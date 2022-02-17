@@ -1,0 +1,108 @@
+.text-search-button {
+    padding-left: 8px;
+    padding-right: 8px;
+    font-size: 14px;
+    background: #0084d4;
+    color: #fff;
+    border: none;
+    border-radius: 0 5px 5px 0;
+    -webkit-border-radius: 0 5px 5px 0;
+    -moz-border-radius: 0 5px 5px 0;
+    height: 32px;
+}
+.admin-serach-container {
+    /*margin-left: 0px;*/
+    padding-top: 15px;
+    padding-bottom: 10px;
+}
+.search-advisor {
+    font-size: 12px;
+}
+.export {
+    height: 35px;
+    border: 1px solid #ccc;
+    background: #f1f1f1;
+}
+.reset-field {
+    position: relative;
+
+    .clear-search {
+        position: absolute;
+        top: 13px;
+        right: 7px;
+    }
+}
+.advisor-panel-search {
+    .text-search-button {
+        height: 37px;
+    }
+}
+
+// .request-alert {
+//     position: fixed;
+//     /* top: 0; */
+//     bottom: 50px;
+//     left: 0;
+//     right: 0;
+//     width: 20%;
+//     margin: 0 auto;
+// }
+
+// .cwaccess-checkbox {
+//     vertical-align: middle;
+// }
+
+.home-content {
+    .blue {
+        color: #0073ec;
+    }
+}
+.dx-template-wrapper .link-btn {
+    color: #3567f1;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.dateFilter-popup {
+    position: fixed;
+    background-color: #fff;
+    width: 206px;
+    height: 137px;
+    z-index: 1;
+    display: block;
+    border: 1px solid #ccc;
+    padding: 0px;
+    -webkit-box-shadow: 2px 3px 5px 2px rgba(140, 135, 140, 1);
+    -moz-box-shadow: 2px 3px 5px 2px rgba(140, 135, 140, 1);
+    box-shadow: 2px 3px 5px 2px rgba(140, 135, 140, 1);
+}
+
+.filter-icon {
+    color: #aba9a9;
+    float: right;
+    cursor: pointer;
+    margin-top: 3px;
+}
+
+.progress-bar-contatainer {
+    width: 57%;
+    padding: 3px 3px;
+    height: 10px;
+    background: #ccc;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    display: inline-block;
+    margin-right: 5px;
+    cursor: pointer;
+
+    .progress-bar {
+        height: 4px;
+        background: #384455;
+        border-radius: 5px;
+        -moz-border-radius: 5px;
+        -webkit-border-radius: 5px;
+    }
+}
+
+

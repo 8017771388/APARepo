@@ -1,0 +1,46 @@
+<div class="modal-wrapper">
+    <div class="modal-header goal-header">
+       <h1>{{title}}</h1>
+        <button class="cross-btn" (click)="cancelOrder()">
+            <i class="fa fa-times"></i>
+        </button>
+    </div>
+    <div class="modal-body goal-body rearrange-container">
+        <div class="row" *ngIf="tasks && tasks.length <= 0">
+            <div class="col-12 text-center">
+                <p>There are no tasks.</p>
+            </div>
+
+        </div>
+        <div class="row" *ngIf="tasks && tasks.length > 0">
+            <div class="col-12">
+                <div cdkDropList #taskList = "cdkDropList"
+                [cdkDropListData] = "tasks"
+                (cdkDropListDropped) = "onDrop($event)">
+                    <div *ngFor ="let task of tasks" cdkDrag>
+                        <i class="fa fa-arrows" aria-hidden="true"></i>
+                        {{task.task}}
+                    </div>
+                </div>
+            </div>
+        </div>        
+        
+    </div>
+    <div class="modal-footer custom-footer">
+        <input
+            type="button"
+            class="btn cancel-btn"
+            value="Cancel"
+            name="Cancel"
+            (click)="cancelOrder()"
+        />
+        <input
+            (click)="saveOrder()"
+            type="button"
+            class="btn custom-primary"
+            value="Save"
+            name="Save"
+           
+        />
+    </div>
+</div>

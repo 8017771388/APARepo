@@ -1,0 +1,165 @@
+<div class="master-container">
+    <!-- <div class="row">
+        <div class="col-4 offset-8">
+            <div class="search-container">
+                <button class="search-btn-submit">
+                    <i class="fa fa-search"></i>
+                </button>
+                <input
+                    class="form-control"
+                    id="myInput"
+                    type="text"
+                    placeholder="Search.."
+                    [(ngModel)]="searchTxt"
+                />
+            </div>
+        </div>
+    </div> -->
+    <div class="row">
+        <div class="col-4">
+            <label>Deal Type</label>
+            <select
+                class="form-control custom-field"
+                [(ngModel)]="selectedDealType"
+                (ngModelChange)="getSatges($event, null)"
+            >
+            <option value="" selected>Select Deal Type</option>
+                <option
+                    *ngFor="let deal of dealtypeList.data"
+                    [ngValue]="deal.dealTypeID"
+                >
+                    {{ deal.dealType | shortName: 50 }}
+                </option>
+            </select>
+        </div>
+        <div class="col-4 offset-4">
+            <div class="search-container margin-top25">
+                <button
+                    class="search-btn-submit"
+                    (click)="getSatges($event, searchTxt)"
+                >
+                    <i class="fa fa-search"></i>
+                </button>
+                <input
+                    class="form-control"
+                    id="myInput"
+                    type="text"
+                    placeholder="Search.."
+                    [(ngModel)]="searchTxt"
+                    (keypress)="searchWithTxt($event)"
+                />
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 sub-heading">
+            <h2>Stage</h2>
+        </div>
+    </div>
+    <div class="collaps-container text-center" *ngIf="selectedDealType == ''">Select a Deal Type to view details.</div>
+    <div class="collaps-container" *ngIf="stageList.data.length > 0">
+        <div
+            *ngFor="
+                let stage of stageList.data | filter: searchTxt:'stage';
+                let i = index
+            "
+        >
+            <div
+                class="row custom-row"
+                [ngClass]="{ active: stage.isCollapsed }"
+            >
+                <div class="col-12">
+                    <span
+                        class="add-collaps-button"
+                        (click)="stage.isCollapsed = !stage.isCollapsed"
+                        >{{ stage.stage }}</span
+                    >
+                </div>
+            </div>
+            <div
+                class="row"
+                [ngClass]="{ 'bottom-border-space': stage.isCollapsed }"
+            >
+                <div
+                    class="col-12 expand-container"
+                    id="collapseBasic"
+                    [collapse]="!stage.isCollapsed"
+                >
+                    <div class="row">
+                        <div class="col-12">
+                            <label>Stage:</label>
+                            <input
+                                type="text"
+                                class="form-control"
+                                [(ngModel)]="coppiedstage[i].stage"
+                                (ngModelChange)="checkDuplicatestage($event, i)"
+                                readonly
+                            />
+                            <span
+                                class="err-msg"
+                                *ngIf="errMsg || coppiedstage[i].stage == ''"
+                                >{{
+                                    coppiedstage[i].stage == ""
+                                        ? "Please enter stage."
+                                        : errMsg
+                                }}</span
+                            >
+                        </div>
+                    </div>
+                    <!--<div class="row margin-top15">
+                        <div class="col-12">
+                            <label>Purpose:</label>
+                            <input type="text" class="form-control" [(ngModel)]="coppiedstage[i].purpose">
+                        </div>
+                    </div>-->
+                    <div class="row margin-top15">
+                        <div class="col-12 text-right">
+                            <input
+                                class="btn cancel-btn"
+                                name="Cancel"
+                                type="button"
+                                value="Cancel"
+                                (click)="stage.isCollapsed = !stage.isCollapsed"
+                            />
+                            <!--<input
+                                class="btn custom-primary margin-left5"
+                                name="Save"
+                                type="button"
+                                value="Update"
+                                (click)="updatestage(coppiedstage[i])"
+                                [disabled]="!coppiedstage[i].stage || errMsg"
+                            />
+                            <input
+                                class="btn cancel-btn margin-left5"
+                                name="Delete"
+                                type="button"
+                                value="Delete"
+                                (click)="deletestage(stage)"
+                            />-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="row custom-row">
+            <div class="col-12">
+                <span (click)="stage.isCollapsed = !stage.isCollapsed" >ABC123</span>
+            </div>
+
+        </div>
+        <div class="row custom-row">
+            <div class="col-12">
+                <span (click)="stage.isCollapsed = !stage.isCollapsed" >ABC123</span>
+            </div>
+
+        </div> -->
+    </div>
+    <!-- <div class="row container-footer">
+        <div class="col-12">
+            <button (click)="addStage()">
+                <i class="fa fa-plus-circle"></i>
+                <span>Add New Stage</span>
+            </button>
+        </div>
+    </div> -->
+</div>

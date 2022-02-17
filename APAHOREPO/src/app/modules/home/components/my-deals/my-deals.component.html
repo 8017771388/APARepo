@@ -1,0 +1,321 @@
+<div class="home-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-10 col-lg-12">
+                <dx-data-grid
+                    #gridContainer1
+                    id="gridContainer1"
+                    [dataSource]="dataSource"
+                    [masterDetail]="{ enabled: true, template: 'detail' }"
+                    [showColumnLines]="true"
+                    [showRowLines]="true"
+                    [showBorders]="true"
+                    [rowAlternationEnabled]="true"
+                    [cacheEnabled]="false"
+                >
+                    <dxi-column
+                        dataField="dealName"
+                        caption="Deal Name"
+                        [allowSorting]="true"
+                        [width]="200"
+                    >
+                    </dxi-column>
+                    <dxi-column
+                        dataField="dealType"
+                        caption="Deal Type"
+                        [allowSorting]="true"
+                        [width]="200"
+                    >
+                    </dxi-column>
+                    <dxi-column
+                        dataField="dealSpecialistInfo"
+                        caption="Deal Specialist"
+                        [allowSorting]="true"                      
+                        cellTemplate="DS"
+                        [width]="200"
+                    >
+                        <div *dxTemplate="let detail of 'DS'">
+                            {{detail.data.dealSpecialistInfo.dsFullName}}
+                        </div>
+                    </dxi-column>
+                    
+                    <dxi-column
+                        dataField="valuationProfile"
+                        caption="Valuation Profile"
+                        [width]="300"
+                        [allowSorting]="true"
+                        cellTemplate="ValuationProfile"
+                    ></dxi-column>
+                    <div *dxTemplate="let data of 'ValuationProfile'">
+                        <a [routerLink]="['/valuation/valuation-details/']">
+                            <div
+                                title="{{ data.text }}"
+                                class="progress-bar-contatainer"
+                            >
+                                <div
+                                    class="progress-bar"
+                                    [ngStyle]="{
+                                        width: data.text
+                                            ? data.text + '%'
+                                            : '0%'
+                                    }"
+                                ></div>
+                            </div>
+                            {{ data.text ? data.text : 0 }}%
+                        </a>
+                    </div>
+
+                    <dxi-column
+                        dataField="stage"
+                        caption="Active Stage"
+                        [allowSorting]="true"
+                        [width]="120"
+                    >
+                    </dxi-column>
+
+                    <dxi-column
+                        dataField="startDate"
+                        caption="Start Date"
+                        [allowFiltering]="false"
+                        [allowSorting]="false"
+                        [width]="150"
+                        dataType="date"
+                        format="MMM d, yyyy"
+                    ></dxi-column>
+                    <dxi-column
+                        dataField="dealStatus"
+                        caption="Deal Status"
+                        [allowFiltering]="false"
+                        [allowSorting]="false"
+                        [width]="120"
+                    ></dxi-column>
+
+                    <dxi-column
+                        caption="Action"
+                        [width]="120"
+                        [allowFiltering]="false"
+                        [allowSorting]="false"
+                        cellTemplate="Action"
+                    >
+                        <div *dxTemplate="let dataAction of 'Action'">
+                            <a
+                                *ngIf="
+                                    dataAction.data.dealStatus == 'Not Started'
+                                "
+                                class="blue"
+                                [routerLink]="['/admin/create-deal/']"
+                                >Create Deal</a
+                            >
+                            <a
+                                *ngIf="
+                                    dataAction.data.dealStatus !== 'Not Started'
+                                "
+                                class="blue"
+                                [routerLink]="['/home/view-deals/']"
+                                >View Deals</a
+                            >
+                            |
+                            <a
+                                class="blue"
+                                [routerLink]="[
+                                    '/admin/create-deal/' +
+                                        dataAction.data.dealId
+                                ]"
+                                >Manage Deal</a
+                            >
+                        </div>
+                    </dxi-column>
+
+                    <div *dxTemplate="let taskDet of 'detail'">
+                        <dx-data-grid
+                            [dataSource]="getTasks(taskDet.key)"
+                            [showColumnLines]="true"
+                            [showRowLines]="true"
+                            [showBorders]="true"
+                            [rowAlternationEnabled]="true"
+                            [columnAutoWidth]="true"
+                        >
+                            <dxi-column
+                                dataField="task"
+                                [width]="500"
+                                [allowSorting]="false"
+                            >
+                                <!-- <div *dxTemplate="let ts of 'task'">
+                                        <a
+                                            class="taskName"
+                                            title="{{ ts.data.task }}"
+                                            >{{
+                                                ts.data.task | shortName: 150
+                                            }}</a
+                                        >
+                                    </div> -->
+                            </dxi-column>
+                            <dxi-column
+                                dataField="stage"
+                                [width]="140"
+                                [allowSorting]="true"
+                            ></dxi-column>
+                            <dxi-column
+                                dataField="status"
+                                [width]="150"
+                                [allowSorting]="true"
+                            ></dxi-column>
+                            <dxi-column
+                                dataField="duedate"
+                                [width]="100"
+                                caption="Due Date"
+                                dataType="date"
+                                format="MMM d, yyyy"
+                                [allowFiltering]="false"
+                                [allowSorting]="false"
+                                headerCellTemplate="titleHeaderTemplate"
+                            ></dxi-column>
+                            <div
+                                *dxTemplate="
+                                    let info of 'titleHeaderTemplate';
+                                    let i = index
+                                "
+                            >
+                                <span
+                                    >Due Date
+                                    <i
+                                        class="fa fa-filter text-right filter-icon"
+                                        aria-hidden="true"
+                                        (click)="
+                                            taskDet.data.showFilter = !taskDet
+                                                .data.showFilter
+                                        "
+                                    ></i
+                                ></span>
+                                <div
+                                    class="dateFilter-popup"
+                                    *ngIf="taskDet.data.showFilter"
+                                >
+                                    <div class="row m-1 p-1">
+                                        <div class="col-3 p-0 pr-1 text-right">
+                                            From :
+                                        </div>
+                                        <div class="col-9 p-0">
+                                            <div
+                                                class="input-group custom-input-group"
+                                            >
+                                                <input
+                                                    type="text"
+                                                    class="form-control custom-field"
+                                                    [(ngModel)]="fromDate[i]"
+                                                    #dateFrom="bsDatepicker"
+                                                    bsDatepicker
+                                                    [bsConfig]="{
+                                                        dateInputFormat:
+                                                            'MMM D, YYYY'
+                                                    }"
+                                                    (bsValueChange)="
+                                                        onValueChange(
+                                                            $event,
+                                                            'dateFrom',
+                                                            i
+                                                        )
+                                                    "
+                                                />
+                                                <span class="input-group-btn">
+                                                    <button
+                                                        type="button"
+                                                        class="btn btn-default calender-custom"
+                                                        (click)="
+                                                            dateFrom.toggle()
+                                                        "
+                                                        ng-click="isDatepickerOpen = !isDatepickerOpen"
+                                                    >
+                                                        <i
+                                                            class="fa fa-calendar"
+                                                        ></i>
+                                                    </button>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row m-1 p-1">
+                                        <div class="col-3 p-0 pr-1 text-right">
+                                            To :
+                                        </div>
+                                        <div class="col-9 p-0">
+                                            <div
+                                                class="input-group custom-input-group"
+                                            >
+                                                <input
+                                                    type="text"
+                                                    class="form-control custom-field"
+                                                    [(ngModel)]="toDate[i]"
+                                                    #dateTo="bsDatepicker"
+                                                    bsDatepicker
+                                                    [bsConfig]="{
+                                                        dateInputFormat:
+                                                            'MMM D, YYYY'
+                                                    }"
+                                                    (bsValueChange)="
+                                                        onValueChange(
+                                                            $event,
+                                                            'dateTo',
+                                                            i
+                                                        )
+                                                    "
+                                                />
+                                                <span class="input-group-btn">
+                                                    <button
+                                                        type="button"
+                                                        class="btn btn-default calender-custom"
+                                                        (click)="
+                                                            dateTo.toggle()
+                                                        "
+                                                        ng-click="isDatepickerOpen = !isDatepickerOpen"
+                                                    >
+                                                        <i
+                                                            class="fa fa-calendar"
+                                                        ></i>
+                                                    </button>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row m-1 p-1">
+                                        <div class="col-8 p-0 text-right">
+                                            <input
+                                                type="button"
+                                                class="btn cancel-btn action-button margin-left10"
+                                                value="Cancel"
+                                                name="Cancel"
+                                                (click)="
+                                                    taskDet.data.showFilter = false
+                                                "
+                                            />
+                                        </div>
+                                        <div class="col-4 p-0 text-right">
+                                            <input
+                                                type="button"
+                                                class="btn custom-primary action-button"
+                                                value="Save"
+                                                name="Filter"
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <dxi-column
+                                dataField="owner"
+                                [width]="120"
+                                [allowSorting]="true"
+                            ></dxi-column>
+
+                            <dxi-column
+                                dataField="department"
+                                caption="Department"
+                                [width]="300"
+                                [allowSorting]="true"
+                            ></dxi-column>
+                        </dx-data-grid>
+                    </div>
+                </dx-data-grid>
+            </div>
+        </div>
+    </div>
+</div>

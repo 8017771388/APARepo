@@ -1,0 +1,672 @@
+<div class="row mt-4">
+    <div class="col-12 pl-4">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a [routerLink]="[
+                    '/admin/admin-page/']">Admin</a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">
+                    {{ pageHeading }}
+                </li>
+            </ol>
+        </nav>
+    </div>
+    <div class="col-12">
+        <div class="advisor-subscription container-fluid">
+            <div class="pl-2">
+                <h5>{{ pageHeading }}</h5>
+                <!-- <div class="card-header">
+                    Deal Initiation
+                </div> -->
+            </div>
+            <form #dealForm="ngForm">
+                <div class="card margin-top15">
+                    <div class="card-header">Deal</div>
+                    <div class="card-body">
+                        <div class="form-group row">
+                            <label class="col-md-2 custom-label"
+                                >Deal Name:</label
+                            >
+                            <div class="col-md-5 deal-name-box">
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    [(ngModel)]="dealDet.dealName"
+                                    required
+                                    name="dealName"
+                                    maxlength="150"
+                                    autocomplete="off"
+                                    (blur)="
+                                        duplicateDealCheck(dealDet.dealName)
+                                    "
+                                    [ngClass]="{
+                                        'ng-invalid': duplicateDeal == 1
+                                    }"
+                                    (ngModelChange)="onModelChange($event)"
+                                />
+                                <span class="deal-name-tooltip">
+                                    <i
+                                        class="fa fa-info-circle"
+                                        data-toggle="tooltip"
+                                        title="buyer (first, last name) and seller (first,last name)"
+                                    ></i>
+                                </span>
+                                <div
+                                    *ngIf="duplicateDeal == 1"
+                                    class="error-text"
+                                >
+                                    The deal already exists for this Deal Name.
+                                    Please enter a different deal name or search
+                                    the existing deal to update it.
+                                </div>
+                            </div>
+                            <label class="col-md-2 custom-label"
+                                >Deal Specialist:</label
+                            >
+                            <div class="col-md-3">
+                                <input
+                                    name="dealSpecialist"
+                                    [ngClass]="{ 'ng-invalid': noResult }"
+                                    autocomplete="off"
+                                    [typeaheadAsync]="true"
+                                    [(ngModel)]="searchedDealSpecialist"
+                                    id="dealSpecialistId"
+                                    placeholder="Search"
+                                    [typeahead]="advisorDateSource"
+                                    (typeaheadOnSelect)="
+                                        typeaheadOnSelectAdvisor($event)
+                                    "
+                                    (typeaheadNoResults)="
+                                        typeaheadNoResultsDS($event)
+                                    "
+                                    (typeaheadLoading)="
+                                        changeTypeaheadLoading($event)
+                                    "
+                                    [typeaheadHideResultsOnBlur]="true"
+                                    (typeaheadOnBlur)="typeaheadOnBlur($event)"
+                                    typeaheadRequireSelection="false"
+                                    typeaheadOptionField="fullName"
+                                    class="form-control deal-spec"
+                                    [typeaheadOptionsLimit]="10"
+                                    [typeaheadMinLength]="0"
+                                    (ngModelChange)="onModelChange($event)" 
+                                    
+                                />
+                                <div
+                                    *ngIf="typeaheadLoading"
+                                    class="margin-top5"
+                                >
+                                    <button class="btn btn-primary" disabled>
+                                        <span
+                                            class="spinner-border spinner-border-sm"
+                                        ></span>
+                                    </button>
+                                    Loading...
+                                </div>
+                                <div *ngIf="noResult" class="error-text">
+                                    Invalid Deal Specialist name.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-md-2 custom-label"
+                                >Deal Type:</label
+                            >
+                            <div class="col-md-2">
+                                <div class="">
+                                    <select
+                                        name="dealType"
+                                        required
+                                        class="form-control custom-select"
+                                        [(ngModel)]="dealDet.dealTypeID"
+                                        (ngModelChange)="onModelChange($event);onDealTypeChange($event)"
+                                        [ngClass]="[dealDet.dealTypeID == 0 ? 'invalid' : '']"                                        
+                                        [disabled]="isPlanCreated"
+                                    >
+                                    <option value="0">Select Deal Type</option>
+                                        <option value="1" >
+                                            LPL to LPL Acquisition
+                                        </option>
+                                        <option value="2" >
+                                            LPL Buyer of Outside Seller
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <label class="col-md-2 custom-label"
+                                >Deal Start Date:</label
+                            >
+                            <div class="col-md-2">
+                                <div class="input-group custom-input-group">
+                                    <input
+                                        name="fromDate"
+                                        type="text"
+                                        required
+                                        class="form-control"
+                                        #fromDate="bsDatepicker"
+                                        bsDatepicker
+                                        [(ngModel)]="dealDet.startDate"
+                                        (bsValueChange)="
+                                            startDateChange($event)
+                                        "
+                                        [bsConfig]="{
+                                            dateInputFormat: 'MMM D, YYYY'
+                                        }"
+                                        autocomplete="off"
+                                        (ngModelChange)="onModelChange($event)"
+                                        
+                                    />
+                                    <span class="input-group-btn">
+                                        <button
+                                            style="line-height: 20px;"
+                                            type="button"
+                                            class="btn btn-default calender-custom"
+                                            (click)="fromDate.toggle()"
+                                        >
+                                            <i class="fa fa-calendar"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <label class="custom-label col-md-2"
+                                >Target Close Date:</label
+                            >
+                            <div class="col-md-2">
+                                <div class="input-group custom-input-group">
+                                    <input
+                                        name="closeDate"
+                                        type="text"
+                                        class="form-control"
+                                        #closeDate="bsDatepicker"
+                                        bsDatepicker
+                                        [(ngModel)]="dealDet.endDate"
+                                        [bsConfig]="{
+                                            dateInputFormat: 'MMM D, YYYY'
+                                        }"
+                                        [minDate]="minDate"
+                                        autocomplete="off"
+                                        (ngModelChange)="onModelChange($event)"
+                                        
+                                    />
+                                    <span class="input-group-btn">
+                                        <button
+                                            style="line-height: 20px;"
+                                            type="button"
+                                            class="btn btn-default calender-custom"
+                                            (click)="closeDate.toggle()"
+                                        >
+                                            <i class="fa fa-calendar"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-md-2 custom-label">Stage:</label>
+                            <div class="col-md-2">
+                                <select
+                                    required
+                                    name="dealStage"
+                                    class="form-control custom-select"
+                                    [(ngModel)]="dealDet.dealStageID"
+                                    [disabled]="dealDet.dealType == 'edit'"
+                                    (ngModelChange)="onModelChange($event)"
+                                >
+                                    <option
+                                        *ngFor="let stage of allStages"
+                                        [value]="stage.code"
+                                    >
+                                        {{ stage.name }}
+                                    </option>
+                                    <!-- <option value="Discovery">Discovery</option>
+                                    <option value="Due Diligence"
+                                        >Due Diligence</option
+                                    >
+                                    <option value="Integration">Integration</option>
+                                    <option value="Closing">Closing</option> -->
+                                </select>
+                            </div>
+
+                            <label class="col-md-2 custom-label">Status:</label>
+                            <div class="col-md-2">
+                                <select
+                                    name="dealStatus"
+                                    class="form-control custom-select"
+                                    [(ngModel)]="dealDet.dealStatusCd"
+                                    (ngModelChange)="onModelChange($event); selectedStatus($event)"
+                                    required                                    
+                                >
+                                    <option
+                                        *ngFor="let status of allStatus"
+                                        [value]="status.code"
+                                    >
+                                        {{ status.name }}
+                                    </option>
+                                    <!-- <option value="Not Started">Not Started</option>
+                                    <option value="In Progress">
+                                        In Progress</option
+                                    >
+                                    <option value="Closed">Closed</option>
+                                    <option value="Completed">Completed</option>
+                                    <option value="Terminated">Terminated</option> -->
+                                </select>
+                            </div>
+                        </div>
+                        <div
+                            class="form-group row"
+                            *ngIf="pageHeading == 'Edit Deal'"
+                        >
+                            <label class="col-md-2 custom-label">Box:</label>
+                            <div class="col-md-10 pd-top5">
+                                <span *ngIf="dealDet.boxLink != null"
+                                    ><a
+                                        href="{{ dealDet.boxLink }}"
+                                        target="_blank"
+                                        class="blue"
+                                    >
+                                        {{ dealDet.boxLink }}
+                                    </a></span
+                                >
+                                <span *ngIf="dealDet.boxLink == null"
+                                    >BOX folder is not created yet.</span
+                                >
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card margin-top15">
+                    <div class="card-header">Advisors on the Deal</div>
+
+                    <div
+                        class="card-body"
+                        style="overflow-y: inherit; overflow-x: inherit;"
+                    >
+                        <!-- <div class="form-group row">
+                            <div class="col-md-4">
+                                <a
+                                    class="btn custom-primary margin-left5 hand-cursor"
+                                    (click)="addAdvisor()"
+                                >
+                                    + Add Buyer/Seller
+                             </a>
+                            </div>
+                        </div> -->
+                        <div class="form-group row" [formGroup]="advisorForm">
+                            <div
+                                class="col-12 custom-plan-table"
+                                formArrayName="buyerSeller"
+                            >
+                                <div class="row row-heading">
+                                    <div class="col-3 custom-col">
+                                        Master Rep ID
+                                    </div>
+                                    <div class="col-4 custom-col">
+                                        Advisor
+                                    </div>
+                                    <div class="custom-col" [ngClass]="[pageHeading == 'Edit Deal'? 'col-2' : 'col-3']">
+                                        Role
+                                    </div>
+                                    <div class="col-2 custom-col" *ngIf="pageHeading == 'Edit Deal'">
+                                        CW Access Status
+                                    </div>
+                                    <div class="col-1 custom-col">
+                                        Action
+                                    </div>
+                                </div>
+                                <div
+                                    *ngFor="
+                                        let adv of buyerSeller().controls;
+                                        let i = index
+                                    "
+                                    [formGroupName]="i"
+                                >
+                                    <div class="row plan-custom-row">
+                                        <div class="col-3 custom-col">
+                                            <input
+                                                name="repId"
+                                                autocomplete="off"
+                                                class="form-control custom-typeahed"
+                                                [ngClass]="{
+                                                    invalid:
+                                                        advisorsValidation[i]
+                                                            .repId,
+                                                    valid: !advisorsValidation[
+                                                        i
+                                                    ].repId,
+                                                    'border-red':
+                                                        borderColor[i],
+                                                    '': !borderColor[i]
+                                                }"
+                                                formControlName="repId"
+                                                placeholder="Search Master Rep ID"
+                                                (keyup)="
+                                                    searchRepID(adv, i, $event)
+                                                "
+                                                (blur)="selectRepIdOnBLur(i)"
+                                                (ngModelChange)="onModelChange($event)"
+                                                
+                                            />
+                                            <div
+                                                *ngIf="
+                                                    typAhedResList[i].length ==
+                                                    0
+                                                "
+                                                class="error-txt"
+                                            >
+                                                {{ advNoResult[i] }}
+                                            </div>
+                                            <div *ngIf="typAhedResList[i].length > 0" class="custom-typeahed-container">
+                                                <ul>
+                                                    <li
+                                                        class="custom-typeahed"
+                                                        [ngClass]="[
+                                                            list.focus
+                                                                ? 'active'
+                                                                : ''
+                                                        ]"
+                                                        *ngFor="
+                                                            let list of typAhedResList[
+                                                                i
+                                                            ];
+                                                            let j = index
+                                                        "
+                                                        (click)="
+                                                            selectRepId(list, i)
+                                                        "
+                                                        [innerHTML]="
+                                                            list.repIdWithNameNew
+                                                        "
+                                                    ></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="col-4 custom-col">
+                                            <input
+                                                name="advisor"
+                                                autocomplete="off"
+                                                type="text"
+                                                placeholder="Advisors Name"
+                                                class="form-control"
+                                                disabled
+                                                formControlName="advisorName"
+                                                [ngClass]="[
+                                                    advisorsValidation[i]
+                                                        .advisorName
+                                                        ? 'invalid'
+                                                        : 'valid'
+                                                ]"
+                                                (ngModelChange)="onModelChange($event)"
+                                            />
+                                        </div>
+                                        <div class="custom-col" [ngClass]="[pageHeading == 'Edit Deal'? 'col-2' : 'col-3']">
+                                            <select
+                                                name="role"
+                                                class="form-control custom-select"
+                                                formControlName="advisorRole"
+                                                [ngClass]="[
+                                                    advisorsValidation[i]
+                                                        .advisorRole
+                                                        ? 'invalid'
+                                                        : 'valid'
+                                                ]"
+                                                (change)="validateRole(i, adv)"
+                                            >
+                                                <option value="Buyer">
+                                                    Buyer
+                                                </option>
+                                                <option value="Seller">
+                                                    Seller
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <div class="col-2 custom-col" *ngIf="pageHeading == 'Edit Deal'">
+                                            <input
+                                                name="advisor"
+                                                autocomplete="off"
+                                                type="text"
+                                                class="form-control inputToText"
+                                                disabled
+                                                formControlName="maSolutionsCWStatus"
+                                                (ngModelChange)="onModelChange($event)"
+                                            />
+                                        </div>
+                                        <div class="custom-col p-3" [ngClass]="[pageHeading == 'Edit Deal'? 'col-1' : 'col-2']">
+                                            <!-- <button
+                                                class="custom-btn-Edit defaultText"
+                                                (click)="gtantRevokeAcess(i)"
+                                            >
+                                                Revoke Access
+                                            </button>
+                                            | -->
+                                            <span
+                                                class="custom-btn-Edit defaultText hand-cursor"
+                                                (click)="deleteAdvisor(i, adv.value.repId)"
+                                            >
+                                                Delete
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div *ngIf="buyerSeller().controls.length <= 0">
+                                    <div class="row plan-custom-row">
+                                        <div
+                                            class="col-sm-12 custom-col text-center"
+                                        >
+                                            No Buyer/Seller Available.
+                                            <button
+                                                class="custom-btn-Edit defaultText"
+                                                (click)="addAdvisor()"
+                                            >
+                                                Add Buyer/Seller
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-4">
+                                <input
+                                    type="button"
+                                    class="btn custom-primary margin-left5 hand-cursor white"
+                                    (click)="addAdvisor()"
+                                    value="+ Add Buyer/Seller"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card margin-top15">
+                    <div class="card-header">Internal Notes</div>
+
+                    <div class="card-body">
+                        <div class="form-group row">
+                            <label class="col-md-1 pr-0 custom-label"
+                                >Add Note:</label
+                            >
+                            <div class="col-md-8 deal-name-box">
+                                <textarea
+                                    class="form-control custom-field textarea-resize"
+                                    rows="3"
+                                    id="comment"
+                                    [(ngModel)]="dealDet.note"
+                                    name="note"
+                                    maxlength="500"
+                                    placeholder="Please enter your note here.."
+                                    (ngModelChange)="onModelChange($event)"
+                                ></textarea>
+                            </div>
+                        </div>
+                        <div
+                            class="form-group row"
+                            *ngIf="dealDet.notes?.length > 0"
+                        >
+                            <label class="col-md-1 custom-label"></label>
+                            <!--<div class="row margin-top5 note-task" *ngIf="dealDet.notes?.length > 0">-->
+                            <div class="col-md-8 deal-name-box">
+                                <div class="note-container">
+                                    <!--<h6>Notes</h6>-->
+                                    <div>
+                                        <div
+                                            class=""
+                                            *ngFor="let note of dealDet.notes"
+                                        >
+                                            <div class="note-icon">
+                                                <i
+                                                    class="fa fa-sticky-note"
+                                                ></i>
+                                            </div>
+                                            <div class="note-details">
+                                                <strong class="label-strong">{{
+                                                    note.createdByName
+                                                }}</strong>
+                                                <span class="label-strong">{{
+                                                    note.createdOn | date
+                                                }}</span>
+                                                <p>{{ note.note }}</p>
+                                                <div
+                                                    class="note-del"
+                                                    (click)="deleteNote(note)"
+                                                >
+                                                    Delete
+                                                    <i
+                                                        class="fa fa-trash"
+                                                        aria-hidden="true"
+                                                    ></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="notsContainer"
+                                        *ngIf="dealDet.notes?.length == 0"
+                                    >
+                                        <strong>No Note Found</strong>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--</div>-->
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="card margin-top15">
+                    <div class="card-header">Advisors on the Deal</div>
+                    <div class="row">
+                        <div class="container">
+                            <h1>
+                                Angular FormArray Example - ItSolutionStuff.com
+                            </h1>
+
+                            <form
+                                [formGroup]="advisorForm"
+                                (ngSubmit)="onSubmit()"
+                            >
+                                <p>
+                                    <label for="name">Product Name:</label>
+                                    <input
+                                        type="text"
+                                        id="name"
+                                        name="name"
+                                        formControlName="repId"
+                                        class="form-control"
+                                    />
+                                </p>
+
+                                <table
+                                    class="table table-bordered"
+                                    formArrayName="buyerSeller"
+                                >
+                                    <tr>
+                                        <th colspan="2">
+                                            Add Multiple adv:
+                                        </th>
+                                        <th width="150px">
+                                            <button
+                                                type="button"
+                                                (click)="addAdvisor()"
+                                                class="btn btn-primary"
+                                            >
+                                                Add More
+                                            </button>
+                                        </th>
+                                    </tr>
+                                    <tr
+                                        *ngFor="
+                                            let adv of buyerSeller()
+                                                .controls;
+                                            let i = index
+                                        "
+                                        [formGroupName]="i"
+                                    >
+                                        <td>
+                                            adv :
+                                            <input
+                                                type="text"
+                                                formControlName="qty"
+                                                class="form-control"
+                                            />
+                                        </td>
+                                        <td>
+                                            Price:
+                                            <input
+                                                type="text"
+                                                formControlName="price"
+                                                class="form-control"
+                                            />
+                                        </td>
+                                        <td>
+                                            <button
+                                                (click)="removeadv(i)"
+                                                class="btn btn-danger"
+                                            >
+                                                Remove
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </table>
+
+                                <button type="submit" class="btn btn-success">
+                                    Submit
+                                </button>
+                            </form>
+
+                            <br />
+                            {{ this.advisorForm.value | json }}
+                        </div>
+                    </div>
+                </div> -->
+
+                <div class="row deal-btn-section pb-3 mb-3">
+                    <div class="col-md-12 pr-0 margin-top15 text-right">
+                        <input
+                            class="btn cancel-btn"
+                            name="Cancel"
+                            type="button"
+                            value="Cancel"
+                            (click)="onCancel()"
+                        />
+                        <input
+                            [disabled]="
+                                !dealForm.form.valid ||
+                                !validAdvisor ||
+                                !dealSpecialistSelected ||
+                                duplicateDeal == 1 || dealDet.dealTypeID == 0
+                            "
+                            class="btn custom-primary margin-left5"
+                            name="Save"
+                            type="button"
+                            value="Save"
+                            (click)="openConfirmation()"
+                        />
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

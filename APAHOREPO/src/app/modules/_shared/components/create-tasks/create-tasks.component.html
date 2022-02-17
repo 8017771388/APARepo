@@ -1,0 +1,75 @@
+<div class="create-task container-fluid">
+    <div class="create-task-container">
+        <div class="row custom-row header-bg-color">
+            <div class="col-2 pl-0">
+                <h2>Select Stage</h2>
+            </div>
+            <div class="col-10">
+                <h2>Stage</h2>
+            </div>            
+        </div>
+        <div class="category-grid" >
+            <div *ngFor="let stage of stageList">
+                <div class="row custom-row custom-switches" [attr.aria-expanded]="!stage.isCollapsed" aria-controls="collapseBasic" >
+                    <div class="col-2 pl-0">
+                        <ui-switch [(ngModel)]="stage.switch" (change)="switchAccordian(stage)"></ui-switch>
+                        <button class="transparent-button margin-left5" (click)="stage.isCollapsed = !stage.isCollapsed">
+                            <i class="fa fa-caret-right" *ngIf="!stage.isCollapsed"></i>
+                            <i class="fa fa-caret-down" *ngIf="stage.isCollapsed"></i>
+                        </button>
+                    </div>
+                    <div class="col-10">
+                        <span title="ABC123" class="goal ">{{stage.stage}}</span>
+                    </div>
+                </div>
+                <div class="expand-plan-details" id="collapseBasic" *ngIf="stage.isCollapsed">
+                    <div class="row">
+                        <div class="col-10 offset-2">
+                            <div class="link-text" (click)="addTask(stage)">
+                                <i class="fa fa-plus-circle"></i>
+                                <span>Add Task +</span>
+                            </div>
+                            <div class="custom-plan-table">
+                                <div class="row row-heading">
+                                    <div class="col-1 custom-col">
+                                        <strong>Add</strong>
+                                    </div>
+                                    <div class="col-8 custom-col">
+                                       <strong>Task</strong>
+                                    </div>
+                                    <div class="col-3 custom-col">
+                                        <strong>Department</strong>
+                                    </div>
+                                </div>
+                                <div *ngFor="let task of stage.tasks">
+                                    <div class="row plan-custom-row">
+                                        <div class="col-1 custom-col">
+                                            <input type="checkbox" [checked]="task.checked">
+                                        </div>
+                                        <div class="col-8 custom-col">
+                                            <span> {{task.task}}</span>
+                                        </div>
+                                        <div class="col-3 custom-col">
+                                            <span>{{task.department}}</span>
+                                        </div>
+                                      
+                                    </div>
+                                    
+                                </div>
+                                <div *ngIf="stage.tasks.length <= 0">
+                                    <div class="row plan-custom-row"><div class="col-sm-12 custom-col text-center">No Goal Available</div></div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+         <div class="category-footer text-right">
+            <input class="btn cancel-btn" name="Cancel" type="button" value="Cancel">
+            <input class="btn custom-primary margin-left5" name="Save" type="button" value="Save" >
+       </div>
+    </div>
+</div>

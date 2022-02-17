@@ -1,0 +1,121 @@
+
+<div class="container-fluid">
+    <div class="row">   
+        <div class="col-7">  
+            <div class="box-container">          
+                <div class="row mt-2">
+                    <div class="col-12">
+                        <label>Task Name</label>
+                        <input placeholder="Task Name" value="Prepare report of valuation impact from asset conversion" type="text" class="form-control custom-field" maxlength="300"/>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-6">
+                        <label>Department</label>                
+                        <select class="form-control custom-field"  >                   
+                            <option value="Advisor" [selected]="true">AFS - M&A - Deal Specialist</option>
+                            <option value="VCFO" >AFS - M&A - Sr. Specialist</option>   
+                            
+                        </select>
+                    </div>
+                    <div class="col-6">
+                        <label>Stage</label>     
+                        <select class="form-control custom-field"  >                   
+                            <option value="Advisor" [selected]="true">Discovery</option>
+                            <option value="VCFO" >Closing</option>
+                            <option value="VCFO" >Due Diligence</option>
+                            <option value="VCFO" >Integration</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-6">
+                        <label>Owner</label>
+                        <input placeholder="Owner" value="Marissa Texeira" type="text" class="form-control custom-field" maxlength="300"/>
+                    </div>
+                    <div class="col-6">                        
+                        <label>Upload</label>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="inputGroupFile01"
+                            aria-describedby="inputGroupFileAddon01">
+                            <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-6">
+                        <label>Buyer</label>                
+                        <input placeholder="Buyer" value="Marissa Texeira" type="text" class="form-control custom-field" maxlength="300"/>
+                    </div>
+                    <div class="col-6">
+                        <label>Seller</label>     
+                        <input placeholder="Seller" value="Sumija Thallassery" type="text" class="form-control custom-field" maxlength="300"/>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-6">
+                        <label>Status</label>                
+                        <select class="form-control custom-field" >                   
+                            <option value="Advisor" [selected]="true">Active</option>
+                            <option value="VCFO" >Pending</option> 
+                        </select>
+                    </div>
+                    <div class="col-6" >
+                        <label>Due Date</label>     
+                        <div class="input-group custom-input-group">
+                            <input type="text" class="form-control custom-field" #dueDate="bsDatepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'MMM D, YYYY' }" (bsValueChange)="onValueChange($event, 'duedate')"> 
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default calender-custom" (click)="dueDate.toggle()" ng-click="isDatepickerOpen = !isDatepickerOpen">
+                                    <i class="fa fa-calendar"></i>
+                                </button>
+                            </span>
+                        </div>      
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-5">
+            <div class="box-container">
+                <div class="row">
+                    <div class="col-10 table-heading">
+                        Notes : 
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-10">
+                        <textarea class="txt-area"></textarea>
+                    </div>
+                    <div class="col-2 text-right"><button class="btn btn-primary custom-btn"><i class="fa fa-plus" aria-hidden="true"></i> Note</button></div>
+                </div>
+                <dx-data-grid
+                        #gridContainer1
+                        id="gridContainer1"
+                        [dataSource]="dataSource"
+                        [showColumnLines]="true"
+                        [showRowLines]="true"
+                        [showBorders]="true"
+                        [rowAlternationEnabled]="true"
+                        [cacheEnabled]="false"
+                    >
+                        <dxi-column
+                            dataField="note"
+                            caption="Note"
+                            [width]="500"
+                            [allowSorting]="true"
+                        >
+                        </dxi-column>
+                        <dxi-column
+                            dataField="createdBy"
+                            [width]="110"
+                            caption="Created By"
+                            [allowFiltering]="false"
+                            [allowSorting]="false"
+                        ></dxi-column>                       
+
+                        
+                    </dx-data-grid>
+            </div>
+        </div>
+    </div>
+</div>

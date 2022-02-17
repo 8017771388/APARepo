@@ -1,0 +1,335 @@
+<div class="row admin-serach-container">
+    <div class="col-4 input-group input-group-search">
+        <label for="grid-search" class="sr-only"></label>
+        <div class="reset-field">
+            <input
+                class="form-control grid-search"
+                [(ngModel)]="searchText"
+                (keydown)="searchOnEnter($event)"
+                placeholder="Search Rep ID or Name"
+                type="text"
+            />
+            <i
+                class="clear-search fa fa-remove"
+                (click)="searchText = ''; searchAdvisor()"
+                *ngIf="searchText != ''"
+            ></i>
+        </div>
+        <span class="input-group-btn advisor-panel-search">
+            <button class="btn text-search-button" (click)="searchAdvisor()">
+                <i class="fa fa-search"></i>
+            </button>
+        </span>
+    </div>
+</div>
+
+<!-- <div class="row margin-top15" *ngIf="showAdvisorSubsriptionForm">
+    <div class="col-12">
+        <app-initiate-deal (communicateOnSave)="subscriptionHandler($event)"></app-initiate-deal>
+    </div>
+</div> -->
+<div class="row margin-top5">
+    <div class="col-12">
+        <div
+            class="dx-button dx-button-mode-contained dx-button-has-text"
+            role="button"
+            [routerLink]="['/admin/create-deal/']"
+        >
+            <div class="dx-button-content">
+                <i class="dx-icon dx-icon-add"></i
+                ><span class="dx-button-text">Initiate A Deal</span>
+            </div>
+        </div>
+        <div class="total-records mt-1">
+            <strong>{{ totalCount }}</strong> Deal<span *ngIf="totalCount > 1"
+                >s</span
+            >
+        </div>
+    </div>
+</div>
+    
+<div class="row margin-top5">
+    <div class="col-12">
+        <dx-data-grid
+            #gridContainer
+            id="gridContainerAdmin"
+            [dataSource]="dataSource"
+            [showColumnLines]="true"
+            [showRowLines]="true"
+            [showBorders]="true"
+            [rowAlternationEnabled]="true"
+            
+            [cacheEnabled]="false"
+        >
+            <dxo-remote-operations
+                [sorting]="true"
+                [filtering]="true"
+                [paging]="true"
+            >
+            </dxo-remote-operations>
+            <dxo-paging [pageSize]="15"></dxo-paging>
+            <dxo-pager
+                [showPageSizeSelector]="false"
+                [allowedPageSizes]="[5, 10, 20]"
+                [showInfo]="true"
+                infoText="Page {0} of {1}({{ pagingInfo }} of {2} items)"
+            >
+                >
+            </dxo-pager>
+            <dxo-header-filter [visible]="showHeaderFilter">
+            </dxo-header-filter>
+            <dxi-column
+                dataField="dealName"
+                caption="Deal Name"
+                [allowSorting]="true"
+                [allowFiltering]="false"
+                headerCellTemplate="titleHeaderTemplate"
+            >
+            </dxi-column>
+
+            <dxi-column
+                dataField="dealSpecialistInfo"
+                caption="Deal Specialist"
+                [allowSorting]="false"
+                [width]="240"
+                alignment="center"
+                [allowFiltering]="true"
+                cellTemplate="DS"
+                headerCellTemplate="titleHeaderTemplate"
+                [calculateFilterExpression]="calculateFilterExpressionDS"
+            >
+                <dxo-header-filter
+                    [dataSource]="filterData.dealSpecialist"
+                ></dxo-header-filter>
+                <div *dxTemplate="let detail of 'DS'">
+                    {{ detail.data.dealSpecialistInfo.dsFullName }}
+                </div>
+            </dxi-column>
+
+            <!-- <dxi-column
+                dataField="dealSpecialist"
+                caption="Deal Specialist"
+                [allowSorting]="true"
+                [width]="250"
+                [allowFiltering]="true"
+            >
+            </dxi-column> -->
+            <dxi-column
+                dataField="dealStatus"
+                caption="Status"
+                [allowSorting]="false"
+                [width]="180"
+                alignment="center"
+                [allowFiltering]="true"
+                headerCellTemplate="titleHeaderTemplate"
+                [calculateFilterExpression]="calculateFilterExpressionS"
+            >
+                <dxo-header-filter
+                    [dataSource]="filterData.dealStatus"
+                ></dxo-header-filter>
+            </dxi-column>
+            
+            <dxi-column
+                dataField="dealTargetEndDate"
+                caption="Target Close Date"
+                [allowFiltering]="false"
+                [allowSorting]="true"
+                alignment="center"
+                [width]="200"
+                dataType="date"
+                format="MMM d, yyyy"
+                headerCellTemplate="titleHeaderTemplate"
+            ></dxi-column>
+            <!--<dxi-column
+                dataField="dealStatus"
+                caption="Deal Status"
+                [allowFiltering]="false"
+                [allowSorting]="false"
+                [width]="150"
+            ></dxi-column>-->
+
+            <dxi-column
+                caption="Action"
+                [width]="110"
+                alignment="center"
+                [allowFiltering]="false"
+                [allowSorting]="false"
+                cellTemplate="Action"
+                headerCellTemplate="titleHeaderTemplate"
+            >
+                <div *dxTemplate="let dataAction of 'Action'">
+                    <button
+                        type="button"
+                        class="btn btn-sm action-button"
+                        (click)="goToEditDeal(dataAction.data.dealID)"
+                    >
+                        Edit Deal
+                    </button>
+                    <!-- <a
+                        style="color: blue;"
+                        class="blue"
+                        (click)="goToEditDeal(dataAction.data.dealID)"
+                        
+                        >Edit Deal</a
+                    > -->
+                </div>
+            </dxi-column>
+            <div *dxTemplate="let info of 'titleHeaderTemplate'">
+                <span
+                    ><strong>{{ info.column.caption }}</strong></span
+                >
+            </div>
+        </dx-data-grid>
+        <!-- <dx-data-grid
+            #gridContainer
+            id="gridContainer"
+            [dataSource]="dataSource"
+            [masterDetail]="{ enabled: true, template: 'detail' }"
+            [showColumnLines]="true"
+            [showRowLines]="true"
+            [showBorders]="true"
+            [rowAlternationEnabled]="true"
+            [columnAutoWidth]="true"
+            [cacheEnabled]="false"
+        >
+            <dxo-remote-operations
+                [paging]="true"
+                [filtering]="true"
+                [sorting]="true"
+            >
+            </dxo-remote-operations>
+            <dxo-paging [pageSize]="15"></dxo-paging>
+            <dxo-pager
+                [showPageSizeSelector]="false"
+                [allowedPageSizes]="[5, 10, 15]"
+                [showInfo]="true"
+            >
+            </dxo-pager>
+            <dxo-header-filter [visible]="showHeaderFilter">
+            </dxo-header-filter>
+            <dxi-column
+                dataField="advisorName"
+                caption="Advisor"
+                [allowSorting]="true"
+                [calculateFilterExpression]="calculateFilterExpression"
+            >
+                <dxo-header-filter
+                    [dataSource]="filterData.advisorName"
+                ></dxo-header-filter>
+            </dxi-column>
+            <dxi-column
+                dataField="repId"
+                caption="REP ID"
+                [allowSorting]="true"
+                [calculateFilterExpression]="calculateFilterExpression"
+            >
+                <dxo-header-filter
+                    [dataSource]="filterData.repId"
+                ></dxo-header-filter>
+            </dxi-column>
+            <dxi-column
+                dataField="totalDeals"
+                caption="Total Deals (#)"
+                [allowFiltering]="false"
+                [allowSorting]="false"
+            ></dxi-column>
+            <dxi-column
+                dataField="activeDeals"
+                caption="Active Deals (#)"
+                [allowFiltering]="false"
+                [allowSorting]="false"
+            ></dxi-column>
+            <dxi-column
+                dataField="cwAccess"
+                caption="CW Access"
+                [allowFiltering]="false"
+                [allowSorting]="false"
+                cellTemplate="MasterAction"
+            >
+                <div *dxTemplate="let a of 'MasterAction'">
+                    <label>{{ a.data.cwAccess }}</label>
+                    <input
+                        class="margin-left5 cwaccess-checkbox"
+                        type="checkbox"
+                    />
+                </div>
+            </dxi-column>
+
+            <div *dxTemplate="let AD of 'detail'">
+                <dx-data-grid
+                    [dataSource]="getTasks(AD.key, 'grid')"
+                    [showColumnLines]="true"
+                    [showRowLines]="true"
+                    [showBorders]="true"
+                    [rowAlternationEnabled]="true"
+                    [columnAutoWidth]="true"
+                >
+                    <dxo-paging [pageSize]="15"></dxo-paging>
+                    <dxo-pager
+                        [showPageSizeSelector]="false"
+                        [allowedPageSizes]="[5, 10, 20]"
+                        [showInfo]="true"
+                    >
+                    </dxo-pager>
+                    <dxi-column
+                        dataField="dealName"
+                        [width]="250"
+                        caption="Deal Name"
+                    ></dxi-column>
+                    <dxi-column
+                        dataField="dealType"
+                        [width]="150"
+                        caption="Deal Type"
+                    ></dxi-column>
+                    <dxi-column dataField="stage" caption="Stage"></dxi-column>
+                    <dxi-column
+                        dataField="status"
+                        caption="Status"
+                    ></dxi-column>
+                    <dxi-column
+                        dataField="dealSpecialist"
+                        caption="Deal Specialist"
+                    ></dxi-column>
+                    <dxi-column
+                        dataField="startDate"
+                        caption="Start Date"
+                        [allowFiltering]="false"
+                        [allowSorting]="true"
+                        dataType="date"
+                        format="MMM d, yyyy"
+                    ></dxi-column>
+                    <dxi-column
+                        dataField="advisorRole"
+                        [width]="150"
+                        caption="Role"
+                    ></dxi-column>
+                    <dxi-column
+                        [allowFiltering]="false"
+                        [allowSorting]="false"
+                        cellTemplate="Action"
+                    >
+                        <div *dxTemplate="let a of 'Action'">
+                            <button
+                                mdbBtn
+                                type="button"
+                                color="blue-grey"
+                                mdbWavesEffect
+                                class="custom-edit"
+                                (click)="editDeal(AD.data, a.data)"
+                            >
+                                <i class="fa fa-edit"></i>
+                                Edit
+                            </button>
+                        </div>
+                    </dxi-column>
+                </dx-data-grid>
+
+                <div class="margin-top15 d-flex justify-content-center">
+                    <button type="button" name="save">
+                        Grant/Revoke ClientWorks Access
+                    </button>
+                </div>
+            </div>
+        </dx-data-grid> -->
+    </div>
+</div>

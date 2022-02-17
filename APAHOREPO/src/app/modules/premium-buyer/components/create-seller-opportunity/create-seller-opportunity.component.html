@@ -1,0 +1,1115 @@
+<div class="row mt-4">
+    <div class="col-12 pl-4 margin-left12">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb create-profile-breadcrumb">
+                <li class="breadcrumb-item">
+                    <strong>
+                        <a (click)="onCancel()" href="javascript:void(0)">Sellers</a>
+                    </strong>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">
+                    {{pageHeading}}
+                </li>
+            </ol>
+        </nav>
+    </div>
+    
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="advisor-subscription create-profile">
+            <form #sellerOpportunityForm="ngForm">
+               <!-- valid======{{sellerOpportunityForm.form.valid}}-->
+                <div class="card margin-top15">
+                    <div class="card-header">Profile</div>
+                    <div class="card-body">
+                        <div class="form-group row">
+                            <label class="col-md-2 custom-label text-right">Seller Name:</label>
+
+                            <div class="col-md-10">
+                                <input
+                                    class="form-control"
+                                    name="sellerName"
+                                    maxlength="100"
+                                    autocomplete="off"
+                                    required
+                                    placeholder="Enter Seller Name"
+                                    (ngModelChange)="onModelChange($event)"
+                                    [(ngModel)]="sellerOppDet.sellerProfile.sellerName"
+                                    type="text"
+                                    title="{{sellerOppDet.sellerProfile.sellerName}}"
+                                />
+                                
+                            </div>
+                           
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-md-2 custom-label text-right">Seller Description:</label>
+                            <div class="col-md-10">
+                                <textarea class="form-control custom-field textarea-resize"
+                                    rows="3"
+                                    name="sellerDescription"
+                                    spellcheck="true"
+                                    maxlength="1000"
+                                    [(ngModel)]="sellerOppDet.sellerProfile.sellerDescription"
+                                    placeholder="Enter Seller Description" spellcheck="trues"
+                                    title="{{sellerOppDet.sellerProfile.sellerDescription}}"></textarea>
+                                    <span class="mt-3 subtext-form">Maximum {{1000-sellerOppDet.sellerProfile.sellerDescription.length}} Characters </span>
+                            </div>
+                            
+                               
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-2 custom-label text-right">Source:</label>
+                            <div class="col-md-2">
+                                <select [ngClass]="sellerOppDet.sellerProfile.source == '' ? 'font-italic' : ''"
+                                        name="source" title="{{sellerOppDet.sellerProfile.source}}" [(ngModel)]="sellerOppDet.sellerProfile.source"  (ngModelChange)="onModelChange($event)"
+                                        class="form-control custom-select"
+                                        required>   
+                                        <option value="">Select</option>
+                                        <option value="LPL">LPL</option>
+                                        <option value="APBOE">APBOE</option>
+                                        <option value="FP Transitions">
+                                            FP Transitions
+                                        </option>
+                                        <option value="SRG">SRG</option>
+                                    </select>
+                            </div> 
+                            <label class="col-md-2 custom-label text-right">Asking Price:</label>
+
+                            <div class="col-md-2 dollar">
+                                <span class="currency">$</span>
+                                <input
+                                    class="form-control pl-25"
+                                    autocomplete="off"
+                                    pattern="^[-+]?(?:[0-9]+,)*[0-9]+(?:\.[0-9]+)?$"
+                                    rquired
+                                    title="{{sellerOppDet.sellerProfile.valuationMidPoint}}"
+                                    name="valuationMidPoint"
+                                    #valuationMidPoint
+                                    [(ngModel)]="sellerOppDet.sellerProfile.valuationMidPoint"
+                                    type="text"
+                                    min="0"
+                                    max="99999999"
+                                    (ngModelChange)="
+                                    valueChanged($event, 'valuationMidPoint'); onModelChange($event)
+                                "
+                                (keydown)="
+                                        checkValue($event, 'valuationMidPoint')
+                                    "
+                                
+                                [ngClass]="[
+                                sellerOppDet.sellerProfile.valuationMidPoint != null &&
+                                sellerOppDet.sellerProfile.valuationMidPoint == null
+                                        ? 'invalid'
+                                        : ''
+                                ]"
+                            />
+                           
+                                
+                            </div>
+                            <label class="col-md-2 padding-l-0 custom-label text-right">Primary Master Rep ID:</label>
+
+                            <div class="col-md-2">
+                                <input
+                                    class="form-control"
+                                    autocomplete="off"
+                                    title="{{sellerOppDet.sellerProfile.primaryMasterRepID}}"
+                                    placeholder="LPL Advisors only"
+                                    maxlength="4"
+                                    (ngModelChange)="onModelChange($event)"
+                                    [(ngModel)]="sellerOppDet.sellerProfile.primaryMasterRepID"
+                                    name="primaryMasterRepID"
+                                    type="text"
+                                   pattern="^[A-Za-z0-9]*$"
+                                />
+                                
+                            </div>
+
+                               
+                        </div>
+
+
+                        <div class="form-group row">
+                            <label class="col-md-2 custom-label text-right">Location:</label>
+                            <div class="col-md-2">
+                                <select title="{{locationTitle ? locationTitle : ''}}" [ngClass]="sellerOppDet.sellerProfile.stateCd == '' ? 'font-italic' : ''"
+                                        name="stateCd" [(ngModel)]="sellerOppDet.sellerProfile.stateCd"  (ngModelChange)="onModelChange($event)" (change)="selectedLocation(sellerOppDet.sellerProfile.stateCd)"
+                                        class="form-control custom-select"
+                                        required>  
+                                        <option value="">Select State</option> 
+                                        <option
+                                        *ngFor="let loc of locationList"
+                                        [ngValue]="loc.id"
+                                        >{{ loc.value }}</option
+                                    >
+                                    </select>
+                            </div> 
+                            <label class="col-md-2 custom-label text-right">Metro/County/Region:</label>
+
+                            <div class="col-md-2">
+                                <input
+                                    class="form-control"
+                                    autocomplete="off"
+                                    placeholder="Define location"
+                                   maxlength="40"
+                                   name="region"
+                                   [(ngModel)]="sellerOppDet.sellerProfile.region" 
+                                   type="text"
+                                   title="{{sellerOppDet.sellerProfile.region}}"
+                                    
+                                />
+                                
+                            </div>
+
+                            <label class="col-md-2 padding-l-0 custom-label text-right">Stage:</label>
+
+                           
+                            <div class="col-md-2">
+                                <select title="{{sellerStageObj[sellerOppDet.sellerProfile.stageCd]}}"
+                                        name="stageCd"  [(ngModel)]="sellerOppDet.sellerProfile.stageCd"  (ngModelChange)="onModelChange($event)"
+                                        class="form-control custom-select"
+                                        required>   
+                                        <option value="AO" >Accepting Offers</option>
+                                        <option value="SP">Sale Pending</option>
+                                        <option value="SD">Sold</option>
+                                        <option value="UK">Unknown</option>
+                                        <option value="WD">Withdrawn</option>
+                                    </select>
+                            </div> 
+
+                               
+                        </div>
+
+
+
+                        <div class="form-group row">
+                            <label class="col-md-2 custom-label text-right">Application Deadline:</label>
+                            <div class="col-md-2">
+                                <div class="input-group custom-input-group">
+                                    <input
+                                        class="form-control"
+                                        type="text"
+                                    name="applicationDeadline"
+                                        placeholder="Select a Date"
+                                        (keydown)="checkValueAD($event, 'applicationDeadline')"
+                                    #aDeadline="bsDatepicker"
+                                            bsDatepicker
+                                            title="{{sellerOppDet.sellerProfile.applicationDeadline}}"
+                                            
+                                            [bsConfig]="{
+                                                dateInputFormat: 'MMM D, YYYY'
+                                            }"
+                                            [(ngModel)]="sellerOppDet.sellerProfile.applicationDeadline"
+                                            (bsValueChange)="
+                                                onValueChange($event, 'applicationDeadline')
+                                            "
+                                            autocomplete="off"
+                                
+                                            (ngModelChange)="onModelChange($event)"
+                                        
+                                    />
+                                    <span class="input-group-btn">
+                                        <button
+                                            style="line-height: 20px;"
+                                            type="button"
+                                            class="btn btn-default calender-custom"
+                                            (click)="aDeadline.toggle()"
+                                        >
+                                            <i class="fa fa-calendar"></i>
+                                        </button>
+                                    </span>
+                               </div>
+                            </div> 
+
+                           
+                           
+                               
+                        </div>
+                       
+
+                                        
+                            
+                    </div>
+                        
+                    
+                </div>
+				<div class="card margin-top15">
+                    <div class="card-header">AUM</div>
+                    <div class="card-body">
+                        
+                        <div class="form-group row">
+                            <label class="col-md-2 custom-label text-right">Total AUM:</label>
+
+                            <div class="col-md-2 dollar">
+                                <span class="currency">$</span>
+                                <input
+                                    title="{{sellerOppDet.sellerAUM.totalAUM}}"
+                                    class="form-control pl-25"
+                                    name="totalAUM"
+                                    [ngClass]="AUMTotal==true?'ng-invalid':''"
+                                    autocomplete="off"
+                                    required
+                                    pattern="^[-+]?(?:[0-9]+,)*[0-9]+(?:\.[0-9]+)?$"
+                                    min="0"
+                                    max="99999999999"
+                                    [(ngModel)]="sellerOppDet.sellerAUM.totalAUM"
+                                    (ngModelChange)="valueChanged($event, 'aumtotalAum')"
+                                    (keydown)="
+                                    checkValueAum($event, 'aumtotalAum')"
+                                    (blur)="checktotalValue('aumtotalAum');"
+                                />
+                                <div *ngIf="AUMTotal" class="errorMsg text-left mb-3">
+                                    Total AUM must be equal to the sum of the AUM for each product category.
+                                </div>
+                            </div>
+                            <label class="col-md-2 custom-label text-right">Advisory:</label>
+
+                            <div class="col-md-2 dollar">
+                                <span class="currency">$</span>
+                                <input title="{{sellerOppDet.sellerAUM.advisory}}"
+                                
+                                (blur)="checktotalValue('aumadvisory');"
+                                    class="form-control pl-25"
+                                    name="aumadvisory"
+                                    autocomplete="off"
+                                    pattern="^[-+]?(?:[0-9]+,)*[0-9]+(?:\.[0-9]+)?$"
+                                    min="0"
+                                    max="99999999999"
+                                    [(ngModel)]="sellerOppDet.sellerAUM.advisory"
+                                    (ngModelChange)="valueChanged($event, 'aumadvisory')"
+                                    (keydown)="
+                                    checkValueAum($event, 'aumadvisory')"
+                                />
+                                
+                            </div>
+                            <label class="col-md-2 padding-l-0 custom-label text-right">Mutual Funds:</label>
+
+                            <div class="col-md-2 dollar">
+                                <span class="currency">$</span>
+                                <input title="{{sellerOppDet.sellerAUM.mutualFunds}}"
+                                    class="form-control pl-25"
+                                    name="aummutualFunds"
+                                    autocomplete="off"
+                                    pattern="^[-+]?(?:[0-9]+,)*[0-9]+(?:\.[0-9]+)?$"
+                                    min="0"
+                                    max="99999999999"
+                                    [(ngModel)]="sellerOppDet.sellerAUM.mutualFunds"
+                                    (ngModelChange)="valueChanged($event, 'aummutualFunds')"
+                                    (keydown)="
+                                    checkValueAum($event, 'aummutualFunds')"
+                                    (blur)="checktotalValue('aummutualFunds');"
+                                    
+                                />
+                                
+                            </div>
+                            
+                               
+                        </div>
+
+
+                        
+
+
+                        <div class="form-group row m-b-0" [ngClass]="AUMTotal==true?'pd-top15':''">
+                            <label class="col-md-2 custom-label text-right">Annuities:</label>
+                            <div class="col-md-2 dollar">
+                                <span class="currency">$</span>
+                                <input title="{{sellerOppDet.sellerAUM.annuities}}"
+                                class="form-control pl-25"
+                                name="aumannuities"
+                                autocomplete="off"
+                                pattern="^[-+]?(?:[0-9]+,)*[0-9]+(?:\.[0-9]+)?$"
+                                min="0"
+                                max="99999999999"
+                                [(ngModel)]="sellerOppDet.sellerAUM.annuities"
+                                (ngModelChange)="valueChanged($event, 'aumannuities')"
+                                (keydown)="
+                                checkValueAum($event, 'aumannuities')"
+                                 (blur)="checktotalValue('aumannuities');"
+                                
+                            />
+                            </div> 
+
+                            <label class="col-md-2 custom-label text-right">Alternatives:</label>
+
+                            <div class="col-md-2 dollar">
+                                <span class="currency">$</span>
+                                <input title="{{sellerOppDet.sellerAUM.alternatives}}"
+                                    class="form-control pl-25 "
+                                    (blur)="checktotalValue('aumalternatives');"
+                                    name="aumalternatives"
+                                    autocomplete="off"
+                                    pattern="^[-+]?(?:[0-9]+,)*[0-9]+(?:\.[0-9]+)?$"
+                                    min="0"
+                                    max="99999999999"
+                                    [(ngModel)]="sellerOppDet.sellerAUM.alternatives"
+                                    (ngModelChange)="valueChanged($event, 'aumalternatives')"
+                                    (keydown)="
+                                    checkValueAum($event, 'aumalternatives')"
+                                
+                                    
+                                />
+                                
+                            </div>
+                            <label class="col-md-2 padding-l-0 custom-label text-right">Other:</label>
+
+                            <div class="col-md-2 dollar">
+                                <span class="currency">$</span>
+                                <input title="{{sellerOppDet.sellerAUM.other}}"
+                                
+                                (blur)="checktotalValue('aumother');"
+                                    class="form-control pl-25"
+                                    name="aumother"
+                                    autocomplete="off"
+                                    pattern="^[-+]?(?:[0-9]+,)*[0-9]+(?:\.[0-9]+)?$"
+                                    min="0"
+                                    max="99999999999"
+                                    [(ngModel)]="sellerOppDet.sellerAUM.other"
+                                    (ngModelChange)="valueChanged($event, 'aumother')"
+                                    (keydown)="
+                                    checkValueAum($event, 'aumother')"
+                                />
+                                
+                            </div>
+
+                               
+                        </div>
+                       
+                    </div>
+                </div>
+                <div class="card margin-top15">
+                    <div class="card-header">GDC</div>
+                    <div class="card-body">
+                        
+                        
+                        <div class="form-group row">
+                            <label class="col-md-2 custom-label text-right">Total GDC:</label>
+
+                            <div class="col-md-2 dollar">
+                                <span class="currency">$</span>
+                                <input title="{{sellerOppDet.sellerGDC.totalGDC}}"
+                                
+                                    (blur)="checktotalValueGDC('totalGDC');"
+                                    class="form-control pl-25"
+                                    [ngClass]="AUMTotalGDC==true?'ng-invalid':''"
+                                    name="totalGDC"
+                                    autocomplete="off"
+                                    required
+                                    pattern="^[-+]?(?:[0-9]+,)*[0-9]+(?:\.[0-9]+)?$"
+                                    min="0"
+                                    max="99999999"
+                                    [(ngModel)]="sellerOppDet.sellerGDC.totalGDC"
+                                    (ngModelChange)="valueChanged($event, 'totalGDC')"
+                                    (keydown)="
+                                    checkValue($event, 'totalGDC')"
+                                />
+                                <div *ngIf="AUMTotalGDC" class="errorMsg text-left mb-3">
+                                    Total GDC must be equal to the sum of the GDC for each product category.
+                                </div>
+                            </div>
+
+                            <label class="col-md-2 custom-label text-right">Recurring Revenue %:</label>
+
+                            <div class="col-md-2 dollar">
+                                <span class="currency currency_right">%</span>
+                                <input
+                                    #reccuringRevenue
+                                    class="form-control"
+                                    autocomplete="off"
+                                    title="{{sellerOppDet.sellerProfile.reccuringRevenue}}"
+                                    type="text"
+                                    pattern="^(100|[1-9]?[0-9])$"
+                                    maxlength="3"
+                                   max="100"
+                                   min="0"
+                                   name="reccuringRevenue"
+                                   [(ngModel)]="sellerOppDet.sellerProfile.reccuringRevenue"
+                                  
+                                    
+                                />
+                                <div *ngIf="reccuringRevenue.classList.contains(
+                                    'ng-invalid'
+                                ) "  class="errorMsg text-center mb-3">
+                                        Please enter a valid percentage value between 0 and 100.
+                                 </div>
+                               
+                               
+                            </div>
+                           
+
+                           
+                            
+                            
+                            <label class="col-md-2 custom-label text-right">Advisory:</label>
+
+                            <div class="col-md-2 dollar">
+                                <span class="currency">$</span>
+                                <input title="{{sellerOppDet.sellerGDC.advisory}}"                                    
+                               
+                                (blur)="checktotalValueGDC('gdcadvisory');"
+                                    class="form-control pl-25"
+                                    name="gdcadvisory"
+                                    autocomplete="off"
+                                    
+                                    pattern="^[-+]?(?:[0-9]+,)*[0-9]+(?:\.[0-9]+)?$"
+                                    min="0"
+                                    max="99999999"
+                                    [(ngModel)]="sellerOppDet.sellerGDC.advisory"
+                                    (ngModelChange)="valueChanged($event, 'gdcadvisory')"
+                                    (keydown)="
+                                    checkValue($event, 'gdcadvisory')"
+                                />
+                                
+                            </div>
+                           
+                           
+                        </div>
+                       
+
+                        <!--<div *ngIf="reccuringRevenue.classList.contains(
+                            'ng-invalid'
+                        ) "  class="error-text text-center mb-3">
+                                Please enter a valid percentage value between 0 and 100.
+                         </div>-->
+
+
+                        <div class="form-group row" [ngClass]="AUMTotalGDC==true?'pd-top15':''"> 
+                            <label class="col-md-2 padding-l-0 custom-label text-right">Mutual Funds:</label>
+
+                            <div class="col-md-2 dollar">
+                                <span class="currency">$</span>
+                                <input title="{{sellerOppDet.sellerGDC.mutualFunds}}"
+                                    class="form-control pl-25"
+                                    name="gdcmutualFunds"
+                                    autocomplete="off"
+                                    pattern="^[-+]?(?:[0-9]+,)*[0-9]+(?:\.[0-9]+)?$"
+                                    min="0"
+                                    max="99999999"
+                                    [(ngModel)]="sellerOppDet.sellerGDC.mutualFunds"
+                                    (ngModelChange)="valueChanged($event, 'gdcmutualFunds')"
+                                    (keydown)="
+                                    checkValue($event, 'gdcmutualFunds')"
+                                    (blur)="checktotalValueGDC('gdcmutualFunds');"
+                               />
+                                
+                            </div>
+
+
+
+                        <!-- <div class="form-group row"  > -->
+                            
+
+
+                            <label class="col-md-2 custom-label text-right">Annuities:</label>
+                            <div class="col-md-2 dollar">
+                                <span class="currency">$</span>
+                                <input title="{{sellerOppDet.sellerGDC.annuities}}"
+                                class="form-control pl-25"
+                                name="gdcannuities"
+                                autocomplete="off"
+                                pattern="^[-+]?(?:[0-9]+,)*[0-9]+(?:\.[0-9]+)?$"
+                                min="0"
+                                max="99999999"
+                                [(ngModel)]="sellerOppDet.sellerGDC.annuities"
+                                (ngModelChange)="valueChanged($event, 'gdcannuities')"
+                                (keydown)="
+                                checkValue($event, 'gdcannuities')"
+                                (blur)="checktotalValueGDC('gdcannuities');"
+                                
+                            />
+                            </div>
+                          
+                            <label class="col-md-2 padding-l-0 custom-label text-right">Insurance:</label>
+
+                            <div class="col-md-2 dollar">
+                                <span class="currency">$</span>
+                                <input title="{{sellerOppDet.sellerGDC.insurance}}"
+                                    class="form-control pl-25"
+                                    autocomplete="off"
+                                    name="gdcinsurance"
+                                    pattern="^[-+]?(?:[0-9]+,)*[0-9]+(?:\.[0-9]+)?$"
+                                    min="0"
+                                    max="99999999"
+                                    [(ngModel)]="sellerOppDet.sellerGDC.insurance"
+                                    (ngModelChange)="valueChanged($event, 'gdcinsurance')"
+                                    (keydown)="
+                                    checkValue($event, 'gdcinsurance')"
+                                    (blur)="checktotalValueGDC('gdcinsurance');"
+                                    
+                                />
+                                
+                            </div>
+ 
+                           
+                            
+                               
+                        </div>
+                        <div class="form-group row m-b-0">
+                            <label class="col-md-2 custom-label text-right">Alternatives:</label>
+
+                            <div class="col-md-2 dollar">
+                                <span class="currency">$</span>
+                                <input title="{{sellerOppDet.sellerGDC.alternatives}}"
+                                    class="form-control pl-25"
+                                    name="gdcalternatives"
+                                    autocomplete="off"
+                                    pattern="^[-+]?(?:[0-9]+,)*[0-9]+(?:\.[0-9]+)?$"
+                                    min="0"
+                                    max="99999999"
+                                    [(ngModel)]="sellerOppDet.sellerGDC.alternatives"
+                                    (ngModelChange)="valueChanged($event, 'gdcalternatives')"
+                                    (keydown)="
+                                    checkValue($event, 'gdcalternatives')"
+                                    (blur)="checktotalValueGDC('gdcalternatives');"
+                                    
+                                />
+                                
+                            </div>
+                            
+                            <label class="col-md-2 custom-label text-right">Financial Planning:</label>
+                            <div class="col-md-2 dollar">
+                                <span class="currency">$</span>
+                                <input title="{{sellerOppDet.sellerGDC.financialPlanning}}"
+                                class="form-control pl-25"
+                                name="gdcfinancialPlanning"
+                                autocomplete="off"
+                                pattern="^[-+]?(?:[0-9]+,)*[0-9]+(?:\.[0-9]+)?$"
+                                min="0"
+                                max="99999999"
+                                [(ngModel)]="sellerOppDet.sellerGDC.financialPlanning"
+                                (ngModelChange)="valueChanged($event, 'gdcfinancialPlanning')"
+                                (keydown)="
+                                checkValue($event, 'gdcfinancialPlanning')"
+                                (blur)="checktotalValueGDC('gdcfinancialPlanning');"
+                                
+                            />
+                            </div>
+                            
+                            <label class="col-md-2 padding-l-0 custom-label text-right">Other:</label>
+
+                            <div class="col-md-2 dollar">
+                                <span class="currency">$</span>
+                                <input title="{{sellerOppDet.sellerGDC.other}}"
+                                    class="form-control pl-25"
+                                    name="gdcother"
+                                    autocomplete="off"
+                                    pattern="^[-+]?(?:[0-9]+,)*[0-9]+(?:\.[0-9]+)?$"
+                                    min="0"
+                                    max="99999999"
+                                    [(ngModel)]="sellerOppDet.sellerGDC.other"
+                                    (ngModelChange)="valueChanged($event, 'gdcother')"
+                                    (keydown)="checkValue($event, 'gdcother')"
+                                    (blur)="checktotalValueGDC('gdcother');"
+                                />
+                                
+                            </div>
+ 
+                            
+                               
+                        </div>
+                    </div>
+                </div>
+                <div class="card margin-top15">
+                    <div class="card-header">Client Details</div>
+                    <div class="card-body">
+                        
+                        <div class="form-group row">
+                            <label class="col-md-2 custom-label text-right">Average Client Age:</label>
+                            <div class="col-md-2 dollar">
+                                <input title="{{sellerOppDet.sellerClientDetail.averageClientAge}}"
+                                type="text"
+                                name="averageClientAge"
+                                class="form-control"
+                                autocomplete="off"
+                                placeholder="Years"
+                                min="1"
+                                max="200"
+                                step="1"
+                                pattern="^([1-9]|[1-9][0-9]|[1][0-9][0-9]|20[0-0])$"
+                                maxlength="3"
+                                [(ngModel)]="sellerOppDet.sellerClientDetail.averageClientAge"
+                            />
+                            </div> 
+                            
+                            <label class="col-md-3 custom-label text-right">AUM from Clients Aged 70+:</label>
+
+                            <div class="col-md-1 dollar">
+                                <span class="currency currency_right">%</span>
+                                <input title="{{sellerOppDet.sellerClientDetail.aumFromClients70Plus}}"
+                                    class="form-control "
+                                    autocomplete="off"
+                                    name="aumFromClients70Plus"
+                                    min="0"
+                                    max="100"
+                                    step="1"
+                                    pattern="^(100|[1-9]?[0-9])$"
+                                    maxlength="3"
+                                    [(ngModel)]="sellerOppDet.sellerClientDetail.aumFromClients70Plus"
+                                    #aumFromClients70Plus
+                                    
+                                />
+                                <div *ngIf="aumFromClients70Plus.classList.contains(
+                                    'ng-invalid'
+                                ) "  class="errorMsg text-center mb-3">
+                                        Please enter a valid percentage value between 0 and 100.
+                            </div>
+                                
+                            </div>
+                           
+                            <label class="col-md-3 padding-l-0 custom-label text-right">Clients with $1Million+ AUM:</label>
+
+                            <div class="col-md-1">
+                               
+                                <input title="{{sellerOppDet.sellerClientDetail.clientsWith1MillionPlusAUM}}"
+                                    class="form-control"
+                                    autocomplete="off"
+                                    name="clientsWith1MillionPlusAUM"
+                                    placeholder="0000"
+                                    maxlength="4"
+                                    pattern="^[0-9]{1,10}$"
+                                    [(ngModel)]="sellerOppDet.sellerClientDetail.clientsWith1MillionPlusAUM"
+                                />
+                                
+                            </div>
+
+                               
+                        </div>
+                        
+                        
+                        <div class="form-group row">
+                            <label class="col-md-2 custom-label text-right">Average Client Meeting Cadence:</label>
+                            <div class="col-md-2">
+                                <input title="{{sellerOppDet.sellerClientDetail.averageClientMeetingCadence}}"
+                                class="form-control"
+                                    autocomplete="off"
+                                    name="averageClientMeetingCadence"
+                                    placeholder="# of meeting per year"
+                                    maxlength="2"
+                                    pattern="^(99|[1-9]?[0-9])$"
+                                    [(ngModel)]="sellerOppDet.sellerClientDetail.averageClientMeetingCadence"
+                                
+                            />
+                            </div> 
+                            <label class="col-md-3 custom-label text-right">Households:</label>
+
+                            <div class="col-md-1">
+                                <input title="{{sellerOppDet.sellerClientDetail.households}}"
+                                    class="form-control"
+                                    autocomplete="off"
+                                    name="households"
+                                    placeholder="0000"
+                                    maxlength="4"
+                                    pattern="^[0-9]{1,10}$"
+                                    [(ngModel)]="sellerOppDet.sellerClientDetail.households"
+                                />
+                                
+                            </div>
+                            <label class="col-md-3 padding-l-0 custom-label text-right">Total Annual Financial Plans:</label>
+
+                            <div class="col-md-1">
+                                <input title="{{sellerOppDet.sellerClientDetail.totalAnnualFinancialPlans}}"
+                                class="form-control"
+                                autocomplete="off"
+                                name="totalAnnualFinancialPlans"
+                                placeholder="0000"
+                                maxlength="4"
+                                pattern="^[0-9]{1,10}$"
+                                [(ngModel)]="sellerOppDet.sellerClientDetail.totalAnnualFinancialPlans"
+                            />
+                            
+                                
+                            </div>
+
+                               
+                        </div>
+                        <div class="form-group row m-b-0">
+                            <label class="col-md-2 custom-label text-right">CRM Software:</label>
+                            <div class="col-md-2">
+                                <input title="{{sellerOppDet.sellerClientDetail.crmSoftware}}"
+                                class="form-control"
+                                autocomplete="off"
+                                name="crmSoftware"
+                                placeholder="Ex: Redtail"
+                                maxlength="30"
+                                type="text"
+                                
+                                [(ngModel)]="sellerOppDet.sellerClientDetail.crmSoftware"
+                            />
+                            <span class="subtext-form">Maximum 30 characters</span>
+                            </div> 
+                            
+                               
+                        </div>
+                    </div>
+               
+                    
+                </div>
+                <div class="card margin-top15">
+                    <div class="card-header">Business Details</div>
+                    <div class="card-body">
+                        <div *ngIf="checkboxLength==true" class="error-text mb-3 text-center">
+                            The maximum number of selections allowed is 8
+                         </div>
+                        <div class="form-group row">
+                            <label class="col-md-2 custom-label text-right">Number of Employees:</label>
+
+                            <div class="col-md-2">
+                                
+                                <input
+                                    #numberOfEmployees
+                                    title="{{sellerOppDet.sellerBusinessDetail.numberOfEmployess}}"
+                                    class="form-control"
+                                    name="numberOfEmployess"
+                                    autocomplete="off"
+                                    placeholder="000"
+                                    maxlength="3"
+                                    [(ngModel)]="sellerOppDet.sellerBusinessDetail.numberOfEmployess"
+                                    (ngModelChange)="
+                                    valueChanged($event, 'numberOfEmployess'); onModelChange($event)
+                                "
+                                (keydown)="
+                                        checkValue($event, 'numberOfEmployess')
+                                    "
+
+                                    
+                                />
+                                
+                            </div>
+                            <label class="col-md-2 padding-l-0 custom-label text-right">Employee Licenses:</label>
+
+                            <div class="col-md-2 " id="dropdownParent">
+                               
+                                    <div class="dropdownCheckbox" (click)="openClosedropdown()">
+                                        <span id="dropdownValue" [ngClass]="showLicenceValue == 'Series 7' ? 'font-italic' : ''"  title="{{showLicenceValue}}">{{showLicenceValue}}</span>
+                                        <i class="fa fa-caret-up"></i>
+                                        <i class="fa fa-caret-down"></i>
+                                    </div>
+
+                                    <div #dropdownDiv class="dropdownDiv" [hidden]="!isShowDiv">
+                                       
+                                        
+                                         
+                                             <h6>Common</h6>
+                                             <ul>
+                                                <li *ngFor="let eLicenceC of epLicence.Common; index as i">
+                                                    <input type="checkbox" name="emplyeeLicence[]" [checked]="eLicenceC.ischeck"  (change)="addValue($event);" (click)="checkLength($event)"   value="Common-{{eLicenceC.value}}">&nbsp;{{eLicenceC.value}}
+                                                </li>
+                                             </ul>
+
+                                        
+                                        
+                                            <h6>Unique</h6>
+                                            <ul>
+                                               <li *ngFor="let eLicenceU of epLicence.Unique; index as i">
+                                                   <input type="checkbox" name="emplyeeLicence[]" [checked]="eLicenceU.ischeck" (change)="addValue($event);" (click)="checkLength($event)"   value="Unique-{{eLicenceU.value}}">&nbsp;{{eLicenceU.value}}
+                                                </li>
+                                            </ul>
+
+                                       
+
+                                    </div>
+
+                                
+                            </div>
+                            <label class="col-md-2 custom-label text-right pr-0 padding-l-0">Operating Expense Ratio:</label>
+
+                            <div class="col-md-2 dollar">
+                                <span class="currency currency_right">%</span>
+                                <input
+                                    #operatingExpenseRatio
+                                    class="form-control"
+                                    autocomplete="off"
+                                    title="{{sellerOppDet.sellerBusinessDetail.operatingExpenseRatio}}"
+                                    type="text"
+                                    pattern="^(100|[1-9]?[0-9])$"
+                                    maxlength="3"
+                                   max="100"
+                                   min="0"
+                                   name="operatingExpenseRatio"
+                                   [(ngModel)]="sellerOppDet.sellerBusinessDetail.operatingExpenseRatio"
+                                  
+                                    
+                                />
+                                <div *ngIf="operatingExpenseRatio.classList.contains(
+                                    'ng-invalid'
+                                ) "  class="errorMsg text-right mb-3">
+                                        Please enter a valid percentage value between 0 and 100.
+                            </div>
+                               
+                               
+                            </div>
+                            
+                           
+                            
+                        </div>
+                       
+                       
+                       
+                        <div class="form-group row">
+                          
+                            <label class="col-md-2 padding-l-0 custom-label text-right">Number of Owners:</label>
+
+                            <div class="col-md-2 ">
+                                
+                                <input title="{{sellerOppDet.sellerBusinessDetail.numberOfOwners}}"
+                                    #numberOfOwners
+                                    class="form-control"
+                                    name="numberOfOwners"
+                                    autocomplete="off"
+                                    placeholder="000"
+                                    maxlength="3"
+                                    [(ngModel)]="sellerOppDet.sellerBusinessDetail.numberOfOwners"
+                                    (ngModelChange)="
+                                    valueChanged($event, 'numberOfOwners'); onModelChange($event)
+                                "
+                                (keydown)="
+                                        checkValue($event, 'numberOfOwners')
+                                    "
+
+                                    
+                                />
+                                
+                            </div>
+ 
+                            <label class="col-md-2 custom-label text-right padding-l-0">Owners Compensation:</label>
+
+                            
+                               
+                            <div class="col-md-2 dollar">
+                                <span class="currency">$</span>
+                                <input
+                                    class="form-control pl-25"
+                                    autocomplete="off"
+                                    pattern="^[-+]?(?:[0-9]+,)*[0-9]+(?:\.[0-9]+)?$"
+                                    title="{{sellerOppDet.sellerBusinessDetail.ownersCompensation}}"
+                                    placeholder="Owner’s Salary"
+                                    name="ownersCompensation"
+                                    #ownersCompensation
+                                    [(ngModel)]="sellerOppDet.sellerBusinessDetail.ownersCompensation"
+                                    type="text"
+                                    min="0"
+                                    max="99999999"
+                                    (ngModelChange)="
+                                    valueChanged($event, 'ownersCompensation'); onModelChange($event)
+                                "
+                                (keydown)="
+                                        checkValue($event, 'ownersCompensation')
+                                    "
+                                
+                                [ngClass]="[
+                                sellerOppDet.sellerBusinessDetail.ownersCompensation != null &&
+                                sellerOppDet.sellerBusinessDetail.ownersCompensation == null
+                                        ? 'invalid'
+                                        : ''
+                                ]"
+                            />
+                           
+                                
+                            </div>
+                            
+                            <label class="col-md-2 custom-label text-right pr-0">Services Offered:</label>
+                            <div class="col-md-2">
+                                
+                            <input
+                            class="form-control"
+                            name="servicesOffered"
+                            title="{{sellerOppDet.sellerBusinessDetail.servicesOffered}}"
+                            [(ngModel)]="sellerOppDet.sellerBusinessDetail.servicesOffered"
+                            autocomplete="off"
+                            maxlength="60"
+                            placeholder="Ex: CPA Services"/>
+                            <span class="subtext-form">Maximum 60 Characters </span>
+                            </div>
+                               
+                        </div>
+                        <div class="form-group row m-b-0">
+                            
+                            <label class="col-md-2 padding-l-0 custom-label text-right">Primary Custodian:</label>
+                            <div class="col-md-2">
+                                
+                                <input
+                                class="form-control"
+                                name="primaryCustodian"
+                                title="{{sellerOppDet.sellerBusinessDetail.primaryCustodian}}"
+                                [(ngModel)]="sellerOppDet.sellerBusinessDetail.primaryCustodian"
+                                autocomplete="off"
+                                maxlength="30"
+                                placeholder="Primary Custodian"/>
+                                <span class="subtext-form">Maximum 30 Characters</span>
+                                
+                                </div>
+
+                            <label class="col-md-2 padding-l-0 custom-label text-right">Primary Broker Dealer:</label>
+
+                            <div class="col-md-2 dollar">
+                                
+                                <input
+                                    class="form-control"
+                                    name="primaryBrokerDealer"
+                                    title="{{sellerOppDet.sellerBusinessDetail.primaryBrokerDealer}}"
+                                    [(ngModel)]="sellerOppDet.sellerBusinessDetail.primaryBrokerDealer"
+                                    autocomplete="off"
+                                    placeholder="Primary Broker Dealer"
+                                   
+                                    maxlength="30"
+                                />
+                                <span class="subtext-form">Maximum 30 Characters</span>
+                                
+                            </div>
+                            <label class="col-md-2 padding-l-0 custom-label text-right pr-0 padding-l-0">Financial Planning Software:</label>
+
+                            <div class="col-md-2">
+                                
+                                <input title="{{sellerOppDet.sellerBusinessDetail.financialPlanningSoftware}}"
+                                    class="form-control"
+                                    name="financialPlanningSoftware"
+                                    [(ngModel)]="sellerOppDet.sellerBusinessDetail.financialPlanningSoftware"
+                                    autocomplete="off"
+                                    placeholder="Ex: Money Guide Pro"
+                                   
+                                    maxlength="30"
+                                />
+                                <span class="subtext-form">Maximum 30 Characters</span>
+                                
+                            </div>
+ 
+                            
+                               
+                        </div>
+                    </div>
+                </div>
+                <div class="card margin-top15">
+                    <div class="card-header">Preferred Buyer Characteristics</div>
+                    <div class="card-body">
+                        
+                        <div class="form-group row">
+                            <label class="col-md-2 custom-label text-right">Preferred Deal Structure:</label>
+
+                            <div class="col-md-2 dollar">
+                                
+                                <select title="{{preDealStructureObj[sellerOppDet.sellerBusinessDetail.preferredDealStructureCd]}}" [ngClass]="sellerOppDet.sellerBusinessDetail.preferredDealStructureCd == '' ? 'font-italic' : ''"
+                                        name="preferredDealStructureCd" 
+                                        class="form-control custom-select"
+                                        [(ngModel)]="sellerOppDet.sellerBusinessDetail.preferredDealStructureCd"  (ngModelChange)="onModelChange($event)"
+                                        >   
+                                        <option value="">Select</option>
+                                        <option value="1">Immediate Transition < 3 Months</option>
+                                        <option value="2">Sell and Stay < 12 Months</option>
+                                        <option value="3"> Sell and Service > 12 Months</option>
+                                        
+                                    </select>
+                                
+                            </div>
+                            <label class="col-md-2 padding-l-0 custom-label pr-0 text-right">Preferred Down Payment:</label>
+
+                            <div class="col-md-2 dollar">
+                                <span class="currency currency_right">%</span>
+                                <input
+                                title="{{sellerOppDet.sellerBusinessDetail.preferredDownPayment}}"
+                                class="form-control"
+                                name="preferredDownPayment"
+                                autocomplete="off"
+                                min="0"
+                                max="100"
+                                step="1"
+                                pattern="^(100|[1-9]?[0-9])$"
+                                maxlength="3"
+                                [(ngModel)]="sellerOppDet.sellerBusinessDetail.preferredDownPayment"
+                                #preferredDownPayment
+                            />
+
+                            <div *ngIf="preferredDownPayment.classList.contains(
+                            'ng-invalid'
+                        ) "  class="errorMsg text-center mb-3">
+                                Please enter a valid percentage value between 0 and 100.
+                                </div>
+                          
+                            </div>
+                            <label class="col-md-2 custom-label text-right pr-0 padding-l-0">Professional Designations:</label>
+                            <div class="col-md-2" >                             
+                                <input
+                                title="{{sellerOppDet.sellerBusinessDetail.professionalDesignations}}"
+                                class="form-control" 
+                                name="professionalDesignations"
+                                autocomplete="off"
+                                maxlength="30"
+                                placeholder="Ex: CFP, CPA, CKA, CFA"
+                                [(ngModel)]="sellerOppDet.sellerBusinessDetail.professionalDesignations"
+                            />
+                            <span class="subtext-form">Maximum 30 Characters</span>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group row">
+                          
+                            <label class="col-md-2 padding-l-0 custom-label text-right">Target Close Date:</label>
+
+                            <div class="col-md-2 ">
+                                
+                                <input title="{{sellerOppDet.sellerBusinessDetail.targetCloseDate}}"
+                                    class="form-control"
+                                    autocomplete="off"
+                                    name="targetCloseDate"
+                                    maxlength="30"
+                                    placeholder="MM/DD/YY, Month, Next 6 Months"
+                                    [(ngModel)]="sellerOppDet.sellerBusinessDetail.targetCloseDate"
+                                    
+                                />
+                                <span class="subtext-form">Maximum 30 Characters</span>
+                                
+                            </div>
+ 
+                            <label class="col-md-2 custom-label text-right padding-l-0">Buyer Industry Experience:</label>
+
+                            <div class="col-md-2 dollar">
+                               
+                                <select title="{{sellerOppDet.sellerBusinessDetail.buyerIndustryExperienceCd}}" [ngClass]="sellerOppDet.sellerBusinessDetail.buyerIndustryExperienceCd == '' ? 'font-italic' : ''"
+                                        name="buyerIndustryExperienceCd" 
+                                        class="form-control custom-select"
+                                        [(ngModel)]="sellerOppDet.sellerBusinessDetail.buyerIndustryExperienceCd"  (ngModelChange)="onModelChange($event)"
+                                        >   
+                                        <option value="">Select</option>
+                                        <option value="1">1-5 years</option>
+                                        <option value="2">6-10 years</option>
+                                        <option value="3"> 11-20 years</option>
+                                        <option value="4"> 20+ years</option>
+                                        
+                                    </select>
+                                
+                            </div>
+                            <label class="col-md-2 custom-label text-right pr-0">Retain Employees:</label>
+                            <div class="col-md-2 pl-25 custom-radio">                                
+                                <div class="checkBoxContainer" *ngFor = "let emp of retainEmpCB; let i=index;">
+                                   
+                                    <input type="checkbox" name="checkbox{{ i }}" attr.id="checkBox{{i}}" [(ngModel)]="emp.value" [value]="emp.value" [disabled]="emp.disabled" (change)="changeCBValue($event, emp)">
+                                    <span>{{emp.name}}</span>
+                                </div>
+                            
+                            </div>
+                               
+                        </div>
+                        
+                    </div>
+                </div>
+               
+                
+               
+                <div class="row">
+                    <div class="col-md-12 pd-right72 margin-top15 text-right pb-3">
+                        
+                        <button class="btn cancel-btn" (click)="onCancel()" >Cancel</button>
+                        <button  class="btn custom-primary margin-left5 button-color" type="button" (click)="openConfirmation()"
+                         [disabled]="!sellerOpportunityForm.form.valid || AUMTotal || AUMTotalGDC">
+                         
+                         Save
+                        </button>
+
+                    </div>
+                </div>
+				
+            </form>
+        </div>
+    </div>
+</div>

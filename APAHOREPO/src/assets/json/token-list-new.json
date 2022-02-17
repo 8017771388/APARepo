@@ -1,0 +1,22 @@
+[
+    {
+        "LPLTokenId": "375de4f9-5112-4979-b279-0001af2b58af",
+        "TokenOriginalValue": "46051046",
+        "TokenOriginalType": "LPL ACCOUNT NUMBER",
+        "TokenMaskedValue": "****1046",
+        "TokenCreatedTime": "",
+        "TokenUpdatedTime": "",
+        "LastUpdatedUser": "SGOTUR",
+        "IsActive": false
+    },
+    {
+        "LPLTokenId": "375de4f9-5112-4979-b279-0001af2b58af",
+        "TokenOriginalValue": "46051046",
+        "TokenOriginalType": "LPL ACCOUNT NUMBER",
+        "TokenMaskedValue": "****1046",
+        "TokenCreatedTime": "",
+        "TokenUpdatedTime": "",
+        "LastUpdatedUser": "SGOTUR",
+        "IsActive": false
+    }
+] 

@@ -1,0 +1,70 @@
+.advisor-subscription{
+    input{
+        font-size: 14px;
+    }
+    .custom-check{
+        margin-top:7px;
+    }
+    .pl-16{
+        padding-left: 16px;
+    }
+    .custom-input-group {
+        width: 213px;
+    }
+    .custom-header-card{
+        border-radius:5px 5px 0 0;
+        -webkit-border-radius:5px 5px 0 0;
+        background:#a2a2a2;
+        border:none;
+        .card-header{
+            font-size:16px;
+            color:#fff;
+            font-family: "roboto-condensed";
+            border:none;
+        }
+    }
+    .card-header{
+        font-size: 16px;
+        font-family: "roboto-condensed";
+    }
+    .card-body{
+        max-height: 200px;
+        overflow-y: auto;
+        overflow-x: hidden;
+        
+    }
+    .contact-body{
+        min-height:150px;
+    }
+    .custom-label{
+        padding-top: 5px;
+        font-weight: bold;
+        font-family: "roboto";
+        font-size:12px;
+        text-align: right;
+    }
+    .span-space{
+        display:inline-block;
+        margin-top:2px;
+    }
+    .dollar{
+        position: relative;
+        .currency{
+            position: absolute;
+            z-index: 999;
+            padding: 8px;
+        }
+    }
+}
+.textboxwidth{
+    width: 200px !important;
+}
+
+.ng-touched{
+    &.error-class{
+        border: 1px solid red;
+    }
+    &.ng-invalid{
+        border: 1px solid red;
+    }
+}

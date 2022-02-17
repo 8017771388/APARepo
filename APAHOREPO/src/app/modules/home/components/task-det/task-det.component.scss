@@ -1,0 +1,26 @@
+.box-container{
+    border: 1px solid #ccc;
+    padding: 0.9rem;
+    -webkit-box-shadow: 1px 1px 3px 0px rgba(130,126,130,1);
+    -moz-box-shadow: 1px 1px 3px 0px rgba(130,126,130,1);
+    box-shadow: 1px 1px 3px 0px rgba(130,126,130,1);
+    min-height: 23rem;
+}
+
+.custom-btn{
+    font-size: 14px;
+}
+
+.table-heading{
+    float: left;
+    font-size: 16px;
+    vertical-align: middle;
+    line-height: 1.7;
+    font-weight: 600;
+}
+
+.txt-area{
+    width: 31.5rem;
+    height: 2.3rem;
+    resize: none;
+}

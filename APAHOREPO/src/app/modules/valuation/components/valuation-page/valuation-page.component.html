@@ -1,0 +1,66 @@
+<div class="container-fluid">
+    <div class="row">
+            <div class="col-sm-12">
+                <dx-data-grid
+                    #gridContainer1
+                    id="gridContainer1"
+                    [dataSource]="dataSource"
+                    [masterDetail]="{ enabled: false, template: 'detail' }"
+                    [showColumnLines]="true"
+                    [showRowLines]="true"
+                    [showBorders]="true"
+                    [rowAlternationEnabled]="true"
+                    [cacheEnabled]="false"
+                >
+                    <dxi-column
+                        dataField="buyer"
+                        caption="Buyer"
+                        [width]="500"
+                        [allowSorting]="true"
+                    >
+                    </dxi-column>
+                    <dxi-column
+                        dataField="seller"
+                        caption="Seller"
+                        [width]="500"
+                        [allowSorting]="true"
+                    >
+                    </dxi-column>
+                    <dxi-column
+                        dataField="valuationProfile"
+                        caption="Valuation Profile"
+                        [width]="400"
+                        [allowSorting]="true"
+                        cellTemplate="ValuationProfile"
+                    ></dxi-column>
+                    <div *dxTemplate="let data of 'ValuationProfile'">
+                        <a 
+                        [routerLink]="[
+                            '/valuation/valuation-details/'
+                        ]"
+                        > <div title="{{data.text}}" class="progress-bar-contatainer" >
+                            <div class="progress-bar" [ngStyle]="{'width' : data.text ? data.text+'%' : '0%'}" ></div>
+                        </div> 
+                        {{data.text ? data.text : 0}}% </a>                        
+                    </div>                    
+                    <dxi-column
+                        caption="Action"
+                        [width]="300"
+                        [allowFiltering]="false"
+                        [allowSorting]="false"
+                        cellTemplate="Action"
+                    ></dxi-column>
+                    <div *dxTemplate="let data of 'Action'">
+                        <a                                   
+                            class="link-btn"
+                            [routerLink]="[
+                                '/valuation/valuation-details/'
+                            ]"
+                            >Run Valuation</a
+                        >
+                        
+                    </div>
+                </dx-data-grid>
+            </div>
+        </div>
+</div>

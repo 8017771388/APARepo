@@ -1,0 +1,80 @@
+#loading-overlay {
+    background-color: #EEE;
+    opacity: 0.4;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 99998;
+}
+.pageLoading {
+    background: rgba(255, 255, 255, 0.4);
+    bottom: 0;
+    display: block;
+    left: 0;
+    position: fixed;
+    right: 0;
+    top: 0;
+    z-index: 100000;
+}
+
+    .pageLoading > #page-loading,
+    .pageLoading > .loading {
+        height: 60px;
+        left: 50%;
+        margin: -30px 0 0 -30px;
+        position: absolute;
+        top: 50%;
+        width: 60px;
+    }
+
+.loading {
+    -webkit-animation: loading-rotation 0.6s infinite linear;
+    -moz-animation: loading-rotation 0.6s infinite linear;
+    -o-animation: loading-rotation 0.6s infinite linear;
+    animation: loading-rotation 0.6s infinite linear;
+    border-style: solid;
+    border-color: #252f3c rgba(200, 203, 206, 0.5) rgba(200, 203, 206, 0.5) rgba(200, 203, 206, 0.5);
+    border-radius: 100%;
+    display: block;
+}
+@-webkit-keyframes loading-rotation {
+    from {
+        -webkit-transform: rotate(0deg);
+    }
+
+    to {
+        -webkit-transform: rotate(359deg);
+    }
+}
+
+@-moz-keyframes loading-rotation {
+    from {
+        -moz-transform: rotate(0deg);
+    }
+
+    to {
+        -moz-transform: rotate(359deg);
+    }
+}
+
+@-o-keyframes loading-rotation {
+    from {
+        -o-transform: rotate(0deg);
+    }
+
+    to {
+        -o-transform: rotate(359deg);
+    }
+}
+
+@keyframes loading-rotation {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(359deg);
+    }
+}

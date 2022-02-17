@@ -1,0 +1,26 @@
+
+.dx-template-wrapper .link-btn{
+    color: #3567f1;
+    cursor: pointer;
+    text-decoration: underline;
+}
+.progress-bar-contatainer {
+    width: 57%;
+    padding: 3px 3px;
+    height: 10px;
+    background: #ccc;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    display: inline-block;
+    margin-right: 5px;
+    cursor: pointer;
+
+    .progress-bar {
+        height: 4px;
+        background: #384455;
+        border-radius: 5px;
+        -moz-border-radius: 5px;
+        -webkit-border-radius: 5px;
+    }
+}

@@ -1,0 +1,20 @@
+.ng-touched {
+    &.error-class {
+        border: 1px solid red;
+    }
+    &.ng-invalid {
+        border: 1px solid red;
+    }
+}
+form{
+    &.ng-touched.ng-invalid{
+        border:none;
+    }
+    .ng-valid[required], .ng-valid.required  {
+        border-left: 5px solid #42A948; /* green */
+    }
+    
+    .ng-invalid:not(form), .ng-valid.ng-invalid  {
+        border-left: 5px solid #a94442; /* red */
+    }
+}

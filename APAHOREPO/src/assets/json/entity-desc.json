@@ -1,0 +1,37 @@
+[{
+    "EntityDescription": "LPL ACCOUNT NUMBER",
+"EntityMaxLength": 9,
+"EntityMinLength": 8,
+"Id": 1,
+"IgnoreTenantCode": false,
+"NoOfCharsToShow": 4,
+"Operation": null
+},
+{
+    "EntityDescription": "REP ID",
+"EntityMaxLength": 4,
+"EntityMinLength": 4,
+"Id": 2,
+"IgnoreTenantCode": false,
+"NoOfCharsToShow": 2,
+"Operation": null
+},
+{
+    "EntityDescription": "SSN",
+"EntityMaxLength": 9,
+"EntityMinLength": 9,
+"Id": 3,
+"IgnoreTenantCode": true,
+"NoOfCharsToShow": 4,
+"Operation": null
+},
+{
+    "EntityDescription": "ABC",
+"EntityMaxLength": 4,
+"EntityMinLength": 1,
+"Id": 9,
+"IgnoreTenantCode": false,
+"NoOfCharsToShow": 0,
+"Operation": null
+}
+]

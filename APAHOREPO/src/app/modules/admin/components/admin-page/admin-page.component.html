@@ -1,0 +1,18 @@
+<div class="admin-container container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <tabset  (click)="adminRoute($event)">
+                <tab heading="Manage Deal">
+                    <div class="tab-container" *ngIf="currentTab=='AdvisorProfile'">
+                          <advisor-profile></advisor-profile>
+                    </div>
+                </tab>
+                <!--<tab heading="Manage CFO Home Profile">
+                    <div class="tab-container" *ngIf="currentTab=='HomeProfile'">
+                             <app-home-profile></app-home-profile>
+                    </div>
+                </tab>-->
+            </tabset>
+        </div>
+    </div>
+</div>

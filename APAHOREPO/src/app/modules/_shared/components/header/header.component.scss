@@ -1,0 +1,92 @@
+.navbar {
+    .header-navbar {
+        /*width:50%*/
+    }
+    .header-notification {
+        width: 50%;
+        .header-notification-icon {
+            padding-right: 15px;
+            margin-top: 10px;
+        }
+    }
+    .navbar-brand {
+        font-size: 16px;
+        font-family: "roboto_slab", sans-serif;
+    }
+    &.custom-navbar {
+        margin-top: 50px;
+        padding-bottom: 0;
+        border-bottom: 1px solid #efefef;
+       // box-shadow: -2px 1px 5px 0 rgba(0, 0, 0, 0.1);
+       // -webkit-box-shadow: -2px 1px 5px 0 rgba(0, 0, 0, 0.1);
+       &.sub-menu{
+             box-shadow: -2px 1px 5px 0 rgba(0, 0, 0, 0.1);
+             -webkit-box-shadow: -2px 1px 5px 0 rgba(0, 0, 0, 0.1);
+       }
+        .nav-item {
+            padding: 0 15px 0 0;
+            &.active {
+                .nav-link {
+                    background: transparent;
+                    border-bottom: 3px solid #0076c8;
+                    font-family: "Roboto Regular", Helvetica, Arial, sans-serif;
+                }
+            }
+        }
+        .nav-link {
+            border-bottom: 3px solid transparent;
+            color: #444;
+            font-size: 16px;
+            padding: 19px 0 11px 0;
+            line-height: 17px;
+            font-family: "Roboto Regular", Helvetica, Arial, sans-serif;
+        }
+    }
+    .user-info {
+        font-size: 13px;
+        font-family: "roboto_slab", sans-serif;
+        color: #fff;
+    }
+    .avatar {
+        width: 30px;
+        height: 30px;
+    }
+    .notification {
+        position: absolute;
+        font-size: 18px;
+        float: right;
+        padding-left: 20px;
+        right: 30px;
+        .fa {
+            color: #008ff5;
+            cursor: pointer;
+        }
+        span {
+            position: absolute;
+            font-size: 12px;
+            left: 25px;
+            top: -11px;
+            color: #008ff5;
+            padding: 0;
+            width: 18px;
+            border-radius: 15px;
+            -moz-border-radius: 15px;
+            -webkit-border-radius: 15px;
+            text-align: center;
+            border: 1px solid #008ff5;
+            background-color: white;
+        }
+        &.deactive {
+            .fa {
+                color: #ccc;
+            }
+        }
+    }
+}
+.margintop0 {
+    margin-top: 0px !important;
+}
+
+.fontweight700 {
+    font-weight: 700;
+}

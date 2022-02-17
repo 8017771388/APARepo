@@ -1,0 +1,597 @@
+<div class="row mt-4">
+    <div class="col-12 pl-4">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb create-profile-breadcrumb">
+                <li class="breadcrumb-item">
+                    <strong>
+                        <a (click)="onCancel()" href="javascript:void(0)">Assurance Plan</a>
+                    </strong>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">
+                    {{ pageHeading }}
+                </li>
+            </ol>
+        </nav>
+    </div>
+    <div class="col-12">
+        <div class="advisor-subscription create-profile container-fluid">
+            <!-- <div class="pl-2">
+                <h5>{{ pageHeading }}</h5>
+
+            </div> -->
+            <form #profileForm="ngForm">
+                <div class="card margin-top15">
+                    <div class="card-header">Advisor</div>
+                    <div class="card-body">
+                        <div class="form-group row">
+                            <label class="col-md-2 custom-label">Master Rep ID:</label>
+
+                            <div class="col-md-2">
+                                <input [(ngModel)]="searchAdvisor" [ngClass]="{
+                                        'ng-invalid':
+                                            noResult || searchAdvisor == '',
+                                        invalid: profileExists
+                                    }" name="repId" autocomplete="off" required typeaheadOptionField="repIdWithName"
+                                    [typeahead]="dataSource" [typeaheadAsync]="true" class="form-control"
+                                    placeholder="Search Master Rep ID" (typeaheadOnSelect)="
+                                        typeaheadOnSelectAdvisor($event)
+                                    " (typeaheadNoResults)="
+                                        typeaheadNoResults($event)
+                                    " (typeaheadLoading)="
+                                        changeTypeaheadLoading($event)
+                                    " [typeaheadMinLength]="0" (typeaheadOnBlur)="typeaheadOnBlur($event)" [disabled]="
+                                        profileDet.advisorProfile.profileID > 0
+                                    " (ngModelChange)="onModelChange($event)" />
+                                <div *ngIf="typeaheadLoading" class="margin-top5">
+                                    <button class="btn btn-primary" disabled>
+                                        <span class="spinner-border spinner-border-sm"></span>
+                                    </button>
+                                    Loading...
+                                </div>
+                                <div *ngIf="noResult" class="error-text">
+                                    Invalid Rep ID.
+                                </div>
+                            </div>
+                            <label class="col-md-2 custom-label">Name:</label>
+                            <div class="col-md-3">
+                                <input type="text" class="form-control" required name="advisorName" maxlength="150"
+                                    autocomplete="off" [(ngModel)]="advisorName" disabled placeholder="Advisor's Name"
+                                    (ngModelChange)="onModelChange($event)" />
+                            </div>
+                            <label class="col-md-2 pl-0 pr-0 custom-label">Ownership %:</label>
+                            <div class="col-md-1">
+                                <input type="text" min="0" max="100" step="0.1"
+                                    pattern="^(100(\.0{1,2})?|[1-9]?\d(\.\d{1,1})?)$" oneDigitDecimalNumber
+                                    class="form-control" name="ovnership" maxlength="4" autocomplete="off" [(ngModel)]="
+                                        profileDet.advisorProfile
+                                            .ownershipPercentage
+                                    " (blur)="
+                                        removeZero(
+                                            'profileDet',
+                                            'advisorProfile',
+                                            'ownershipPercentage',
+                                            null
+                                        )
+                                    " (ngModelChange)="onModelChange($event)" />
+                                <!-- <span class="pl-2 percentage-span">%</span> -->
+                            </div>
+                        </div>
+                        <div class="row pb-2" *ngIf="profileExists == true">
+                            <div class="col-1"></div>
+                            <div class="col-4 error-text">
+                                Profile already exists for this Master Rep ID.
+                                Please enter a different Master Rep ID or search
+                                the existing profile to update it.
+                            </div>
+                            <div class="col-7"></div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-2 custom-label">Contract Start Date:</label>
+                            <div class="col-md-2">
+                                <div class="input-group custom-input-group">
+                                    <input name="startDate" type="text" class="form-control" #stDate="bsDatepicker"
+                                        bsDatepicker required [(ngModel)]="startDate" [bsConfig]="{
+                                            dateInputFormat: 'MMM D, YYYY'
+                                        }" (bsValueChange)="
+                                            onValueChange($event, 'startDate')
+                                        " autocomplete="off" (ngModelChange)="onModelChange($event)" />
+                                    <span class="input-group-btn">
+                                        <button style="line-height: 20px;" type="button"
+                                            class="btn btn-default calender-custom" (click)="stDate.toggle()">
+                                            <i class="fa fa-calendar"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                            <label class="col-md-2 custom-label">Contract End Date:</label>
+                            <div class="col-md-2">
+                                <div class="input-group custom-input-group">
+                                    <input #contractEndDate name="endDate" type="text" class="form-control"
+                                        #closeDate="bsDatepicker" bsDatepicker required [(ngModel)]="endDate"
+                                        [minDate]="minDate" [bsConfig]="{
+                                            dateInputFormat: 'MMM D, YYYY'
+                                        }" (bsValueChange)="
+                                            onValueChange($event, 'endDate')
+                                        " autocomplete="off" [ngClass]="[
+                                            startDate >= endDate
+                                                ? 'ng-invalid'
+                                                : ''
+                                        ]" (ngModelChange)="onModelChange($event)" />
+                                    <span class="input-group-btn">
+                                        <button style="line-height: 20px;" type="button"
+                                            class="btn btn-default calender-custom" (click)="closeDate.toggle()">
+                                            <i class="fa fa-calendar"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                            <label class="col-md-2 pl-0 pr-0 custom-label">Profile Status:</label>
+                            <div class="col-md-2">
+                                <select name="proStatus" class="form-control custom-select" [(ngModel)]="profileStatus"
+                                    (ngModelChange)="selectedStatus($event); onModelChange($event)" required>
+                                    <option value="Active">Active</option>
+                                    <option value="Terminated">
+                                        Terminated
+                                    </option>
+                                </select>
+                            </div>
+
+                            <!-- <label class="col-md-1 custom-label">Box :</label>
+    <div class="col-md-4">
+
+        <input
+            type="text"
+            class="form-control"
+            name="boxLink"
+            autocomplete="off"
+            [(ngModel)]="profileDet.advisorProfile.boxLink"
+
+        />
+    </div> -->
+                        </div>
+                        <div class="row pb-2" *ngIf="
+                                contractEndDate.classList.contains(
+                                    'ng-invalid'
+                                ) && endDate != ''
+                            ">
+                            <div class="col-4"></div>
+                            <div class="col-5 error-text">
+                                <!-- Contract End Date cannot be earlier than the
+                                Contract Start Date. Please select a valid date. -->
+                                Contract Start Date must be prior to Contract
+                                End Date. Please select a valid date.
+                            </div>
+                            <div class="col-3"></div>
+                        </div>
+                        <div class="form-group row" *ngIf="pageHeading == 'Edit Profile'">
+                            <label class="col-md-2 custom-label">CW Status:</label>
+                            <div class="col-md-2 pr-0 pd-top5">
+                                <span>{{
+                                    assuranceCWStatus
+                                    ? assuranceCWStatusDesc[
+                                    assuranceCWStatus
+                                    ]
+                                    : "No Access"
+                                    }}</span>
+                            </div>
+                            <label class="col-md-2 custom-label">Box:</label>
+                            <div class="col-md-6 pd-top5" *ngIf="
+                                    pageHeading == 'Edit Profile' &&
+                                    profileDet.advisorProfile.boxLink != null
+                                ">
+                                <span><a href="{{
+                                            profileDet.advisorProfile.boxLink
+                                        }}" target="_blank" class="blue">
+                                        {{ profileDet.advisorProfile.boxLink }}
+                                    </a></span>
+                            </div>
+                            <div class="col-md-6 pd-top5" *ngIf="
+                                    pageHeading == 'Edit Profile' &&
+                                    profileDet.advisorProfile.boxLink == null
+                                ">
+                                <span>BOX folder is not created yet.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card margin-top15">
+                    <div class="card-header">Dependents</div>
+
+                    <div class="card-body" style="overflow-y: inherit; overflow-x: inherit;">
+                        <div class="form-group row marL-1">
+
+                            <div class="col-md-2">
+                                <select  class="form-control custom-select" name="beneficiryDP_P"
+                                [(ngModel)]="profileDet.beneficiary[0].beneficiryDP"
+                                         (ngModelChange)="onModelChange($event);checkPercentage(profileDet.beneficiary,$event);" required>
+                                    <option value="Primary">Primary</option>
+                                    <option value="Additional">Additional </option>
+                                </select>
+                            </div>
+
+                            <label class="custom-label padL-2">Beneficiary:</label>
+                            <div class="col-md-2">
+                                <input required type="text" class="form-control" required name="primBeneficairy"
+                                    maxlength="150" autocomplete="off" placeholder="Full Name" [(ngModel)]="profileDet.beneficiary[0].beneficiaryFullName" (ngModelChange)="onModelChange($event)" />
+                            </div>
+
+                            <div class="col-md-2" style="text-align: right;">
+                                <span><strong>%:</strong></span>
+                                <input #primaryBenficiaryPercentage type="text" min="0" max="100" step="0.1"
+                                    pattern="^(100(\.0{1,2})?|[1-9]?\d(\.\d{1,1})?)$" oneDigitDecimalNumber
+                                    class="form-control percentage-input margin-left15" required maxlength="4"
+                                    name="percentage" autocomplete="off"
+                                       [(ngModel)]="profileDet.beneficiary[0].beneficiaryPercentage"
+                                       (ngModelChange)="checkPercentage(profileDet.beneficiary[0],$event); onModelChange($event)"
+                                       (keypress)="checkValue($event,'percentage',profileDet.beneficiary[0])"
+                                       (blur)="removeZero('profileDet','beneficiary','beneficiaryPercentage',0)" />
+                            </div>
+
+                            <label class="col-md-1 custom-label" for="phone">Phone:</label>
+                            <div class="col-md-2">
+                                <input type="text" class="form-control"
+                                [(ngModel)]="profileDet.beneficiary[0].beneficiaryPhone"   name="PhoneP"
+								autocomplete="off" autocomplete="off" placeholder="Phone" phoneNumber
+                                (ngModelChange)="onModelChange($event)" />
+                            </div>
+                        </div>
+
+
+                        <div class="form-group row marL-1" *ngFor="
+                                let beneficiary of beneficiaries;
+                                let i = index;
+                                trackBy: trackByFn
+                            ">
+                            <div class="col-md-2">
+                                <select name="beneficiryDP{{i}}" class="form-control custom-select"
+                                [(ngModel)]="beneficiary.beneficiryDP"
+                                        (ngModelChange)="checkPercentage(profileDet.beneficiary,$event);"
+                                        required>
+                                    <option value="Primary">Primary</option>
+                                    <option value="Additional">Additional</option>
+                                </select>
+                            </div>
+
+                            <label class="custom-label padL-2"> Beneficiary:</label>
+                            <div class="col-md-2">
+                                <input type="text" class="form-control" [name]="'beneName' + i"
+                                placeholder="Full Name"
+                                    [(ngModel)]="
+                                        beneficiary.beneficiaryFullName
+                                    " (ngModelChange)="
+                                        checkField(beneficiary, 'name'); onModelChange($event)
+                                    " [ngClass]="[
+                                        beneficiary.invalidBeneName
+                                            ? 'invalid'
+                                            : ''
+                                    ]" />
+                            </div>
+                            <div class="col-md-2" style="text-align: right;">
+                                <span><strong>%:</strong></span>
+                                <input type="text" min="0" max="100" step="0.1"
+                                    pattern="^(100(\.0{1,2})?|[1-9]?\d(\.\d{1,1})?)$" oneDigitDecimalNumber
+                                    maxlength="4" class="form-control percentage-input margin-left15"
+                                    name="benePercentage{{ i }}"
+                                    [(ngModel)]="beneficiary.beneficiaryPercentage
+                                    "(ngModelChange)="checkField(beneficiary,'percentage',$event); onModelChange($event)
+                                    "[ngClass]="[beneficiary.invalidBenePercentage? 'invalid': '']" (keypress)="checkValue($event,'percentage',beneficiary)
+                                    "(blur)="removeZero(null,'beneficiaries','beneficiaryPercentage',i)"
+                                />
+                            </div>
+
+                            <label class="col-md-1 custom-label" for="phone">Phone:</label>
+                            <div class="col-md-2">
+                                <input type="text" class="form-control" name="Phone{{i}}"
+								autocomplete="off" autocomplete="off" placeholder="Phone"
+                                [(ngModel)]="beneficiary.beneficiaryPhone" phoneNumber
+                                (ngModelChange)="onModelChange($event)" />
+                            </div>
+
+                            <label class="col-md-1 delete-span hand-cursor"
+                            (click)="deleteBeneficiary(beneficiary, i)">
+                                Delete</label>
+                        </div>
+                        <div class="form-group row" *ngIf="totalExceeded == true">
+                            <div class="col-md-1"> </div>
+                            <div class="col-md-11 error-text">
+                                Total % assigned to Primary Beneficiary and Total % assigned to Additional Beneficiary must each add up to 100%.
+                            </div>
+                        </div>
+                        <div class="form-group row marL-0">
+                            <div class="col-md-4">
+                                <button type="button" class="btn btn-primary add-beneficiary margin-left15" (click)="
+                                        addBeneficiary(beneficiaries.length)
+                                    " [disabled]="beneficiaries.length > 6">
+                                    + Add more beneficiaries
+                                </button>
+                                <!-- <span
+                                    class="btn custom-primary margin-left5 hand-cursor" (click)="addBeneficiary(beneficiaries.length)"
+                                >
+                                    + Add more beneficiaries
+                                </span> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card margin-top15">
+                    <div class="card-header">Potential Successor</div>
+
+                    <div class="card-body" style="overflow-y: inherit; overflow-x: inherit;">
+                        <div class="form-group row">
+                            <label class="col-md-1 custom-label">Name:</label>
+                            <div class="col-md-3">
+                                <input type="text" class="form-control" [(ngModel)]="
+                                        profileDet.potentialSuccessor
+                                            .successorFullName
+                                    " name="refusal" maxlength="150" autocomplete="off" placeholder="Full Name"
+                                    (ngModelChange)="onModelChange($event)" />
+                            </div>
+                            <label class="col-md-2 custom-label">Master Rep ID:</label>
+                            <div class="col-md-3">
+                                <input type="text" class="form-control" [(ngModel)]="
+                                        profileDet.potentialSuccessor
+                                            .successorMasterRepID
+                                    " name="psRepId" maxlength="4" autocomplete="off" placeholder="Master Rep ID "
+                                    pattern="[a-zA-Z0-9 ]+" (keypress)="omit_special_char($event)"
+                                    (ngModelChange)="onModelChange($event)" />
+                            </div>
+                            <label class="col-md-1 custom-label" for="phone">Phone:</label>
+                            <div class="col-md-2">
+                                <input type="text" class="form-control" [(ngModel)]="
+                                        profileDet.potentialSuccessor
+                                            .successorPhone
+                                    " name="phone" autocomplete="off" placeholder="Phone" phoneNumber
+                                    (ngModelChange)="onModelChange($event)" />
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-1 custom-label" for="email">Email:</label>
+                            <div class="col-md-3">
+                                <input type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                                    class="form-control" [(ngModel)]="
+                                        profileDet.potentialSuccessor
+                                            .successorEmail
+                                    " name="email" autocomplete="off" placeholder="Email"
+                                    (ngModelChange)="onModelChange($event)" />
+                            </div>
+                            <label class="col-md-2 custom-label" for="website">Company Website:</label>
+                            <div class="col-md-3">
+                                <input type="url"
+                                    pattern="^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$"
+                                    title="Include http://" class="form-control" [(ngModel)]="
+                                        profileDet.potentialSuccessor
+                                            .successorCompany
+                                    " name="website" autocomplete="off" placeholder="Website"
+                                    (ngModelChange)="onModelChange($event)" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card margin-top15">
+                    <div class="card-header">Valuation</div>
+
+                    <div class="card-body" style="overflow-y: inherit; overflow-x: inherit;">
+                        <div class="form-group row">
+                            <label class="col-md-3 custom-label">Estimated Market Value:</label>
+                            <div class="col-md-2 dollar">
+                                <span class="currency">$</span>
+                                <input #estimateMarket pattern="^[-+]?(?:[0-9]+,)*[0-9]+(?:\.[0-9]+)?$" type="text"
+                                    class="form-control pl-16" name="marketValue" autocomplete="off" [(ngModel)]="
+                                        profileDet.valuation
+                                            .estimatedMarketValue
+                                    " min="0" max="2147483647" (ngModelChange)="
+                                        valueChanged($event, 'estimateMarket'); onModelChange($event)
+                                    " (keydown)="
+                                        checkValue($event, 'valuation', '')
+                                    " [ngClass]="[
+                                        profileDet.valuation
+                                            .estimatedMarketValueDate != null &&
+                                        profileDet.valuation
+                                            .estimatedMarketValue == null
+                                            ? 'invalid'
+                                            : ''
+                                    ]" />
+                                <div *ngIf="
+                                        estimateMarket.classList.contains(
+                                            'ng-invalid'
+                                        )
+                                    " class="error-text">
+                                    Please enter valid number
+                                </div>
+                            </div>
+                            <label class="col-md-3 custom-label pr-0">Last Market Valuation:</label>
+                            <div class="col-md-3">
+                                <div class="input-group custom-input-group">
+                                    <input #estimateMarketDate name="emDte" type="text" class="form-control"
+                                        #emDate="bsDatepicker" bsDatepicker [bsConfig]="{
+                                            dateInputFormat: 'MMM D, YYYY'
+                                        }" [(ngModel)]="valuationDate" (bsValueChange)="
+                                            onValueChange($event, 'marketDate')
+                                        " autocomplete="off" [ngClass]="[
+                                            profileDet.valuation
+                                                .estimatedMarketValue != null &&
+                                            profileDet.valuation
+                                                .estimatedMarketValueDate ==
+                                                null
+                                                ? 'invalid'
+                                                : ''
+                                        ]" (ngModelChange)="onModelChange($event)" />
+                                    <span class="input-group-btn">
+                                        <button style="line-height: 20px;" type="button"
+                                            class="btn btn-default calender-custom" (click)="emDate.toggle()">
+                                            <i class="fa fa-calendar"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 custom-label">LPL Guaranteed Payment:</label>
+                            <div class="col-md-2 dollar">
+                                <span class="currency">$</span>
+                                <input #lplPayment pattern="^[-+]?(?:[0-9]+,)*[0-9]+(?:\.[0-9]+)?$" type="text"
+                                    class="form-control pl-16" name="lplPayment" autocomplete="off" [(ngModel)]="
+                                        profileDet.valuation
+                                            .lplGuaranteedPayment
+                                    " min="0" max="2147483647" (ngModelChange)="
+                                        valueChanged($event, 'lplPayment'); onModelChange($event)
+                                    " (keydown)="
+                                        checkValue($event, 'valuation', '')
+                                    " [ngClass]="[
+                                        profileDet.valuation
+                                            .lplGuaranteedPaymentDate != null &&
+                                        profileDet.valuation
+                                            .lplGuaranteedPayment == null
+                                            ? 'invalid'
+                                            : ''
+                                    ]" />
+                                <div *ngIf="
+                                        lplPayment.classList.contains(
+                                            'ng-invalid'
+                                        )
+                                    " class="error-text">
+                                    Please enter valid number
+                                </div>
+                            </div>
+                            <label class="col-md-3 custom-label pr-0">Last Guaranteed Valuation:</label>
+                            <div class="col-md-3">
+                                <div class="input-group custom-input-group">
+                                    <input #lplPaymentDate name="lgpDte" type="text" class="form-control"
+                                        #lgpDate="bsDatepicker" bsDatepicker [bsConfig]="{
+                                            dateInputFormat: 'MMM D, YYYY'
+                                        }" [(ngModel)]="
+                                            profileDet.valuation
+                                                .lplGuaranteedPaymentDate
+                                        " (bsValueChange)="
+                                            onValueChange(
+                                                $event,
+                                                'lplPaymentDate'
+                                            )
+                                        " autocomplete="off" [ngClass]="[
+                                            profileDet.valuation
+                                                .lplGuaranteedPayment != null &&
+                                            profileDet.valuation
+                                                .lplGuaranteedPaymentDate ==
+                                                null
+                                                ? 'invalid'
+                                                : ''
+                                        ]" (ngModelChange)="onModelChange($event)" />
+                                    <span class="input-group-btn">
+                                        <button style="line-height: 20px;" type="button"
+                                            class="btn btn-default calender-custom" (click)="lgpDate.toggle()">
+                                            <i class="fa fa-calendar"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card margin-top15">
+                    <div class="card-header">
+                        <span (click)="isColapsed = !isColapsed" class="colsp-wrap"><i class="fa colaps" [ngClass]="[
+                                    isColapsed
+                                        ? 'fa-angle-right'
+                                        : 'fa-angle-down'
+                                ]"></i>Associated Reps</span>
+                    </div>
+
+                    <div class="card-body" style="max-height: 277px; overflow-y: auto;" [hidden]="isColapsed">
+                        <div *ngIf="repInfo.associatedReps.length == 0" style="text-align: center;">
+                            <span>No Data Found. </span>
+                        </div>
+                        <div *ngIf="repInfo.associatedReps.length > 0">
+                            <div class="form-group row" *ngFor="
+                                    let associatedRepData of repInfo.associatedReps;
+                                    let i = index
+                                ">
+                                <label class="col-md-2 custom-label">Rep Id:</label>
+                                <div class="col-md-2">
+                                    <input type="text" class="form-control" disabled name="repID{{ i }}"
+                                        [(ngModel)]="associatedRepData.repID" />
+                                </div>
+                                <label class="col-md-2 custom-label">Full Name:</label>
+                                <div class="col-md-3">
+                                    <input type="text" class="form-control" disabled name="fullName{{ i }}"
+                                        [(ngModel)]="associatedRepData.fullName"
+                                        (ngModelChange)="onModelChange($event)" />
+                                </div>
+                                <label class="col-md-2 custom-label">Ownership %:</label>
+                                <div class="col-md-1">
+                                    <input type="text" min="0" max="100" step="0.1"
+                                        pattern="^(100(\.0{1,2})?|[1-9]?\d(\.\d{1,1})?)$" oneDigitDecimalNumber
+                                        class="form-control" name="ovnership" maxlength="4" autocomplete="off"
+                                        name="ownershipPercentage{{ i }}" [(ngModel)]="
+                                            associatedRepData.ownershipPercentage
+                                        " (ngModelChange)="onModelChange($event)" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card margin-top15">
+                    <div class="card-header">Internal Notes</div>
+
+                    <div class="card-body">
+                        <div class="form-group row">
+                            <label class="col-md-3 custom-label">Add Note:</label>
+                            <div class="col-md-8 deal-name-box">
+                                <textarea class="form-control custom-field textarea-resize" rows="3" id="comment"
+                                    [(ngModel)]="profileDet.notes.note" name="note" maxlength="500"
+                                    placeholder="Please enter your note here.."
+                                    (ngModelChange)="onModelChange($event)"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group row" *ngIf="notes?.length > 0">
+                            <label class="col-md-3 custom-label"></label>
+
+                            <div class="col-md-8 deal-name-box">
+                                <div class="note-container">
+                                    <div>
+                                        <div class="" *ngFor="let note of notes">
+                                            <div class="note-icon">
+                                                <i class="fa fa-sticky-note"></i>
+                                            </div>
+                                            <div class="note-details">
+                                                <strong class="label-strong">
+                                                    {{ note.createdByName }}
+                                                </strong>
+                                                <span class="label-strong">
+                                                    {{ note.createdOn | date }}
+                                                </span>
+                                                <p>{{ note.note }}</p>
+                                                <div class="note-del" (click)="deleteNote(note)">
+                                                    Delete
+                                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="notsContainer" *ngIf="profileDet.notes?.length == 0">
+                                        <strong>No Note Found</strong>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row deal-btn-section">
+                    <div class="col-md-12 pr-0 margin-top15 text-right pb-3">
+                        <input class="btn cancel-btn" name="Cancel" type="button" value="Cancel" (click)="onCancel()" />
+                        <input [disabled]="
+                                !profileForm.form.valid ||
+                                validBeneficiary ||
+                                validValuation ||
+                                totalExceeded
+                            " class="btn custom-primary margin-left5" name="Save" type="button" value="Save"
+                            (click)="openConfirmation()" />
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

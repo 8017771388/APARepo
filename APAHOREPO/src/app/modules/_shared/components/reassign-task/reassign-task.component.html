@@ -1,0 +1,119 @@
+<div class="modal-wrapper">
+    <div class="modal-header goal-header">
+        <h1>{{ title }}</h1>
+        <button (click)="bsModalRef.hide()" class="cross-btn">
+            <i class="fa fa-times"></i>
+        </button>
+    </div>
+    <div class="modal-body goal-body">
+        
+        <div class="row margin-top5">
+            <div class="col-12">
+                <label>Task Name</label>
+                <input
+                    placeholder="Task Name"
+                    type="text"
+                    [(ngModel)]="tasks.task"
+                    class="form-control custom-field"
+                    maxlength="300"
+                    disabled
+                />
+                
+            </div>
+        </div>
+        <div class="row margin-top5">
+            <div class="col-6">
+                <label>Deal Specialist</label>
+                <input
+                    [(ngModel)]="searchedDealSpecialist"
+                    id="advisor"
+                    placeholder="Search"
+                    [typeahead]="dataSource"
+                    (typeaheadOnSelect)="
+                        typeaheadOnSelectAdvisor(
+                            $event
+                        )
+                    "
+                    (typeaheadNoResults)="
+                        typeaheadNoResults($event)
+                    "
+                    typeaheadOptionField="fullname"
+                    class="form-control"                                
+                />
+                <div *ngIf="noResult && searchedDealSpecialist">No Results Found</div>
+                
+            </div>
+            <div class="col-6">
+                <label>Reassigned To</label>
+                <select placeholder=""
+                     class="form-control custom-select"
+                    [(ngModel)]="
+                    tasks.owner
+                    "
+                >
+                    <option value="Test Account">Test Account</option>
+                    <option value="Sumija Thallassery"
+                        >Sumija Thallassery </option
+                    >
+                    <option value="Vigilius Booke">Vigilius Booke</option>
+                </select>
+            </div>
+        </div>
+        <div class="row margin-top5">
+            <div class="col-6">
+                <label>Due Date</label>
+                <div class="input-group custom-input-group">
+                    <input
+                        type="text"
+                        class="form-control custom-field"
+                        [(ngModel)]="tasks.dueDate"
+                        #dueDate="bsDatepicker"
+                        bsDatepicker
+                        [bsConfig]="{ dateInputFormat: 'MMM D, YYYY' }"
+                       
+                    />
+                    <span class="input-group-btn">
+                        <button
+                            type="button"
+                            class="btn btn-default calender-custom"
+                            (click)="dueDate.toggle()"
+                            ng-click="isDatepickerOpen = !isDatepickerOpen"
+                        >
+                            <i class="fa fa-calendar"></i>
+                        </button>
+                    </span>
+                </div>
+            </div>
+            <div class="col-6">
+                <label>Status</label>
+                <select
+                    class="form-control custom-field"
+                    [(ngModel)]="tasks.status"
+                >
+                    <option value="Not Started">Not Started</option>
+                    <option value="In Progress">In Progress</option>
+                    <option value="Complete">Complete</option>
+                    <option value="Past Due" >Past Due</option>
+                </select>
+            </div>
+            
+        </div>
+        
+    </div>
+    <div class="modal-footer custom-footer">
+        <input
+            type="button"
+            class="btn cancel-btn"
+            value="Cancel"
+            name="Cancel"
+            (click)="bsModalRef.hide()"
+        />
+        <input
+            type="button"
+            class="btn custom-primary"
+            value="Save"
+            name="Save"
+            (click)="saveTask()"
+        />
+    </div>
+</div>

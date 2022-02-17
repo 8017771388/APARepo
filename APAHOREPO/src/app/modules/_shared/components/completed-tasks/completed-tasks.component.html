@@ -1,0 +1,195 @@
+<div class="modal-wrapper">
+    <div class="modal-header goal-header">
+        <h1>{{ title }}</h1>
+        <button (click)="bsModalRef.hide()" class="cross-btn">
+            <i class="fa fa-times"></i>
+        </button>
+    </div>
+    <div class="modal-body goal-body">
+        <div class="row">
+            <div class="col-12">
+                <h3>Deal</h3>
+                <span class="cfo-sub-headingText">
+                    {{ dealDetail.dealName }}
+                </span>
+                <p>
+                    <span class="cfo-sub-headingText">
+                        <i
+                            class="fa fa-square {{
+                                taskConstant[dealDetail.status]
+                            }}"
+                        ></i>
+                        {{ dealDetail.status }}
+                    </span>
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-8 col-12" *ngIf="completedTask.length <= 0">
+                <div class="border-box">No Completed tasks</div>
+            </div>
+        </div>
+        <div class="row" *ngIf="completedTask.length > 0">
+            <div class="col-12">
+                <h3>Tasks</h3>
+                <div class="" *ngFor="let task of completedTask; let i = index">
+                    <div class="row margin-top8">
+                        <div class="col-5">
+                            {{ task.task }}
+                            <!-- <p class="blue-Text" *ngIf="task.noteId" (click)="task.visibleNote=!task.visibleNote;getAllNotes(task)">
+                                <span [hidden]="task.visibleNote">View {{task.status}} Notes</span>
+                                <span [hidden]="!task.visibleNote">Hide {{task.status}} Notes</span>
+                            </p> -->
+                        </div>
+                        <div class="col-2">
+                            <!-- <i class="fa fa-user"></i> -->
+                            <!-- <img src="assets/img/owner.svg" class="img-width" *ngIf="task.vcfoOrAdvisor.toLowerCase() == 'vcfo'" />
+                            <img src="assets/img/vCFOuser_Icon.svg" class="img-width"  *ngIf="task.vcfoOrAdvisor.toLowerCase() != 'vcfo'" /> -->
+                            <span>{{ task.ownerName }}</span>
+                        </div>
+                        <div class="col-3">
+                            <em>Completed on: </em>
+                            <strong> {{ task.dueDate | date }}</strong>
+                        </div>
+                        <div class="col-2">
+                            <button class="custom-btn-Edit" (click)="task.reopen=!task.reopen">
+                                Reopen Task
+                            </button>
+                        </div>
+                    </div>
+                    <div class="reopen-task-container margin-top5" [hidden]="!task.reopen">
+                       <div class="row">
+                          
+                            <div class="col-6">
+                                <label>Task</label>
+                                <input
+                                type="text"                           
+                                value="{{
+                                    taskToBeReopened[i].task 
+                                }}"
+                                class="form-control custom-field"
+                                [(ngModel)]="
+                                taskToBeReopened[i].task 
+                                "
+                            />
+                            </div>
+                            <div class="col-6">
+                                <label>Due Date</label> 
+                                <input
+                                    type="text"
+                                    class="form-control custom-field"
+                                    [(ngModel)]="
+                                    taskToBeReopened[i].dueDate
+                                    "
+                                    #dueDate="bsDatepicker"
+                                    bsDatepicker
+                                    [minDate]="minDate"
+                                    [bsConfig]="{
+                                        dateInputFormat:
+                                            'MMM D, YYYY'
+                                    }"
+                                    (bsValueChange)="
+                                        onValueChange(
+                                            $event,
+                                            'duedate'
+                                        )
+                                    "
+                                />
+                            </div>                            
+                            
+                        </div>
+                        <div class="row margin-top5">
+                            <div class="col-6"> 
+                                <label>Role</label>                           
+                                <select
+                                
+                                    class="form-control custom-field"
+                                    [(ngModel)]="
+                                    taskToBeReopened[i].owner
+                                    "
+                                    (ngModelChange)="
+                                        setOwnerName(
+                                            taskToBeReopened[i],
+                                            $event
+                                        )
+                                    "
+                                >
+                                    <option value="Seller" selected
+                                        >Seller</option
+                                    >
+                                    <option value="Buyer"
+                                        >Buyer</option
+                                    >
+                                    <option value="Deal Specialist"
+                                        >Deal Specialist</option
+                                    >
+                                </select>
+                            </div>
+                            <div class="col-6">
+                                <label>Status</label> 
+                                <select
+                                    class="form-control custom-field"
+                                    [(ngModel)]="
+                                    taskToBeReopened[i].status
+                                    "
+                                >
+                                    <option value="Not Started"
+                                        >Not Started</option
+                                    >
+                                    <option value="In Progress"
+                                        >In Progress</option
+                                    >
+                                    <option value="Complete"
+                                        >Complete</option
+                                    >
+                                    <option
+                                        value="Past Due"
+                                        disabled hidden
+                                        >Past Due</option
+                                    >
+                                </select>
+                                
+                            </div>
+
+                        </div>
+                        <div class="row margin-top15">
+                            <div class="col-12">
+                                <!-- <button class="custom-btn-Edit float-right" (click)="task.reopen=!task.reopen; reopenTask(taskToBeReopened[i])">
+                                    Reopen
+                                </button>  -->
+                                <input
+                                    type="button"
+                                    class="btn cancel-btn float-right"
+                                    value="Cancel"
+                                    name="Cancel"
+                                    (click)="task.reopen =!task.reopen;cancel(taskToBeReopened[i])"
+                                />
+                                <input 
+                                    type="button"
+                                    class="btn reopen-button custom-primary float-right"
+                                    value="Reopen"
+                                    name="Reopen"
+                                    (click)="task.reopen=!task.reopen; reopenTask(taskToBeReopened[i])"
+                                />
+                            </div>
+                        </div>
+                    </div> 
+                    <!-- <div class="row" [hidden]="!task.visibleNote">
+                        <div class="col-12">
+                           
+                            <div *ngIf="task.allNt?.length > 0 && !task.noteLoading">
+                                <div *ngFor="let notes of task.allNt" class="sub-notsContainer">
+                                    
+                                    <img src="assets/img/notes.svg"  class="notes-i"/>
+                                    <strong class="label-strong">{{notes.createdBy}}</strong>
+                                    <span class="font-style-italic">{{notes.createdOn | date}}</span>
+                                    <p>{{notes.note}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>                       -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

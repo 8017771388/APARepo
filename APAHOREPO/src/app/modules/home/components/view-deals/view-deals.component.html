@@ -1,0 +1,557 @@
+<div class="core-plan container-fluid">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">
+                Current Deal
+            </li>
+        </ol>
+    </nav>
+    <div class="core-plan-container clearfix" style="margin-bottom: 25px;">
+        <div class="row">
+            <div class="col-6">
+                <div class="deal-details-card deal-details">
+                    <div class="blue-bg">
+                        <span class="deal-type-heading">Deal</span>
+                    </div>
+                    <div class="deal-details-subpart">
+                        <div class="cards-body deals-card">
+                            <div class="row">
+                                <div class="col-2 p-0 text-right">
+                                    <span class="">Deal Name : </span>
+                                </div>
+                                <div class="col-4 text-left boder-right">
+                                    <strong>{{ dealInfo.dealName }}</strong>
+                                </div>
+                                <div class="col-2 p-0 text-right">
+                                    <span class="">Deal Type : </span>
+                                </div>
+                                <div class="col-4 text-left">
+                                    <strong>{{ dealInfo.dealType }}</strong>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-2 p-0 text-right">
+                                    <span class="">Active Stage : </span>
+                                </div>
+                                <div class="col-4 text-left boder-right">
+                                    <strong> {{ dealInfo.activeStage }}</strong>
+                                </div>
+                                <div class="col-2 p-0 text-right">
+                                    <span class="">Status : </span>
+                                </div>
+                                <div class="col-4 text-left">
+                                    <strong> {{ dealInfo.status }}</strong>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-2 p-0 text-right">
+                                    <span class="">
+                                        Documents :
+                                    </span>
+                                </div>
+                                <div class="col-4 text-left boder-right">
+                                    <span
+                                        ><a class="blue" href="https://lplfinancial.app.box.com/folder/113433091125" target="_blank"><u>Link</u></a></span
+                                    >
+                                </div>
+                                <div class="col-2 p-0 text-right">
+                                    <span>
+                                        <a class="blue"><u>Manage Deals</u></a>
+                                    </span>
+                                </div>
+                                <div class="col-4">&nbsp;</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="deal-details-card deal-details">
+                    <div class="blue-bg">
+                        <span class="deal-type-heading"
+                            >Actors on the Deal</span
+                        >
+                    </div>
+                    <div class="deal-details-subpart">
+                        <div class="cards-body deals-card">
+                            <div class="row">
+                                <div class="col-2 p-0 text-right">
+                                    <span class="">Seller : </span>
+                                </div>
+                                <div class="col-4 text-left boder-right">
+                                    <ul class="seller-buyer-list">
+                                        <li
+                                            *ngFor="
+                                                let seller of dealInfo.seller
+                                            "
+                                        >
+                                            <strong>
+                                                {{
+                                                    seller.name +
+                                                        " " +
+                                                        "(" +
+                                                        seller.repId +
+                                                        ")"
+                                                }}
+                                            </strong>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-2 p-0 text-right">
+                                    <span class="">Deal Specialist : </span>
+                                </div>
+                                <div class="col-4 text-left">
+                                    <strong>
+                                        {{ dealInfo.dealSpecialist }}
+                                    </strong>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-2 p-0 text-right">
+                                    <span class="">Buyers : </span>
+                                </div>
+                                <div class="col-4 text-left boder-right">
+                                    <ul class="seller-buyer-list">
+                                        <li
+                                            class=""
+                                            *ngFor="
+                                                let buyer of dealInfo.buyers
+                                            "
+                                        >
+                                            <strong>
+                                                {{
+                                                    buyer.name +
+                                                        " " +
+                                                        "(" +
+                                                        buyer.repId +
+                                                        ")"
+                                                }}
+                                            </strong>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div class="col-6">&nbsp;</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="core-plan-container clearfix">
+        <div class="plan-details-wrapper margin-top15">
+            <!-- <div class="row">
+                <div class="col-lg-8 col-12">
+                    <span class="blue"><u>Add New Task +</u></span>
+                </div>
+            </div> -->
+            <div class="row">
+                <div class="col-lg-8 col-12">
+                    <div class="task-date-info">
+                        <ul class="row">
+                            <li class="col active">
+                                <div class="date-content">
+                                    <span><strong>Discovery</strong></span>
+                                    <span class="number">4</span>
+                                </div>
+                            </li>
+
+                            <li class="col">
+                                <div class="date-content">
+                                    <span class="">
+                                        <strong>Due Diligence</strong>
+                                    </span>
+                                    <span class="number">8</span>
+                                </div>
+                            </li>
+                            <li class="col">
+                                <div class="date-content">
+                                    <span class="">
+                                        <strong>Closing</strong>
+                                    </span>
+                                    <span class="number">7</span>
+                                </div>
+                            </li>
+                            <li class="col">
+                                <div class="date-content">
+                                    <span class="">
+                                        <strong>Integration</strong>
+                                    </span>
+                                    <span class="number">1</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="add-task-container">
+                        <button class="" (click)="addTask(dealInfo)">
+                            <i class="fa fa-plus-circle"></i>
+                            <span>Add New Task</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-8 col-12" *ngIf="dealTasks.length <= 0">
+                    <div class="border-box">No Open tasks</div>
+                </div>
+            </div>
+            <div class="row margin-top15" *ngIf="dealTasks.length > 0">
+                <!-- <div class="col-lg-3">
+                    <span>Stage Due On: </span>
+                    <span
+                        ><strong> {{ dealInfo.stageDueDate }}</strong></span
+                    >
+                </div> -->
+                <div class="col-lg-3">
+                    <span>% of Completion: </span>
+                    <div
+                        [title]="dealInfo.completionPercentage + '%'"
+                        class="progress-bar-contatainer"
+                    >
+                        <div
+                            class="progress-bar"
+                            [ngStyle]="{
+                                width: dealInfo.completionPercentage
+                                    ? dealInfo.completionPercentage + '%'
+                                    : '0%'
+                            }"
+                        ></div>
+                    </div>
+                    <span>{{ dealInfo.completionPercentage + "%" }}</span>
+                </div>
+                <!-- <div class="col-lg-3">
+                    <span>Status of Tasks: </span>
+                    <span class="task-circle darkGrey">
+                        <span>{{
+                            dealInfo.statusOfTasks.total
+                                ? dealInfo.statusOfTasks.total
+                                : 0
+                        }}</span>
+                    </span>
+                    <span class="task-circle red">
+                        <span>{{
+                            dealInfo.statusOfTasks.pastDue
+                                ? dealInfo.statusOfTasks.pastDue
+                                : 0
+                        }}</span>
+                    </span>
+                    <span class="task-circle blue">
+                        <span>{{
+                            dealInfo.statusOfTasks.dueThisWeek
+                                ? dealInfo.statusOfTasks.dueThisWeek
+                                : 0
+                        }}</span>
+                    </span>
+                    <span class="task-circle green">
+                        <span>{{
+                            dealInfo.completedTasks
+                                ? dealInfo.completedTasks
+                                : 0
+                        }}</span>
+                    </span>
+                </div> -->
+                <div class="col-lg-3 pl-0">
+                    <span class="blue" (click)="markStageComplete()"
+                        ><u>Mark Stage Complete</u></span
+                    >
+                </div>
+            </div>
+            <div class="row margin-top15">
+                <div *ngIf="dealTasks.length > 0" class="col-12">
+                    <div class="grid-details">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <!-- <th>Goals</th> -->
+                                    <th>Tasks</th>
+                                    <th>Due Date</th>
+                                    <th>Status</th>
+                                    <th>Owner</th>
+                                    <!-- <th>Role</th>
+                                    <th>Assigned To</th> -->
+                                    <!-- <th>Department</th>
+                                    <th>Open Activities</th>
+                                    <th>Completed Tasks</th> -->
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <ng-template
+                                    ngFor
+                                    let-task
+                                    [ngForOf]="dealTasks"
+                                    let-index="index"
+                                    [ngForTrackBy]="trackByFn"
+                                >
+                                    <tr
+                                        (click)="
+                                            task.visibleTask = !task.visibleTask
+                                        "
+                                        [attr.aria-controls]="
+                                            'collapseBasic' + index
+                                        "
+                                        [ngClass]="{
+                                            even: index % 2 == 0,
+                                            odd: index % 2 != 0
+                                        }"
+                                    >
+                                        <td>
+                                            <!-- <i class="fa fa-caret-right" *ngIf="!task.visibleTask"></i>
+                                                <i class="fa fa-caret-down" *ngIf="task.visibleTask"></i> -->
+                                            <span
+                                                class="text-ellipsis"
+                                                [title]="task.task"
+                                            >
+                                                {{ task.task | shortName: 62 }}
+                                            </span>
+                                            <!-- <span
+                                                class="goal-target-text pl-0"
+                                                [title]="task.description"
+                                                *ngIf="task.description"
+                                            >
+                                                <em>Task Desciption:</em>
+                                                {{
+                                                    task.description
+                                                        | shortName: 50
+                                                }}
+                                            </span> -->
+                                        </td>
+                                        <td class="duedate-cell">
+                                            <span>{{task.dueDate | date}} </span>
+                                            <!-- <span
+                                                class="bullet"
+                                                *ngIf="task.dueDate"
+                                                [ngClass]="
+                                                    taskConstant[task.status]
+                                                "
+                                                >{{ task.dueDate | date }}</span 
+                                            >-->
+                                        </td>
+                                        <td>
+                                            <span >{{task.status}}
+                                                <!-- <select
+                                                class="form-control custom-field"
+                                                [(ngModel)]="task.status"
+                                            >
+                                                <option value="Not Started" selected>Not Started</option>
+                                                <option value="Due within a week">Due within a week</option>
+                                                <option value="Need Attention">Need Attention</option>
+                                            </select> -->
+                                        </span>
+                                        </td>
+                                        <td><span>{{task.ownerName}}</span></td>
+                                        <!-- <td>
+                                            <span>
+                                                <select
+                                                    class="form-control custom-field"
+                                                    [(ngModel)]="task.owner" (ngModelChange)="setOwnerName(task, $event)"
+                                                >
+                                                    <option value="Seller" selected>SELLER</option>
+                                                    <option value="Buyer">BUYER</option>
+                                                    <option value="DealSpecialist">Deal Specialist</option>
+                                                </select>
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span>
+                                                <select
+                                                    class="form-control custom-field"
+                                                    [(ngModel)]="task.ownerName" (ngModelChange)="setAssignedTo(task,$event)"
+                                                >
+                                                    <option *ngFor="let owner of task.seletecdOwner" [value]="owner.name">{{owner.name}}</option>
+                                                </select>
+                                            </span>
+                                        </td> -->
+                                        <!-- <td>
+                                            <span [title]="task.ownerName">{{
+                                                task.ownerName
+                                            }}</span>
+                                        </td> -->
+                                        <!-- <td [title]="task.department">
+                                            {{ task.department }}
+                                        </td> -->
+
+                                        <!-- <td
+                                            [title]="
+                                                task.openActivities
+                                                    ? task.openActivities
+                                                    : 0
+                                            "
+                                        >
+                                            {{
+                                                task.openActivities
+                                                    ? task.openActivities
+                                                    : 0
+                                            }}
+                                        </td> -->
+                                        <!-- <td
+                                            [title]="
+                                                task.completedActivities
+                                                    ? task.completedActivities
+                                                    : 0
+                                            "
+                                        >
+                                            {{
+                                                task.completedActivities
+                                                    ? task.completedActivities
+                                                    : 0
+                                            }}
+                                        </td> -->
+
+                                        <td>
+                                            <!-- Edit | Delete -->
+                                            <button
+                                                class="custom-btn-Edit"
+                                                (click)="
+                                                    editTask(
+                                                        dealInfo,
+                                                        task,
+                                                        $event
+                                                    )
+                                                "
+                                            >
+                                                Edit
+                                            </button>
+                                            |
+                                            <button
+                                                class="custom-btn-Edit"
+                                                (click)="
+                                                    deleteTask(task, $event)
+                                                "
+                                            >
+                                                Delete
+                                            </button>
+                                            |
+                                            <button
+                                                class="custom-btn-Edit"
+                                                (click)="
+                                                    markComplete(task, $event)
+                                                "
+                                            >
+                                                Mark Complete
+                                            </button>
+                                            |
+                                            <button
+                                                class="custom-btn-Edit"
+                                                (click)="
+                                                    addNotes(
+                                                        task,
+                                                        dealInfo,
+                                                        $event
+                                                    )
+                                                "
+                                            >
+                                                {{
+                                                    task.totalNote > 0
+                                                        ? "View Note"
+                                                        : "Add Note"
+                                                }}
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="9" class="expand-col">
+                                            <!--   <div class="expand-plan-details" [attr.id]="'collapseBasic' + index" [hidden]="!task.visibleTask">
+                                                    
+                                                    <div class="plan-Task-Details">
+                                                        <div class="row">
+                                                            <div class="col-1">
+                                                                <strong>Activities</strong>
+                                                            </div>
+                                                            <div class="col-3">
+                                                                <button class="edit-popup-text" (click)="addActivity(dealTasks, dealTasks.tasks[index], index)">
+                                                                    Add New Activity +
+                                                                </button>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row row-plan-details" *ngFor="let activity of dealTasks[index].activities">
+                                                            <div class="col-2">
+                                                                <p [title]="task.task">{{activity.activity | shortName:20}}</p>
+                                                                <span class="text-ellipsis" [title]="task.category">Category: {{activity.category}}</span>
+                                                            </div>
+                                                            <div class="col-4 margin-top5">
+                                                                <div class="row">
+                                                                    <div class="col-4">
+                                                                        <img src="assets/img/owner.svg" class="img-width margin-bottom-r5"
+                                                                             *ngIf="activity.vcfoOrAdvisor == 'VCFO'">
+                                                                        <img src="assets/img/vCFOuser_Icon.svg" class="img-width margin-bottom-r5"
+                                                                             *ngIf="activity.vcfoOrAdvisor != 'VCFO'">
+                                                                        <span>{{activity.vcfoOrAdvisor == 'VCFO' ?(activity.ownerName?task.ownerName:'CFO') : 'Advisor'}}</span>
+                                                                    </div>
+                                                                    <div class="col-5">
+                                                                        <span>{{activity.department}}</span>
+                                                                    </div>
+
+                                                                    
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-6">
+                                                                <div class="row">
+                                                                    <div class="col-2">
+                                                                        <button class="edit-popup-text" (click)="editActivity(task, activity, index)">
+                                                                            <img src="assets/img/edit.svg"> Edit
+                                                                        </button>
+                                                                    </div>
+                                                                    <div class="col-2">
+                                                                        <button class="edit-popup-text" (click)="deleteActivity(dealTasks, activity, index)">
+                                                                            <i class="fa fa-trash"></i> Delete
+                                                                        </button>
+                                                                    </div>
+                                                                    <div class="col-3">
+                                                                        <button class="edit-popup-text" (click)="addNote(task, index)">
+                                                                            <img src="assets/img/notes.svg">
+                                                                            {{activity.totalNote > 0 ? 'View Notes' : 'Add Notes'}}
+                                                                        </button>
+                                                                    </div>
+                                                                    
+                                                                    <div class="col-3">
+                                                                        <button class="edit-popup-text" (click)="markComplete(activity.actionPlanDetailId, index)">
+                                                                            <i class="fa fa-check"></i>Mark Complete
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row margin-top5 row-plan-details" *ngIf="(dealTasks.tasks[index].activities )?.length <= 0">
+                                                            <div class="col-12 text-center">
+                                                                No open tasks
+                                                            </div>
+                                                        </div>
+
+                                                        
+                                                    </div>
+                                                    
+                                                </div>-->
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div
+                    class="col-12 completed-task-section margin-top5"
+                    *ngIf="dealInfo.completedTasks > 0"
+                >
+                    <div class="">
+                        <i class="fa fa-check green-tick"></i>
+                        <button
+                            class="edit-popup-text"
+                            (click)="completedDealTasks(dealInfo)"
+                        >
+                            View {{ dealInfo.completedTasks }} Completed Tasks
+                            <i class="fa fa-sort-down"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

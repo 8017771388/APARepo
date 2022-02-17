@@ -1,0 +1,852 @@
+<div class="row mt-4">
+    <div class="col-12 pl-4 margin-left30">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb create-profile-breadcrumb">
+                <li class="breadcrumb-item">
+                    <strong>
+                        <a (click)="onCancel()" href="javascript:void(0)">Buyers</a>
+                    </strong>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">
+                    {{pageHeading}}
+                </li>
+            </ol>
+        </nav>
+    </div>
+    <div class="row">
+    <div class="col-12">
+        <div class="advisor-subscription create-profile container-fluid" [ngClass]="pageHeading == 'Edit Buyer Profile' ? 'edit-buyer' : '' ">
+            <!-- <div class="pl-2">
+                <h5>{{ pageHeading }}</h5>
+
+            </div> -->
+            <form #buyerForm="ngForm">
+                <div class="card margin-top15">
+                    <div class="card-header">Profile</div>
+                    <div class="card-body">
+                        <div class="form-group row">
+                            <label class="col-md-2 custom-label text-right">Profile Name:</label>
+
+                            <div class="col-md-6">
+                                <input
+                                    class="form-control"
+                                    name="profileName"
+									maxlength="150"
+                                    autocomplete="off"
+                                    required
+                                    [(ngModel)]="profileDet.buyerProfile.buyerProfileName"
+                                    placeholder="Enter Company or Advisor Name"
+                                    (ngModelChange)="onModelChange($event)"
+                                />
+                                
+                            </div>
+                            <label class="col-md-2 custom-label text-right">Profile Status:</label>
+                            <div class="col-md-2">
+                                <select
+                                    name="proStatus"
+                                    class="form-control custom-select"
+                                    [(ngModel)]="profileStatus"
+                                    (ngModelChange)="selectedStatus($event); onModelChange($event)"
+                                    required
+                                >   
+                                    <option value="Not Started">Not Started</option>
+                                    <option value="Active">Active</option>
+                                    <option value="Terminated">
+                                        Terminated
+                                    </option>
+                                </select>
+                            </div>
+
+                        </div>
+
+                        <div class="form-group row ">
+                            <label class="col-md-2 custom-label text-right">Contract Start Date:</label>
+                            <div class="col-md-2">
+                                <div class="input-group custom-input-group">
+								
+                                    <input
+                                        required
+                                        (keydown)="checkValue($event, 'startDate')"
+                                        name="startDate"
+                                        type="text"
+                                        class="form-control"
+                                        #cstartDate="bsDatepicker"
+                                        bsDatepicker
+                                        [bsConfig]="{
+                                            dateInputFormat: 'MMM D, YYYY'
+                                        }"
+                                        [(ngModel)]="startDate"
+                                        (bsValueChange)="
+                                            onValueChange($event, 'startDate')
+                                        "
+                                        autocomplete="off"
+                            
+                                        (ngModelChange)="onModelChange($event);changeStatus($event)"
+                                    />
+									   <span class="input-group-btn">
+										<button
+                                            style="line-height: 20px;"
+                                            type="button"
+                                            class="btn btn-default calender-custom"
+                                            (click)="cstartDate.toggle()"
+                                        >
+                                            <i class="fa fa-calendar"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                            <label class="col-md-2 custom-label text-right">Contract End Date:</label>
+                            <div class="col-md-2">
+                                <div class="input-group custom-input-group">
+                                   
+                                    <input
+                                        required
+                                        (keydown)="checkValue($event, 'endDate')"
+                                        name="endDate"
+                                        type="text"
+                                        class="form-control"
+                                        #cendDate="bsDatepicker"
+                                        bsDatepicker
+                                        [bsConfig]="{
+                                            dateInputFormat: 'MMM D, YYYY'
+                                        }"
+                                        [minDate]="minDate"
+                                        [(ngModel)]="endDate"
+                                        (bsValueChange)="
+                                            onValueChange($event, 'endDate')
+                                        "
+                                        
+                                        autocomplete="off"
+                                        [ngClass]="[
+                                            endDateError
+                                                ? 'ng-invalid'
+                                                : ''
+                                        ]"
+                                        (ngModelChange)="onModelChange($event)"
+                                    />
+
+                                    <span class="input-group-btn">
+                                        <button
+                                            style="line-height: 20px;"
+                                            type="button"
+                                            class="btn btn-default calender-custom"
+                                            (click)="cendDate.toggle()"
+                                        >
+                                            <i class="fa fa-calendar"></i>
+                                        </button>
+                                    </span>
+                                    
+                                </div>
+                                
+                            </div>
+                            <label class="col-md-2 custom-label text-right ">Last Valuation Date:</label>
+                            <div class="col-md-2">
+                                <div class="input-group custom-input-group">
+                                    <input
+                                        
+                                        name="lvDate"
+                                        type="text"
+                                        class="form-control"
+                                        #lvDate="bsDatepicker"
+                                        bsDatepicker
+                                        [bsConfig]="{
+                                            dateInputFormat: 'MMM D, YYYY'
+                                        }"
+                                        [(ngModel)]="profileDet.buyerProfile.lastValuationDate"
+                                        (bsValueChange)="
+                                            onValueChange($event, 'valuationDate')
+                                        "
+                                        autocomplete="off"
+                                        (keydown)="checkValue($event, 'valuationDate')"
+                                        (ngModelChange)="onModelChange($event)"
+                                    />
+                                    <span class="input-group-btn">
+                                        <button
+                                            style="line-height: 20px;"
+                                            type="button"
+                                            class="btn btn-default calender-custom"
+                                            (click)="lvDate.toggle()"
+                                        >
+                                            <i class="fa fa-calendar"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+
+                           
+                        </div>
+
+                            <div class="form-group row" *ngIf="endDateError">
+                                <div class="col-md-4"></div>
+                                <div class="col-md-4 text-right">
+                                    <div class="error-text" *ngIf="endDateError && endDate != ''">
+                                        <!-- Contract End Date cannot be earlier than the
+                                        Contract Start Date. Please select a valid date. -->
+                                        Contract Start Date must be prior to Contract 
+                                        End Date. Please select a valid date.
+                                    </div>
+                                </div>
+    
+                            </div>
+                        <div class="form-group row m-b-0">        
+                            <label class="col-md-2 custom-label text-right">Location:</label>
+                            <div class="col-md-2">
+                                <select title="{{locationTitle ? locationTitle : ''}}"
+                                        name="stateCd" [(ngModel)]="profileDet.buyerProfile.buyerLocationCd"
+                                          (ngModelChange)="onModelChange($event)"
+                                          
+                                        class="form-control custom-select"
+                                        required>  
+                                        <option value="">Select State</option> 
+                                        <option
+                                        *ngFor="let loc of locationList"
+                                        [ngValue]="loc.id"
+                                        >{{ loc.value }}</option
+                                    >
+                                    </select>
+                            </div> 
+                        </div>
+                        </div>
+                        
+                    
+                </div>
+                <div class="card margin-top15">
+                    <div class="card-header">Advisors</div>
+                    <div class="card-body">
+                        <div class="form-group row">
+                            <label class="col-md-2 custom-label text-right"
+                                >Primary Master Rep ID:</label
+                            >
+                            <div class="col-md-2">
+                                <input [(ngModel)]="searchAdvisor"
+                                       [ngClass]="{ 'ng-invalid': (noResult || advisorExists || advisorLinked) }"
+                                       name="repId"
+                                       autocomplete="off"
+                                       required
+                                       typeaheadOptionField="repIdWithName"
+                                       [typeahead]="dataSource"
+                                       [typeaheadAsync]="true"
+                                       class="form-control"
+                                       placeholder="Search Master Rep ID"
+                                       (typeaheadOnSelect)="
+                                        typeaheadOnSelectAdvisor($event)
+                                    "
+                                       (typeaheadNoResults)="
+                                        typeaheadNoResults($event)
+                                    "
+                                       (typeaheadOnBlur)="typeaheadOnBlur($event)"
+                                       [typeaheadMinLength]="0"
+                                       (typeaheadLoading)="
+                                        changeTypeaheadLoading($event)
+                                    "
+                                       (ngModelChange)="onModelChange($event)" />
+                                <div *ngIf="typeaheadLoading"
+                                     class="margin-top5">
+                                    <button class="btn btn-primary" disabled>
+                                        <span class="spinner-border spinner-border-sm"></span>
+                                    </button>
+                                    Loading...
+                                </div>
+                                <div *ngIf="noResult && !typeaheadLoading" class="error-text">
+                                    Invalid Rep ID.
+                                </div>
+                                <div *ngIf="advisorExists" class="error-text">
+                                    This Rep ID is already added. Choose another one.
+                                </div>
+                                <div *ngIf="advisorLinked" class="error-text">
+                                    Master Rep ID is already linked to an existing buyer profile. Please enter a different Master Rep ID or search for the existing profile to update it.
+                                </div>
+                            </div>
+                            
+                            <label class="col-md-1 custom-label">Name:</label>
+                            <div class="col-md-2">
+                                
+
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    required
+                                    name="advisorName"
+                                    disabled
+                                    [(ngModel)]="profileDet.advisors[0].fullName"
+                                    placeholder="Advisor’s Name"
+                                />
+                            </div>
+                            <label class="col-md-2 custom-label padding-r-0" *ngIf="pageHeading == 'Edit Buyer Profile'">ClientWorks Access:</label>
+                            <div class="col-md-2" *ngIf="pageHeading == 'Edit Buyer Profile'"> 
+                                <label class="custom-label">{{buyerCwAccessMapping[profileDet.advisors[0].buyerPortalCWStatus]}}</label>
+                                <!--<input
+                                    type="text"
+                                    class="form-control"
+                                    readonly
+                                    name="cwAccess"
+                                    [(ngModel)]="buyerCwAccessMapping[profileDet.advisors[0].buyerPortalCWStatus]"
+                                />-->
+
+                            </div>
+                        </div>
+                        <!--<div class="row">
+                            <div class="col-md-2"></div>
+                                <div class="col-md-3">
+                                <div *ngIf="typeaheadLoading"
+                                     class="margin-top5">
+                                    <button class="btn btn-primary" disabled>
+                                        <span class="spinner-border spinner-border-sm"></span>
+                                    </button>
+                                    Loading...
+                                </div>
+                                <div *ngIf="noResult && !typeaheadLoading" class="error-text">
+                                    Invalid Rep ID.
+                                </div>
+                            </div>
+                        </div>-->
+                        <div class="form-group row" [formGroup]="advisorForm">
+                            <div class="col-12"
+                                 formArrayName="buyerSeller">
+                                
+                                <div *ngFor="
+                                        let adv of buyerSeller().controls;
+                                        let i = index
+                                    "
+                                     [formGroupName]="i">
+                                    <div class="row">
+                                        <div class="col-md-2 custom-label text-right">Master Rep ID:</div>
+                                        <div class="col-2 ">
+                                            <input name="repId"
+                                                   autocomplete="off"
+                                                   class="form-control custom-typeahed"
+                                                   [ngClass]="{
+                                                    invalid:
+                                                        advisorsValidation[i]
+                                                            .repId,
+                                                    valid: !advisorsValidation[
+                                                        i
+                                                    ].repId,
+                                                    'border-red':
+                                                        borderColor[i],
+                                                    '': !borderColor[i]
+                                                }"
+                                                   formControlName="repId"
+                                                   placeholder="Search Master Rep ID"
+                                                   (keyup)="
+                                                    searchRepID(adv, i, $event)
+                                                "
+                                                   (blur)="selectRepIdOnBLur(i)"
+                                                   (ngModelChange)="onModelChange($event)" />
+                                            <div *ngIf="
+                                                    typAhedResList[i].length ==
+                                                    0
+                                                "
+                                                 class="error-txt">
+                                                {{ advNoResult[i] }}
+                                            </div>
+                                            <div *ngIf="typAhedResList[i].length > 0" class="custom-typeahed-container">
+                                                <ul>
+                                                    <li class="custom-typeahed"
+                                                        [ngClass]="[
+                                                            list.focus
+                                                                ? 'active'
+                                                                : ''
+                                                        ]"
+                                                        *ngFor="
+                                                            let list of typAhedResList[
+                                                                i
+                                                            ];
+                                                            let j = index
+                                                        "
+                                                        (click)="
+                                                            selectRepId(list, i)
+                                                        "
+                                                        [innerHTML]="
+                                                            list.repIdWithNameNew
+                                                        "></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1 custom-label">Name:</div>
+                                        <div class="col-md-2 ">
+                                            <input name="advisor"
+                                                   autocomplete="off"
+                                                   type="text"
+                                                   placeholder="Advisor's Name"
+                                                   class="form-control edit-name"
+                                                   disabled
+                                                   formControlName="advisorName"
+                                                   [ngClass]="[
+                                                    advisorsValidation[i]
+                                                        .advisorName
+                                                        ? 'invalid'
+                                                        : 'valid'
+                                                        
+                                                ]"
+                                                   (ngModelChange)="onModelChange($event)" />
+                                        </div> 
+                                        <label *ngIf="pageHeading == 'Edit Buyer Profile'" class="col-md-2 custom-label padding-r-0 ">ClientWorks Access:</label>
+                                        <div class="col-md-2 padding-fix" *ngIf="pageHeading == 'Edit Buyer Profile'">
+                                            <label class="custom-label text-left">{{adv.value.buyerPortalCWStatus}}</label>
+                                            <!--<input name="cwAccess"
+                                                   autocomplete="off"
+                                                   type="text"
+                                                   class="form-control inputToText"
+                                                   readonly
+                                                   formControlName="buyerPortalCWStatus"
+                                                   (ngModelChange)="onModelChange($event)" />-->
+                                        </div>                                       
+                                        
+                                        <div class="p-3 col-1 delete-padding">
+                                            <!-- <button
+                        class="custom-btn-Edit defaultText".
+                        (click)="gtantRevokeAcess(i)"
+                    >
+                        Revoke Access
+                    </button>
+                    | -->
+                                            <span class="custom-btn-Edit defaultText hand-cursor"
+                                                  (click)="deleteAdvisor(i, adv.value.repId)">
+                                                Delete
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-4">
+                                <button type="button"
+                                        class="btn btn-primary add-beneficiary margin-left15"
+                                        (click)="
+                                        addAdvisorList()
+                                    "
+                                        [disabled]="profileDet.advisors[0].masterRepID =='' || this.buyerSeller().length >= 5">
+                                    + Add more advisors
+                                </button>
+                                <!-- <span
+                                    class="btn custom-primary margin-left5 hand-cursor" (click)="addBeneficiary(beneficiaries.length)"
+                                >
+                                    + Add more beneficiaries
+                                </span> -->
+                            </div>
+                        </div>
+                    </div>
+                        
+                    
+                </div>
+                <div class="card margin-top15">
+                    <div class="card-header">
+                        Fit Score Characteristics
+                    </div>
+                    <div class="pageLoading" *ngIf="fitScoreLoader">
+                        <div class="loading page-loading"></div>
+                    </div>
+                    <div class="card-body" *ngIf="!fitScoreLoader">
+                        <div class="form-group row m-b-0 ">
+                            <div class="col-md-4">
+                                <label class="custom-label padding-r-0">
+                                    Affordability
+                                   </label>
+                                   <p class="subtext-form m-b-0">
+                                       Enter buyer details only
+                                   </p>
+       
+                            </div>                        
+                        </div>
+                        <div class="form-group row m-b-30">
+                            <div class="col-md-3">
+                                <label class="custom-label padding-r-0">
+                                    T12 Revenue
+                                   </label>
+                                   <div class="dollar">
+                                        <span class="currency">$</span>
+                                        <input                                        
+                                        pattern="^[-+]?(?:[0-9]+,)*[0-9]+(?:\.[0-9]+)?$"
+                                        type="text"
+                                        class="form-control pl-16"
+                                        name="revenue"
+                                        autocomplete="off"
+                                        [(ngModel)]="
+                                            profileDet.buyerFitScore
+                                                .t12Revenue
+                                        "
+                                        min="0"
+                                        max="99999999"
+                                        (ngModelChange)="changeLocale($event, 'revenue'); onModelChange($event) "
+                                        (keydown)="validateValue($event)" />
+                                   </div>
+                                   
+                            </div>
+                            <div class="col-md-3">
+                                <label class="custom-label padding-r-0">
+                                    Annual Expenses
+                                   </label>
+                                   <div class="dollar">
+                                        <span class="currency">$</span>
+                                        <input                                        
+                                        pattern="^[-+]?(?:[0-9]+,)*[0-9]+(?:\.[0-9]+)?$"
+                                        type="text"
+                                        class="form-control pl-16"
+                                        name="expenses"
+                                        autocomplete="off"
+                                        [(ngModel)]="
+                                            profileDet.buyerFitScore
+                                                .annualExpenses
+                                        "
+                                        min="0"
+                                        max="99999999"
+                                        (ngModelChange)="changeLocale($event, 'expenses'); onModelChange($event) "
+                                        (keydown)="validateValue($event)" />
+                                    </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="custom-label padding-r-0">
+                                    Available Capital for M&A
+                                   </label>
+                                   <div class="dollar">
+                                        <span class="currency">$</span>
+                                        <input                                        
+                                        pattern="^[-+]?(?:[0-9]+,)*[0-9]+(?:\.[0-9]+)?$"
+                                        type="text"
+                                        class="form-control pl-16"
+                                        name="capital"
+                                        autocomplete="off"
+                                        [(ngModel)]="
+                                            profileDet.buyerFitScore
+                                                .availableCapital
+                                        "
+                                        min="0"
+                                        max="99999999"
+                                        (ngModelChange)="changeLocale($event, 'capital'); onModelChange($event) "
+                                        (keydown)="validateValue($event)" />
+                                    </div>
+                            </div>
+                        </div>
+                        <div class="form-group row m-b-0">
+                            <div class="col-md-4">
+                                <label class="custom-label padding-r-0">
+                                    Undesired Investment Mix
+                                </label>
+                                   <p class="subtext-form m-b-0">
+                                    Enter max tolerance for each category. If an advisor does not want more than 30% if annuities, put 30%. Blank means product is not an issue.
+                                   </p>
+       
+                            </div>                        
+                        </div>
+                        <div class="form-group row m-b-30">
+                            <div class="col-md-2">
+                                <label class="custom-label padding-r-0">
+                                    Annuities  
+                                </label>
+                                <div class="dollar"> 
+                                    <span class="currency perc">%</span>
+                                    <input
+                                    type="text"
+                                    min="0"
+                                    max="100"
+                                    step="1"
+                                    pattern="^(100|[1-9]?[0-9])$"
+                                    #annuity
+                                    class="form-control pr-20"
+                                    name="annuityField"
+                                    maxlength="3"
+                                    autocomplete="off"
+                                    [(ngModel)]="profileDet.buyerFitScore.annuities"
+                                    (ngModelChange)="onModelChange($event)"
+                                />
+                                </div>
+                                <div
+                                    *ngIf="
+                                    annuity.classList.contains(
+                                            'ng-invalid'
+                                        )
+                                    "
+                                    class="error-text"
+                                >
+                                Please enter a valid percentage value between 0 and 100.
+                                </div> 
+                            </div>
+                            <div class="col-md-2">
+                                <label class="custom-label padding-r-0">
+                                    Insurance    
+                                   </label>
+                                   <div class="dollar"> 
+                                        <span class="currency perc">%</span>
+                                        <input
+                                            type="text"
+                                            min="0"
+                                            max="100"
+                                            step="1"
+                                            pattern="^(100|[1-9]?[0-9])$"
+                                            #insurance
+                                            class="form-control pr-20"
+                                            name="insuranceField"
+                                            maxlength="3"
+                                            autocomplete="off"
+                                            [(ngModel)]="profileDet.buyerFitScore.insurance"
+                                            (ngModelChange)="onModelChange($event)"
+                                        />
+                                    </div>
+                                    <div
+                                    *ngIf="
+                                    insurance.classList.contains(
+                                            'ng-invalid'
+                                        )
+                                    "
+                                    class="error-text"
+                                >
+                                Please enter a valid percentage value between 0 and 100.
+                                </div> 
+                            </div>
+                            <div class="col-md-2">
+                                <label class="custom-label padding-r-0">
+                                    Mutual Funds
+                                   </label>
+                                   <div class="dollar"> 
+                                        <span class="currency perc">%</span>
+                                        <input
+                                            type="text"
+                                            min="0"
+                                            max="100"
+                                            step="1"
+                                            pattern="^(100|[1-9]?[0-9])$"
+                                            #mutualFunds
+                                            class="form-control pr-20"
+                                            name="mutualFundsField"
+                                            maxlength="3"
+                                            autocomplete="off"
+                                            [(ngModel)]="profileDet.buyerFitScore.mutualFunds"
+                                            (ngModelChange)="onModelChange($event)"
+                                        />
+                                    </div>
+                                    <div
+                                    *ngIf="
+                                    mutualFunds.classList.contains(
+                                            'ng-invalid'
+                                        )
+                                    "
+                                    class="error-text"
+                                >
+                                Please enter a valid percentage value between 0 and 100.
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="custom-label padding-r-0">
+                                    Alternatives    
+                                   </label>
+                                   <div class="dollar"> 
+                                        <span class="currency perc">%</span>
+                                        <input
+                                            type="text"
+                                            min="0"
+                                            max="100"
+                                            step="1"
+                                            pattern="^(100|[1-9]?[0-9])$"
+                                            #alternatives
+                                            class="form-control pr-20"
+                                            name="alternativesField"
+                                            maxlength="3"
+                                            autocomplete="off"
+                                            [(ngModel)]="profileDet.buyerFitScore.alternatives"
+                                            (ngModelChange)="onModelChange($event)"
+                                        />
+                                    </div>
+                                    <div
+                                    *ngIf="
+                                    alternatives.classList.contains(
+                                            'ng-invalid'
+                                        )
+                                    "
+                                    class="error-text"
+                                >
+                                Please enter a valid percentage value between 0 and 100.
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="custom-label padding-r-0">
+                                    Financial Planning
+                                   </label>
+                                   <div class="dollar"> 
+                                        <span class="currency perc">%</span>
+                                        <input
+                                            type="text"
+                                            min="0"
+                                            max="100"
+                                            step="1"
+                                            pattern="^(100|[1-9]?[0-9])$"
+                                            #financialPlaning
+                                            class="form-control pr-20"
+                                            name="financialPlanningField"
+                                            maxlength="3"
+                                            autocomplete="off"
+                                            [(ngModel)]="profileDet.buyerFitScore.financialPlanning"
+                                            (ngModelChange)="onModelChange($event)"
+                                        />
+                                    </div>
+                                    <div
+                                    *ngIf="
+                                    financialPlaning.classList.contains(
+                                            'ng-invalid'
+                                        )
+                                    "
+                                    class="error-text"
+                                >
+                                Please enter a valid percentage value between 0 and 100.
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="custom-label padding-r-0">
+                                    Other
+                                   </label>
+                                   <div class="dollar"> 
+                                        <span class="currency perc">%</span>
+                                        <input
+                                            type="text"
+                                            min="0"
+                                            max="100"
+                                            step="1"
+                                            pattern="^(100|[1-9]?[0-9])$"
+                                            #other
+                                            class="form-control pr-20"
+                                            name="otherField"
+                                            maxlength="3"
+                                            autocomplete="off"
+                                            [(ngModel)]="profileDet.buyerFitScore.other"
+                                            (ngModelChange)="onModelChange($event)"
+                                        />
+                                    </div>
+                                    <div
+                                    *ngIf="
+                                    other.classList.contains(
+                                            'ng-invalid'
+                                        )
+                                    "
+                                    class="error-text"
+                                >
+                                Please enter a valid percentage value between 0 and 100.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row m-b-0">
+                            <div class="col-md-4">
+                                <label class="custom-label padding-r-0">
+                                    Seller Location
+                                   </label>
+                                   <p class="subtext-form m-b-0">
+                                    Select all states buyer wants to source sellers in
+                                   </p>
+       
+                            </div>                        
+                        </div>
+                       <div class="form-group row m-b-0">
+                            <div class="col-12">
+                               <input type="checkbox" name="selectCB" [(ngModel)]="selectAll" (change)="selectAllCB($event); selectedAllCB = !selectedAllCB"> {{selectedAllCB ? 'Clear All' : 'Select All'}}
+                            </div>
+                        </div>
+                         <div class="form-group row">
+                           <div class="col-8" >
+                            <div class="checkBoxContainer" *ngFor = "let state of statesCB; let i=index;">
+                                <p title="{{state.state}}" *ngIf="state.buyerFitScoreLocationMappingID > 0 || state.buyerFitScoreLocationMappingID == 0">{{state.stateCd}}</p>
+                                <input *ngIf="state.buyerFitScoreLocationMappingID > 0 || state.buyerFitScoreLocationMappingID == 0" type="checkbox" title="{{state.state}}" name="checkbox{{ i }}" attr.id="checkBox{{i}}" [(ngModel)]="state.isActive" [value]="state.isActive" (change)="changeCBValue($event)">
+                                
+                            </div>
+                           </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card margin-top15">
+                    <div class="card-header">
+                        Internal Notes
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group row">
+                            <label class="col-md-2 text-right custom-label">Add Note:</label>
+                        <div class="col-md-10">
+                            <textarea class="form-control custom-field textarea-resize"
+                            rows="3"
+                            id="comment"
+                            [(ngModel)]="profileDet.notes.note"
+                            name="note"
+                            maxlength="500"
+                            placeholder="Please enter your note here.."
+                            (ngModelChange)="onModelChange($event)"></textarea>
+
+                        </div>
+
+                            
+                        </div>
+                        <div class="form-group row" *ngIf="notes?.length > 0">
+                            <label class="col-md-2 custom-label"></label>
+
+                            <div class="col-md-10 custom-field deal-name-box">
+                                <div class="note-container">
+                                    <div>
+                                        <div
+                                            class=""
+                                            *ngFor="let note of notes"
+                                        >
+                                            <div class="note-icon">
+                                                <i
+                                                    class="fa fa-sticky-note"
+                                                ></i>
+                                            </div>
+                                            <div class="note-details">
+                                                <strong class="label-strong">
+                                                    {{ note.createdByName }}
+                                                </strong>
+                                                <span class="label-strong">
+                                                    {{ note.createdOn | date }}
+                                                </span>
+                                                <p>{{ note.note }}</p>
+                                                <div
+                                                    class="note-del"
+                                                    (click)="deleteNote(note)"
+                                                >
+                                                    Delete
+                                                    <i
+                                                        class="fa fa-trash"
+                                                        aria-hidden="true"
+                                                    ></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="notsContainer"
+                                        *ngIf="profileDet.notes?.length == 0"
+                                    >
+                                        <strong>No Note Found</strong>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row deal-btn-section">
+                    <div class="col-md-12 pr-0 margin-top15 text-right pb-3">
+                        <input
+
+                            class="btn cancel-btn"
+                            name="Cancel"
+                            type="button"
+                            value="Cancel"
+                            (click)="onCancel()"
+                        />
+                    
+                        <input
+                            [disabled]="!buyerForm.form.valid || endDateError || !advisorSelected || ((!validAdvisor && buyerSeller().length > 0))"
+                            class="btn custom-primary margin-left5"
+                            name="Save"
+                            type="button"
+                            value="Save"
+                            (click)="openConfirmation()"
+                        />
+                        
+                    </div>
+                    
+                </div>
+               
+            </form>
+        </div>
+    </div>
+</div>
+</div>

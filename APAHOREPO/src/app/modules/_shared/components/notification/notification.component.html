@@ -1,0 +1,43 @@
+<div class="modal-wrapper">
+    <div class="modal-header goal-header">
+        <h1>{{title}}</h1>
+        <button (click)="closeModal()" class="cross-btn">
+            <i class="fa fa-times"></i>
+        </button>
+    </div>
+    <div class="modal-body notes-body">
+        <div class="row text-center padding-10" *ngIf="allNotification?.length <= 0"> <div class="col-12"> No new notifications.</div></div>
+        <div class="row" *ngIf="allNotification?.length > 0">
+            <div class="col-12 notification-row" *ngFor="let deal of allNotification" (click)="readNote(deal.dealInfo, deal.dealInfo.notification, $event)" [ngClass]="deal.dealInfo.notification.readFlag != 'R' ? 'bg-grey' : ''">
+                <i class="fa fa-caret-right" *ngIf="!deal.dealInfo.notification.visibleNote"></i>
+                <i class="fa fa-caret-down" *ngIf="deal.dealInfo.notification.visibleNote"></i>
+                <span >
+                New Note - {{deal.dealInfo.dealName}}
+                </span>
+                <div class="expand-notification"  [hidden]="!deal.dealInfo.notification.visibleNote">
+                    <div class="notification-det">
+                        <span>{{deal.dealInfo.notification.task}}</span>
+                        <div class="row">
+                            <div class="col-6 grey-font"><strong>Note</strong></div>
+                            <div class="col-6 grey-font"><strong>Created By</strong></div>
+                        </div>
+
+                        <div class="row new-note-detail grey-background" >
+                            <div class="col-6 light-grey-font">{{deal.dealInfo.notification.note}}</div>
+                            <div class="col-6 light-grey-font">
+                                <span>{{deal.dealInfo.notification.notecreatedBy}} on {{deal.dealInfo.notification.noteCreatedOn | date}}</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <button type="button" id="notificationView" class="btn btn-outline-primary custom-btn btn-sm width-18 margin-r15" (click)="viewNote(deal.dealInfo,deal.dealInfo.notification)">VIEW</button>
+                            <button type="button" id="notificationDismiss" class="btn btn-outline-primary custom-btn btn-sm width-18" (click)="dismissNotification(deal.dealInfo,deal.dealInfo.notification)">DISMISS</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-primary custom-btn btn-sm width-18" (click)="closeModal()">CANCEL</button>
+    </div>
+</div>

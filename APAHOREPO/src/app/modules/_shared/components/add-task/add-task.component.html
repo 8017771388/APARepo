@@ -1,0 +1,187 @@
+<div class="modal-wrapper">
+    <div class="modal-header goal-header">
+        <h1>{{ title }}</h1>
+        <button (click)="bsModalRef.hide()" class="cross-btn">
+            <i class="fa fa-times"></i>
+        </button>
+    </div>
+    <div class="modal-body goal-body">
+        <form #addTaskForm="ngForm">
+            <!-- <div
+            class="row form-group margin-top5"
+            *ngIf="title == 'Add Task' && showMasterLibrary"
+        >
+            <div class="col-2">
+                <input
+                    class="form-check-input custom-radio"
+                    type="radio"
+                    name="master"
+                    value="Master"
+                />
+                <label for="master" class="padding-left18">
+                    Master Library
+                </label>
+            </div>
+            <div class="col-10">
+                <input
+                    class="form-check-input custom-radio"
+                    type="radio"
+                    name="master"
+                    value="Custom"
+                />
+                <label for="master" class="padding-left18">
+                    Custom Task
+                </label>
+            </div>
+        </div> -->
+            <div class="row form-group margin-top5">
+                <div class="col-12">
+                    <label>Task Name</label>
+                    <input
+                        placeholder="Task Name"
+                        type="text"
+                        [(ngModel)]="tasks.task"
+                        class="form-control custom-field"
+                        maxlength="300"
+                        required
+                        name="taskName"
+                    />
+
+                    <!-- <ng-select #selectTask *ngIf="goalType === 'Master' && masterLibraryTask !== null && !isNewGoal && !isEdit"
+                    [items]="masterLibrary"
+                    [multiple]="true"
+                    [closeOnSelect]="false"
+                    [searchable]="false"
+                    bindLabel="task"
+                    bindValue ="task"
+                    placeholder="Select Task"
+                    [(ngModel)]="tasks.taskName"
+                    (change)="taskSelected($event)">
+                    <ng-template ng-option-tmp let-item="item" let-index="index">                           
+                        <b>{{item.task | shortName:100}}</b>
+                    </ng-template>
+                </ng-select> -->
+                    <!-- <span class="error-text" *ngIf="allTaskExist && goalType !== 'Custom'">
+                    <span>All the tasks have already been added</span>
+                </span>
+                <span class="error-text" *ngIf="taskExist && goalType !== 'Master'">
+                    <span> Task already exists</span>
+                </span>
+                <span class="error-text" *ngIf="taskExist && isEdit">
+                    <span>Task name is duplicate.</span>
+                </span> -->
+                </div>
+            </div>
+            <!-- <div class="row margin-top5">
+            <div class="col-6">
+                <label>Department</label>
+                <select
+                    class="form-control custom-field"
+                    [(ngModel)]="tasks.department"
+                >
+                    <option value="AFS-M&A - Deal Specialist" [selected]="true"
+                        >AFS - M&A - Deal Specialist</option
+                    >
+                    <option value="AFS-M&A - Sr. Specialist"
+                        >AFS - M&A - Sr. Specialist</option
+                    >
+                </select>
+            </div>
+            <div class="col-6">
+                <label>SLA</label>
+                <input
+                    placeholder=""
+                    type="text"
+                    [(ngModel)]="tasks.sla"
+                    class="form-control custom-field"
+                    maxlength="300"
+                />
+            </div>
+        </div> -->
+            <div class="row form-group margin-top5">
+                <div class="col-6">
+                    <label>Owner</label>
+                    <!-- <select required name="owner"
+                    class="form-control custom-field"
+                    [(ngModel)]="tasks.owner"
+                >
+                    <option value="Seller" selected>Seller</option>
+                    <option value="Buyer">Buyer</option>
+                    <option value="Deal Specialist">Deal Specialist</option>
+                </select> -->
+                    <select
+                        required
+                        name="owner"
+                        class="form-control custom-field"
+                        [(ngModel)]="tasks.owner"
+                    >
+                        <option value="">Select Owner</option>
+                        <option
+                            *ngFor="let owner of taskOwner"
+                            [ngValue]="owner.code"
+                            >{{ owner.name }}</option
+                        >
+                    </select>
+                </div>
+
+                <div class="col-6">
+                    <label>Due Date</label>
+                    <div class="input-group custom-input-group">
+                        <input
+                            required
+                            name="duedate"
+                            type="text"
+                            class="form-control custom-field"
+                            [(ngModel)]="editDate"
+                            #dueDate="bsDatepicker"
+                            bsDatepicker
+                            [minDate]="minDate"
+                            [bsConfig]="{ dateInputFormat: 'MMM D, YYYY' }"
+                            (bsValueChange)="onValueChange($event, 'duedate')"
+                        />
+                        <span class="input-group-btn">
+                            <button
+                                type="button"
+                                class="btn btn-default calender-custom"
+                                (click)="dueDate.toggle()"
+                                ng-click="isDatepickerOpen = !isDatepickerOpen"
+                            >
+                                <i class="fa fa-calendar"></i>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row form-group margin-top5" *ngIf="showNotes">
+                <div class="col-12">
+                    <label>Notes</label>
+                    <textarea
+                        class="form-control custom-field textarea-resize"
+                        rows="5"
+                        id="comment"
+                        [(ngModel)]="tasks.note"
+                        name="note"
+                    ></textarea>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer custom-footer">
+        <input
+            type="button"
+            class="btn cancel-btn"
+            value="Cancel"
+            name="Cancel"
+            (click)="bsModalRef.hide()"
+        />
+        <input
+            [disabled]="!addTaskForm.form.valid"
+            type="button"
+            class="btn custom-primary"
+            value="Save"
+            name="Save"
+            (click)="saveTask()"
+        />
+    </div>
+</div>

@@ -1,0 +1,452 @@
+<div class="home-content pt-0 padding-bottom10">
+    <div class="container-fluid">
+        <div class="row m-1 mt-3 search-wrapper">
+            <div class="col-4 input-group input-group-search">
+                <label for="grid-search" class="sr-only"></label>
+                <div class="reset-field">
+                    <input
+                        class="form-control grid-search"
+                        [(ngModel)]="searchText"
+                        (keydown)="searchOnEnter($event)"
+                        placeholder="Search Rep ID or Name"
+                        type="text"
+                    />
+                    <i
+                        *ngIf="searchText != ''"
+                        class="clear-search fa fa-remove"
+                        (click)="searchText = ''; searchAdvisor()"
+                    ></i>
+                </div>
+                <span class="input-group-btn advisor-panel-search">
+                    <button
+                        class="btn text-search-button"
+                        (click)="searchAdvisor()"
+                    >
+                        <i class="fa fa-search"></i>
+                    </button>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="home-content record-section">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-4">
+                <div class="total-records pl-0">
+                    <span>
+                        <strong>{{ totalCount }}</strong>
+                        {{ totalCount > 1 ? "Deals" : "Deal" }}
+                    </span>
+                </div>
+            </div>
+            <!-- <div class="col-8 text-right">
+                <div                  
+                    class="notification"
+                    
+                    (click)="openNotification()"
+                >
+                    <i
+                        class="fa fa-bell"
+                        aria-hidden="true"
+                        
+                    ></i>
+                    <span *ngIf="notificationCount > 0 && showNotification">{{
+                        notificationCount > 0 ? notificationCount : ""
+                    }}</span>
+                </div>
+            </div> -->
+        </div>
+    </div>
+</div>
+
+<div class="home-content pt-0">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-10 col-lg-12 data-grid">
+                <dx-data-grid
+                    #gridContainer
+                    id="gridContainerMD"
+                    [dataSource]="dataSource"
+                    [showColumnLines]="true"
+                    [showRowLines]="true"
+                    [showBorders]="true"
+                    [columnAutoWidth]="false"
+                    [rowAlternationEnabled]="true"
+                    [cacheEnabled]="false"
+                >
+                    <dxo-remote-operations
+                        [sorting]="true"
+                        [filtering]="true"
+                        [paging]="true"
+                    >
+                    </dxo-remote-operations>
+                    <dxo-paging [pageSize]="14"></dxo-paging>
+                    <dxo-pager
+                        [showPageSizeSelector]="false"
+                        [allowedPageSizes]="[5, 10, 20]"
+                        [showInfo]="true"
+                        infoText="Page {0} of {1}({{
+                            pagingInfo
+                        }} of {2} items)"
+                    >
+                        >
+                    </dxo-pager>
+                    <dxo-header-filter [visible]="showHeaderFilter">
+                    </dxo-header-filter>
+
+                    <dxi-column
+                        dataField="dealName"
+                        caption="Deal Name"
+                        [allowSorting]="true"
+                        [allowFiltering]="false"
+                        
+                        headerCellTemplate="titleHeaderTemplate"
+                    >
+                    </dxi-column>
+
+                    <!--<dxi-column dataField="dealType"
+                                caption="Deal Type"
+                                [allowSorting]="true"
+                                [width]="200">
+                    </dxi-column>-->
+                    <dxi-column
+                        dataField="dealSpecialistInfo"
+                        caption="Deal Specialist"
+                        [allowSorting]="false"
+                        cellTemplate="DS"
+                        [width]="210"
+                        alignment="center"
+                        [calculateFilterExpression]="
+                            calculateFilterExpressionDS
+                        "
+                        headerCellTemplate="titleHeaderTemplate"
+                    >
+                        <dxo-header-filter
+                            [dataSource]="filterData.dealSpecialist"
+                        ></dxo-header-filter>
+                        <div *dxTemplate="let detail of 'DS'">
+                            {{ detail.data.dealSpecialistInfo.dsFullName }}
+                        </div>
+                    </dxi-column>
+
+                    <dxi-column
+                        dataField="dealStage"
+                        caption="Active Stage"
+                        [allowSorting]="false"
+                        [width]="150"
+                        alignment="center"
+                        [calculateFilterExpression]="calculateFilterExpressionS"
+                        headerCellTemplate="titleHeaderTemplate"
+                    >
+                        <dxo-header-filter
+                            [dataSource]="filterData.stage"
+                        ></dxo-header-filter>
+                    </dxi-column>
+
+                    <dxi-column
+                        dataField="dealStartDate"
+                        caption="Start Date"
+                        [allowFiltering]="false"
+                        [allowSorting]="true"
+                        [width]="164"
+                        alignment="center"
+                        dataType="date"
+                        format="MMM d, yyyy"
+                        headerCellTemplate="titleHeaderTemplate"
+                    ></dxi-column>
+                    <dxi-column
+                        dataField="dealTargetEndDate"
+                        caption="Target Close Date"
+                        [allowFiltering]="false"
+                        [allowSorting]="true"
+                        [width]="164"
+                        alignment="center"
+                        dataType="date"
+                        format="MMM d, yyyy"
+                        headerCellTemplate="titleHeaderTemplate"
+                    ></dxi-column>
+                    <!--<dxi-column dataField="dealStatus"
+                                caption="Deal Status"
+                                [allowFiltering]="false"
+                                [allowSorting]="false"
+                                [width]="120"></dxi-column>-->
+
+                    <dxi-column
+                        caption="Action"
+                        [allowFiltering]="false"
+                        [allowSorting]="false"
+                        cellTemplate="Action"
+                        [width]="200"
+                        alignment="center"
+                        headerCellTemplate="titleHeaderTemplate"
+                    >
+                        <div
+                            class="txt-center"
+                            *dxTemplate="let dataAction of 'Action'"
+                        >
+                            <div
+                                class="col-lg-6 p-1 action-button-update"
+                                *ngIf="dataAction.data.totalTask <= 0"
+                            >
+                                <button
+                                    type="button"
+                                    class="btn action-button btn-sm"
+                                    *ngIf="dataAction.data.totalTask <= 0"
+                                    [routerLink]="[
+                                        '/home/build-deal/' +
+                                            dataAction.data.dealID +
+                                            '/' +
+                                            dataAction.data.dealTypeID
+                                    ]"
+                                >
+                                    Create Plan
+                                </button>
+                            </div>
+                            <div
+                                class="col-lg-6 p-1 action-button-update"
+                                *ngIf="dataAction.data.totalTask > 0"
+                            >
+                                <button
+                                    type="button"
+                                    class="btn action-button btn-sm"
+                                    *ngIf="dataAction.data.totalTask > 0"
+                                    [routerLink]="[
+                                        '/home/view-deals-new/' +
+                                            dataAction.data.dealID +
+                                            '/' +
+                                            dataAction.data.dealTypeID
+                                    ]"
+                                >
+                                    Manage Plan
+                                </button>
+                            </div>
+
+                            <div class="col-lg-6 p-1 action-button-edit">
+                                <button
+                                    type="button"
+                                    class="btn action-button btn-sm"
+                                    (click)="
+                                        goToEditDeal(dataAction.data.dealID)
+                                    "
+                                >
+                                    Edit Deal
+                                </button>
+                            </div>
+
+                            <!-- <a
+                                *ngIf="dataAction.data.totalTask <= 0"
+                                class="blue"
+                                [routerLink]="[
+                                    '/home/build-deal/' +
+                                        dataAction.data.dealID +
+                                        '/' +
+                                        dataAction.data.dealTypeID
+                                ]"
+                                >Create Plan</a
+                            >
+                            <a
+                                *ngIf="dataAction.data.totalTask > 0"
+                                class="blue"
+                                [routerLink]="[
+                                    '/home/view-deals-new/' +
+                                        dataAction.data.dealID +
+                                        '/' +
+                                        dataAction.data.dealTypeID
+                                ]"
+                                >Manage Plan</a
+                            >
+                            |
+                            <a
+                                class="blue"
+                                (click)="goToEditDeal(dataAction.data.dealID)"
+                                
+                                >Edit Deal</a
+                            > -->
+                        </div>
+                    </dxi-column>
+                    <div class="column-header" *dxTemplate="let info of 'titleHeaderTemplate'">
+                        <span
+                            ><strong>{{ info.column.caption }}</strong></span
+                        >
+                    </div>
+
+                    <!-- <div *dxTemplate="let taskDet of 'detail'">
+                        <dx-data-grid
+                            [dataSource]="getTasks(taskDet.key)"
+                            [showColumnLines]="true"
+                            [showRowLines]="true"
+                            [showBorders]="true"
+                            [rowAlternationEnabled]="true"
+                            [columnAutoWidth]="true"
+                        >
+                            <dxi-column
+                                dataField="task"
+                                [width]="500"
+                                [allowSorting]="false"
+                            >
+                                
+                            </dxi-column>
+                            <dxi-column
+                                dataField="stage"
+                                [width]="140"
+                                [allowSorting]="true"
+                            ></dxi-column>
+                            <dxi-column
+                                dataField="status"
+                                [width]="150"
+                                [allowSorting]="true"
+                            ></dxi-column>
+                            <dxi-column
+                                dataField="duedate"
+                                [width]="100"
+                                caption="Due Date"
+                                dataType="date"
+                                format="MMM d, yyyy"
+                                [allowFiltering]="false"
+                                [allowSorting]="false"
+                                headerCellTemplate="titleHeaderTemplate"
+                            ></dxi-column>
+                            <div
+                                *dxTemplate="
+                                    let info of 'titleHeaderTemplate';
+                                    let i = index
+                                "
+                            >
+                                <span>
+                                    Due Date
+                                    <i
+                                        class="fa fa-filter text-right filter-icon"
+                                        aria-hidden="true"
+                                        (click)="
+                                            taskDet.data.showFilter = !taskDet
+                                                .data.showFilter
+                                        "
+                                    ></i>
+                                </span>
+                                <div
+                                    class="dateFilter-popup"
+                                    *ngIf="taskDet.data.showFilter"
+                                >
+                                    <div class="row m-1 p-1">
+                                        <div class="col-3 p-0 pr-1 text-right">
+                                            From :
+                                        </div>
+                                        <div class="col-9 p-0">
+                                            <div
+                                                class="input-group custom-input-group"
+                                            >
+                                                <input
+                                                    type="text"
+                                                    class="form-control custom-field"
+                                                    [(ngModel)]="fromDate[i]"
+                                                    #dateFrom="bsDatepicker"
+                                                    bsDatepicker
+                                                    [bsConfig]="{
+                                                        dateInputFormat:
+                                                            'MMM D, YYYY'
+                                                    }"
+                                                    (bsValueChange)="
+                                                        onValueChange(
+                                                            $event,
+                                                            'dateFrom',
+                                                            i
+                                                        )
+                                                    "
+                                                />
+                                                <span class="input-group-btn">
+                                                    <button
+                                                        type="button"
+                                                        class="btn btn-default calender-custom"
+                                                        (click)="
+                                                            dateFrom.toggle()
+                                                        "
+                                                        ng-click="isDatepickerOpen = !isDatepickerOpen"
+                                                    >
+                                                        <i
+                                                            class="fa fa-calendar"
+                                                        ></i>
+                                                    </button>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row m-1 p-1">
+                                        <div class="col-3 p-0 pr-1 text-right">
+                                            To :
+                                        </div>
+                                        <div class="col-9 p-0">
+                                            <div
+                                                class="input-group custom-input-group"
+                                            >
+                                                <input
+                                                    type="text"
+                                                    class="form-control custom-field"
+                                                    [(ngModel)]="toDate[i]"
+                                                    #dateTo="bsDatepicker"
+                                                    bsDatepicker
+                                                    [bsConfig]="{
+                                                        dateInputFormat:
+                                                            'MMM D, YYYY'
+                                                    }"
+                                                    (bsValueChange)="
+                                                        onValueChange(
+                                                            $event,
+                                                            'dateTo',
+                                                            i
+                                                        )
+                                                    "
+                                                />
+                                                <span class="input-group-btn">
+                                                    <button
+                                                        type="button"
+                                                        class="btn btn-default calender-custom"
+                                                        (click)="
+                                                            dateTo.toggle()
+                                                        "
+                                                        ng-click="isDatepickerOpen = !isDatepickerOpen"
+                                                    >
+                                                        <i
+                                                            class="fa fa-calendar"
+                                                        ></i>
+                                                    </button>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row m-1 p-1">
+                                        <div class="col-8 p-0 text-right">
+                                            <input
+                                                type="button"
+                                                class="btn cancel-btn action-button margin-left10"
+                                                value="Cancel"
+                                                name="Cancel"
+                                                (click)="
+                                                    taskDet.data.showFilter = false
+                                                "
+                                            />
+                                        </div>
+                                        <div class="col-4 p-0 text-right">
+                                            <input
+                                                type="button"
+                                                class="btn custom-primary action-button"
+                                                value="Save"
+                                                name="Filter"
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <dxi-column
+                                dataField="owner"
+                                [width]="120"
+                                [allowSorting]="true"
+                            ></dxi-column>
+                        </dx-data-grid>
+                    </div> -->
+                </dx-data-grid>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,188 @@
+<div class="advisor-subscription">
+    <div class="card custom-header-card text-white">
+        <div class="card-header">
+            Advisor Subscription
+        </div>
+    </div>
+    <div class="card margin-top15">
+        <div class="card-header">Primary Principal</div>
+        <div class="card-body">
+            <div class="form-group row">
+                <label class="col-md-1  custom-label">Full Name :</label>
+                <div class="col-md-2">
+                    <input type="text" [disabled]="isDisabled" class="form-control" [(ngModel)]="AdvisorData.fullname">
+                </div>
+                <label class="col-md-1 custom-label">Rep ID :</label>
+                <div class="col-md-2">
+                    <input type="text" [disabled]="isDisabled" class="form-control" [(ngModel)]="AdvisorData.repid">
+                </div>
+                <label class="col-md-1 custom-label">Include ID :</label>
+                <div class="col-md-2">
+
+                    <input type="checkbox" class="custom-check" [(ngModel)]="AdvisorData.includeId"(ngModelChange)="valuechange($event, 'includeId')" /> 
+    
+                    <!-- <input type="number" class="form-control"  min="0" max="100" step="0.1"                   
+                           [(ngModel)]="AdvisorData.payoutPercent"
+                           name="rateInput"
+                          pattern="^(100(\.0{1,2})?|[1-9]?\d(\.\d{1,1})?)$"
+                           required
+                           (ngModelChange)="valuechange($event,'rateInput')"
+                           #rateInput3="ngModel" />    
+                    <div *ngIf="rateInput3.errors && !rateInput3.valid && (rateInput3.dirty || rateInput3.touched)">
+                        <div [hidden]="!rateInput3.errors.pattern"  class="error-text">
+                            Number should be between 0 and 100
+                        </div>
+                    </div> -->
+                </div>
+
+                <label class="col-md-1 custom-label">Ownership % :</label>
+                <div class="col-md-2">
+
+                    <input type="number" class="form-control"  min="0" max="100" step="0.1"                   
+                           [(ngModel)]="AdvisorData.ownershipPercentage"
+                           name="rateInput"
+                          pattern="^(100(\.0{1,2})?|[1-9]?\d(\.\d{1,1})?)$"                           
+                           (ngModelChange)="valuechange($event,'rateInput')"
+                           #rateInput2="ngModel" />
+                    
+                           
+                    <div *ngIf="rateInput2.errors && !rateInput2.valid && (rateInput2.dirty || rateInput2.touched)">
+                        <div [hidden]="!rateInput2.errors.pattern"  class="error-text">
+                            Number should be between 0 and 100
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card margin-top15">
+            <div class="card-header">Associated Reps</div>
+            <div class="card-body">
+               <div class="form-group row" *ngFor="let repsData of AdvisorData.secondaryRepids; let i = index">
+                    <label class="col-md-1  custom-label">Full Name :</label>
+                    <div class="col-md-2">
+                        <input type="text" [disabled]="isDisabled" class="form-control" [(ngModel)]="repsData.fullname"> 
+                    </div>
+                    <label class="col-md-1 custom-label">Rep ID :</label>
+                    <div class="col-md-2">
+                        <input type="text" [disabled]="isDisabled" class="form-control" [(ngModel)]="repsData.repid"> 
+                    </div>
+                    <label class="col-md-1 custom-label">Include ID :</label>
+                    <div class="col-md-1">
+                        <input type="checkbox" class="custom-check" [(ngModel)]="repsData.includeId" (ngModelChange)="valuechange($event, 'includeId')"/> 
+                        <!-- <input type="number" class="form-control" min="0" max="100" step="0.1"
+                               [(ngModel)]="repsData.payoutPercent"
+                               name="rateInput"
+                                 pattern="^(100(\.0{1,2})?|[1-9]?\d(\.\d{1,1})?)$"
+                               required
+                               (ngModelChange)="payoutChanged($event, 'rateInput', i)"
+                               #rateInput4="ngModel">
+
+                        <div *ngIf="rateInput4.errors && (rateInput4.dirty || rateInput4.touched)">
+                            <div [hidden]="!rateInput4.errors.pattern" class="error-text">
+                                Number should be between 0 and 100
+                            </div>
+                        </div> -->
+                    </div>
+                    <label class="col-md-1 custom-label">Ownership % :</label>
+                    <div class="col-md-1">
+                        <input type="number" class="form-control" min="0" max="100" step="0.1"
+                               [(ngModel)]="repsData.ownershipPercentage"
+                               name="rateInput"
+                                 pattern="^(100(\.0{1,2})?|[1-9]?\d(\.\d{1,1})?)$"     
+                               (ngModelChange)="ownerShipChanged($event, 'rateInput', i)"
+                               #rateInput2="ngModel">
+
+                        <div *ngIf="rateInput2.errors && (rateInput2.dirty || rateInput2.touched)">
+                            <div [hidden]="!rateInput2.errors.pattern" class="error-text">
+                                Number should be between 0 and 100
+                            </div>
+                        </div>
+                    </div>
+                    <label class="col-md-1 custom-label">CW Access :</label>
+                    <div class="col-md-1">
+                        <input type="checkbox" class="custom-check" [disabled]=true [(ngModel)]="repsData.isActive" /> 
+                    </div>
+                </div>
+            </div>
+        </div>
+    <div class="card margin-top15">
+        <div class="card-header">Firm Data Outside LPL</div>
+        <div class="card-body">
+            <div class="form-group row">
+                <label class="col-md-2  custom-label">Outside Advisory Revenue:</label>
+                <div class="col-md-4 dollar">
+                    <span class="currency">$</span>
+                    <input type="text" class="form-control textboxwidth pl-16"  [(ngModel)]="outsideAdvisoryRevs" (ngModelChange)="valueChanged($event, 'outsideAdvisoryRev')" min="0" max="2147483647" (keydown)="checkValue($event)"> 
+                </div>
+                <label class="col-md-2 custom-label">Outside Brokerage Revenue:</label>
+                <div class="col-md-4 dollar">
+                    <span class="currency">$</span>
+                    <input type="text" class="form-control textboxwidth pl-16"  [(ngModel)]="outsideBrokerageRevs" (ngModelChange)="valueChanged($event, 'outsideBrokerageRev')" min="0" max="2147483647" (keydown)="checkValue($event)"> 
+                </div>
+            </div>
+            <div class="form-group row">
+                    <label class="col-md-2  custom-label">TAMP AUM:</label>
+                    <div class="col-md-4 dollar">
+                        <span class="currency">$</span>
+                        <input type="text" class="form-control textboxwidth pl-16"  [(ngModel)]="tampAums" (ngModelChange)="valueChanged($event, 'tampAum')" min="0" max="2147483647" (keydown)="checkValue($event)"> 
+                    </div>
+                    <label class="col-md-2 custom-label">Other Outside AUM:</label>
+                    <div class="col-md-4 dollar">
+                        <span class="currency">$</span>
+                        <input type="text" class="form-control textboxwidth pl-16"  [(ngModel)]="otherOutsideAums" (ngModelChange)="valueChanged($event, 'otherOutsideAum')" min="0" max="2147483647" (keydown)="checkValue($event)"> 
+                    </div>
+                </div>
+        </div>
+    </div>
+    <div class="card margin-top15">
+            <div class="card-header">Contract Detail</div>
+            <div class="card-body contact-body">
+                <div class="form-group row">
+                    <label class="col-md-2  custom-label">Contract Start Date:</label>
+                    <div class="col-md-2">
+                            <div class="input-group custom-input-group">
+                                <input name="fromDate" type="text" required class="form-control"  #fromDate="bsDatepicker" bsDatepicker (ngModelChange)="valuechange($event,'contractStartdate')" [(ngModel)]="AdvisorData.contractStartDate">
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default calender-custom" (click)="fromDate.toggle()" >
+                                        <i class="fa fa-calendar"></i>
+                                    </button>
+                                </span>
+                            </div>
+                            <div class="error-text" *ngIf="!AdvisorData.contractStartDate">Please select a date</div>
+                    </div>
+                    <label class="col-md-2 custom-label">CFO :</label>
+                    <div class="col-md-2">
+                        <!-- <input type="text"    class="form-control width-auto" [(ngModel)]="vcfoName">  -->
+                        <input  [(ngModel)]="vcfo" id="vcfoName" 
+                        [ngClass]='{"error-class": !vcfo }'
+                        [typeahead]="dataSource"                        
+                        (typeaheadOnSelect)="typeaheadOnSelect($event)" 
+                        (typeaheadNoResults)="typeaheadNoResults($event)"
+                        (typeaheadOnBlur)="typeaheadOnBlur($event)"
+                        typeaheadOptionField="fullname"
+                        typeaheadRequireSelection="true"
+                        required
+                        class="form-control width-auto"
+                        typeaheadEditable="false">    
+                    <div *ngIf="noResult && vcfo">No Results Found</div>  
+                    </div>
+                    <label class="col-md-2 custom-label">Status :</label>
+                    <div class="col-md-2">
+                        
+                        <input type="checkbox" class="custom-check" [disabled]="true" [(ngModel)]="AdvisorData.isActive" (change)="setASATEmailTrigger($event)"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="alert alert-danger text-center card margin-top15" *ngIf="repExist">
+            <p>RepID already exists!</p>
+        </div>
+        <div class="row">
+            <div class="col-md-2 offset-10 margin-top15 text-right">
+                    <input class="btn cancel-btn" name="Cancel" type="button"  value="Cancel" (click)="cancel()">
+                    <input class="btn custom-primary margin-left5" name="Save" [disabled]="(rateInput2.errors && (rateInput2.dirty || rateInput2.touched)) || !vcfoName ||saveDisable || !AdvisorData.contractStartDate" type="button" value="Save" (click)="save()"/>
+            </div>
+        </div>
+</div>
+

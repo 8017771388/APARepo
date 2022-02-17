@@ -1,0 +1,20 @@
+{"UserAccesses": [
+    {
+        "RoleType": "INFUSER",
+        "AccessDetails":    [
+            { "page_link": "CodeAndDecode" }
+        ]
+    },
+    {
+        "RoleType": "INFTABLEMTN",
+        "AccessDetails":    [
+            { "page_link": "CodeAndDecode" }
+        ]
+    },
+    {
+        "RoleType": "INFCOMMSTMT",
+        "AccessDetails": [
+            { "page_link": "CodeAndDecode" }
+        ]
+    }
+]}

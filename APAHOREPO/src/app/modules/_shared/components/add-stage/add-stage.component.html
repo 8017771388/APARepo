@@ -1,0 +1,20 @@
+<div class="modal-wrapper" >
+    <div class="modal-header goal-header">
+        <h1>{{title}}</h1>
+        <button (click)="bsModalRef.hide()" class="cross-btn">
+            <i class="fa fa-times"></i>
+        </button>
+    </div>
+    <div class="modal-body goal-body">       
+        <div class="row  margin-top5" style="min-height: 90px;">
+            <div class="col-12">
+                <label>Stage Name</label>
+                <input placeholder="Stage Name" type="text" class="form-control custom-field" maxlength="300"/>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer custom-footer">
+        <input type="button" class="btn cancel-btn" value="Cancel" name="Cancel" (click)="bsModalRef.hide()">
+        <input type="button" class="btn custom-primary" value="Save" name="Save">
+    </div>
+</div>

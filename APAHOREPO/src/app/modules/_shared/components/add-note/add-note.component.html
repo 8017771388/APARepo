@@ -1,0 +1,66 @@
+<div class="modal-wrapper">
+    <div class="modal-header goal-header">
+        <h1>{{title}}</h1>
+        <button (click)="closeNoteModal()" class="cross-btn">
+            <i class="fa fa-times"></i>
+        </button>
+    </div>
+    <div class="modal-body notes-body">
+        <div class="row note-task" *ngIf="taskNotes">
+            <div class="col-12" >
+                <div class="padding-top15">
+                    <h2>{{taskNotes.task}}</h2>
+                </div>
+                <div class="padding-bottom15">
+                    <span class="cfo-sub-headingText task-status">Category: {{taskNotes.taskCategory}}</span>
+                </div>
+                <div class="padding-bottom15">
+                    <span class="cfo-sub-headingText task-status">Due Date: 
+                        <span title="Past Due" *ngIf="dueDateStatus == 'PastDue'" class="bullet" [ngClass]="taskConstant[dueDateStatus]">{{taskNotes.taskDueDate != null ? (taskNotes.taskDueDate | date) : 'Not Assigned'}}
+
+                        </span>
+                        <span *ngIf="dueDateStatus != 'PastDue'" >{{taskNotes.taskDueDate != null ?  (taskNotes.taskDueDate | date) : 'Not Assigned'}}</span>
+                        <!-- <span>
+                            <i class="fa fa-circle" [ngClass]="taskConstant[taskDetail.taskStatus]"></i>{{taskNotes.taskDueDate | date}}
+                        </span> -->
+                    </span>
+                </div>
+            
+                <!--<p>Due Date: {{taskNotes.taskDueDate| date}}</p>-->
+                <!--<span class="cfo-sub-headingText task-status" *ngIf= "taskNotes.taskStatus">
+                    <i class="fa fa-circle" [ngClass]="taskConstant[taskDetail.taskStatus]"></i> 
+                {{taskNotes.taskStatus}}
+                </span>-->
+                
+            </div>
+        </div>
+        <div class="row margin-top5 note-task" *ngIf="allNotes?.length > 0">
+            <div class="col-12">
+                <h3>Notes</h3>
+                <div>
+                    <div class="" *ngFor="let notes of allNotes">
+                        <i class="fa fa-sticky-note"></i>
+                        <strong class="label-strong">{{notes.createdBy}}</strong>
+                        <span class="font-style-italic">{{notes.createdOn | date}}</span>
+                        <p>{{notes.note}}</p>
+                    </div>
+                </div>
+                <div class="notsContainer" *ngIf="allNotes?.length == 0">
+                    <strong>No Note Found</strong>
+                </div>
+                
+            </div>
+        </div>
+    
+        <div class="row margin-top5 note-task" style="min-height: 90px;">
+            <div class="col-12">
+                <label>Note</label>
+                <textarea class="form-control custom-field textarea-resize" rows="4" id="comment" [(ngModel)]="notes"></textarea>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer custom-footer">
+        <input type="button" class="btn cancel-btn" value="Cancel" name="Cancel" (click)="closeNoteModal()"/>
+        <input type="button" class="btn custom-primary" value="Save" name="Save" [disabled]="notes == '' || clickOnce" (click)="saveNote()"/>
+    </div>
+</div>

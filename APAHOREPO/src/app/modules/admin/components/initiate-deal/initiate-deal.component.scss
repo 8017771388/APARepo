@@ -1,0 +1,253 @@
+.advisor-subscription {
+    form {
+        &.ng-touched.ng-invalid {
+            border: none;
+        }
+        .ng-valid[required],
+        .ng-valid.required {
+            border-left: 5px solid #42a948; /* green */
+        }
+
+        .ng-invalid:not(form),
+        .ng-valid.ng-invalid {
+            border-left: 5px solid #a94442; /* red */
+        }
+        .no-border {
+            border: 1px solid #ced4da !important;
+        }
+    }
+
+    .deal-btn-section {
+        margin-left: 3%;
+        margin-right: 3%;
+        margin-top: 1%;
+        margin-bottom: 2%;
+    }
+    .card {
+        margin-left: 3%;
+        margin-right: 3%;
+    }
+    input {
+        font-size: 14px;
+    }
+    select {
+        font-size: 14px;
+    }
+    .custom-check {
+        margin-top: 7px;
+    }
+    .pl-16 {
+        padding-left: 16px;
+    }
+
+    .inputToText {
+        background-color: #fff;
+        border: 0px;
+        padding-left: 0;
+        font-weight: 600;
+    }
+
+    .custom-header-card {
+        border-radius: 5px 5px 0 0;
+        -webkit-border-radius: 5px 5px 0 0;
+        background: #a2a2a2;
+        border: none;
+        .card-header {
+            font-size: 16px;
+            color: #fff;
+            /*font-family: "roboto-condensed";*/
+            border: none;
+            //background-color: #abcde4;
+        }
+    }
+    .card-header {
+        font-size: 16px;
+        /*font-family: "roboto-condensed";*/
+        background-color: #a7d1ef;
+        font-weight: 500;
+    }
+    .card-body {
+        //max-height: 300px;
+        overflow-y: auto;
+        overflow-x: hidden;
+        .deal-name-box {
+            input {
+                position: relative;
+            }
+            .deal-name-tooltip {
+                position: absolute;
+                right: 26px;
+                top: 8px;
+                i {
+                    font-size: 14px;
+                }
+            }
+        }
+    }
+    .contact-body {
+        min-height: 150px;
+    }
+    .custom-label {
+        padding-top: 5px;
+        font-weight: bold;
+        font-family: "roboto";
+        font-size: 16px;
+        text-align: right;
+    }
+    .span-space {
+        display: inline-block;
+        margin-top: 2px;
+    }
+    .dollar {
+        position: relative;
+        .currency {
+            position: absolute;
+            z-index: 999;
+            padding: 8px;
+        }
+    }
+    .delete-btn {
+        font-size: 16px;
+        color: #0076c8;
+        cursor: pointer;
+        border: 0;
+        background: 0 0;
+    }
+}
+.textboxwidth {
+    width: 200px !important;
+}
+
+.ng-touched {
+    &.error-class {
+        border: 1px solid red;
+    }
+    &.ng-invalid {
+        border: 1px solid red;
+    }
+}
+
+.custom-plan-table {
+    background: #fff;
+    padding: 2px 34px;
+    // margin-left: 10px;
+    margin-top: 10px;
+
+    .row-heading {
+        background: #9bd0ea;
+        border-top: 1px solid #dcdcdc;
+        border-bottom: 1px solid #dcdcdc;
+    }
+    .plan-custom-row {
+        padding: 0;
+        // border-bottom: 1px solid #dcdcdc;
+        // margin-bottom: 0;
+        border: 1px solid #dcdcdc;
+        background: #fff;
+    }
+    .custom-col {
+        padding: 8px 15px;
+        border-right: 1px solid #ccc;
+        &:first-child {
+            border-left: 1px solid #ccc;
+        }
+    }
+}
+.note-container {
+    /*background-color: red;*/
+    border-radius: 3px;
+    border-color: lightgrey;
+    border-width: 1px;
+    border-style: solid;
+    //margin-left: 14px;
+    padding: 15px;
+
+    .note-icon {
+        display: inline;
+        vertical-align: top;
+        i {
+            color: #0076c8;
+            font-size: 17px;
+        }
+    }
+    .note-details {
+        display: inline-block;
+        margin-left: 3px;
+        .label-strong {
+            font-size: 14px;
+        }
+        p {
+            margin-left: 5px;
+            margin-bottom: 4px;
+            margin-top: 2px;
+            font-size: 16px;
+            font-weight: 400;
+            color: #000;
+        }
+        .note-del {
+            margin-left: 5px;
+            margin-bottom: 10px;
+            color: #707070;
+            font-size: 13px;
+            cursor: pointer;
+        }
+    }
+}
+.label-strong {
+    padding-left: 5px !important;
+}
+
+.custom-typeahed-container {
+    position: absolute;
+    z-index: 1000;
+    ul {
+        list-style: none;
+        padding: 0;
+        background: #fff;
+        border: 1px solid #ccc;
+        li {
+            padding: 7px 17px;
+            font-size: 16px;
+            cursor: pointer;
+            &:hover {
+                background: #007bff;
+                color: #fff;
+            }
+            &.active {
+                background: #007bff;
+                color: #fff;
+            }
+        }
+    }
+}
+
+.valid {
+    border-left: 5px solid #42a948; /* green */
+}
+
+.invalid {
+    border-left: 5px solid #a94442 !important; /* red */
+}
+
+.hand-cursor {
+    cursor: pointer;
+}
+
+.error-txt {
+    padding-top: 2px;
+    color: red;
+}
+
+.border-red {
+    border: 1px 1px 1px 0px;
+    border-color: red;
+}
+.white {
+    color: #fff;
+}
+.pd-top5 {
+    padding-top: 5px;
+}
+.blue {
+    color: #007bff;
+}

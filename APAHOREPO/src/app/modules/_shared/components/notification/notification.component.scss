@@ -1,0 +1,48 @@
+.modal-wrapper{
+    .notes-body{
+        padding-top:0;
+        padding-bottom:0;
+        .notification-row{
+            padding-top: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #dee2e6;
+            //border-top: 1px solid darkgray;
+            .expand-notification{
+                padding-top:10px;
+                //padding-bottom: 10px;
+                padding-left:20px;
+                padding-right: 20px;
+
+                .notification-det{
+                    margin-bottom: 3%;
+                    .row{
+                        padding-top:8px;
+                        padding-bottom:8px;
+                    }
+                    .custom-btn{
+                        width: 10%;
+                        margin-right: 10px;
+                    }
+                }
+            }
+        }
+    }
+}
+.grey-background{
+    background : #F9F9F9;
+}
+
+.bg-grey{
+    background: #d3d3d340;
+}
+
+.grey-font{
+    color: #7E7E7E
+}
+.light-grey-font{
+    color: #9A9A9A
+}
+
+.padding-10{
+    padding: 40px;
+}

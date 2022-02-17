@@ -1,0 +1,68 @@
+<div class="home-content">
+    <div class="container-fluid">
+        <div class="row">
+                <div class="col-sm-10 col-lg-12">
+                    <dx-data-grid #gridContainer1
+                                  id="gridContainer1"
+                                  [dataSource]="dataSource"
+                                  [showColumnLines]="true"
+                                  [showRowLines]="true"
+                                  [showBorders]="true"
+                                  [rowAlternationEnabled]="true"
+                                  [cacheEnabled]="false">
+                        <dxi-column dataField="task"
+                                    caption="Task Name"
+                                    [width]="400"
+                                    [allowSorting]="true"
+                                    cellTemplate="taskDetails">
+                        </dxi-column>
+                        <div *dxTemplate="let data of 'taskDetails'">
+                            <a [routerLink]="[
+                                '/home/mytasks/1'
+                            ]" style="color: blue;">
+                                {{data.text}}
+                            </a>
+                        </div>
+                        <dxi-column dataField="assignedTo"
+                                    caption="Assigned To"
+                                    [width]="200"
+                                    [allowSorting]="true">
+                        </dxi-column>
+                        <dxi-column dataField="department"
+                                    caption="Department"
+                                    [width]="200"
+                                    [allowSorting]="true">
+                        </dxi-column>
+                        <dxi-column dataField="duedate"
+                                    caption="Due Date"
+                                    [width]="100"
+                                    [allowSorting]="true">
+                        </dxi-column>
+
+
+                        <dxi-column dataField="stage"
+                                    [width]="110"
+                                    caption="Stage"
+                                    [allowFiltering]="false"
+                                    [allowSorting]="false"></dxi-column>
+                        <dxi-column dataField="dealName"
+                                    [width]="180"
+                                    caption="Deal Name"
+                                    [allowFiltering]="false"
+                                    [allowSorting]="false"></dxi-column>
+                        <dxi-column dataField="dealType"
+                                    [width]="200"
+                                    caption="Deal Type"
+                                    [allowFiltering]="false"
+                                    [allowSorting]="false"></dxi-column>
+                        <dxi-column dataField="dealStartDate"
+                                    [width]="110"
+                                    caption="Deal Start Date"
+                                    [allowFiltering]="false"
+                                    [allowSorting]="false"></dxi-column>
+
+                    </dx-data-grid>
+                </div>
+            </div>
+    </div>
+</div>

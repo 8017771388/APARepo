@@ -1,0 +1,255 @@
+<div class="master-container">
+    <div class="row">
+        <div class="col-4">
+            <label>Deal Type</label>
+            <select class="form-control custom-field"
+                    [(ngModel)]="selectedDealType"
+                    (ngModelChange)="getSatges($event, null);getAllTasks(selectedDealType,null,searchTxt );">
+
+                <option value="">Select Deal Type</option>
+                <option *ngFor="let deal of dealtypeList.data"
+                        [ngValue]="deal.dealTypeID">
+                    {{ deal.dealType | shortName: 50 }}
+                </option>
+            </select>
+        </div>
+        <div class="col-4">
+            <label>Stage</label>
+            <select class="form-control custom-field" [disabled]="selectedDealType == ''"
+                    [(ngModel)]="selectedStage"
+                    (ngModelChange)="
+                    getAllTasks(selectedDealType, selectedStage, searchTxt)
+                ">
+                <option value="" >Select Stage</option>
+                <option *ngFor="let stage of stageList.data"
+                        [ngValue]="stage.stageID">
+                    {{ stage.stage | shortName: 50 }}
+                </option>
+            </select>
+        </div>
+        <div class="col-4">
+            <div class="search-container mt-23">
+                <button class="search-btn-submit">
+                    <i class="fa fa-search"></i>
+                </button>
+                <input class="form-control"
+                       id="myInput"
+                       type="text"
+                       placeholder="Search.."
+                       [(ngModel)]="searchTxt" />
+            </div>
+        </div>
+    </div>
+    <div class="row container-footer">
+        <div class="col-6">
+            <button (click)="addTask()">
+                <i class="fa fa-plus-circle"></i>
+                <span>Add New Task</span>
+            </button>
+            <span class="error" *ngIf="selectStageMsg != ''">
+                {{
+                selectStageMsg
+                }}
+            </span>
+        </div>
+        <div class="col-6 text-right">
+            <span class="error" *ngIf="showSelectStageMsg">
+                Select a deal type and stage to rearrange tasks.
+            </span>
+           
+            <button (click)="reOrder()" [disabled]="taskList.data.length <= 0">
+                <i class="fa fa-sort-amount-desc"></i>
+                <span>Rearrange Tasks</span>
+            </button>
+            
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-7 sub-heading">
+            <h2>Task</h2>
+        </div>
+        <div class="col-2 sub-heading">
+            <h2>Stage</h2>
+        </div>
+
+        <div class="col-3 sub-heading">
+            <h2>Deal Type</h2>
+        </div>
+    </div>
+    <div class="collaps-container text-center" *ngIf="selectedDealType == ''">Select a Deal Type to view details.</div>
+    <div class="collaps-container text-center" *ngIf="taskList.data.length <= 0 && selectedDealType != ''">There are no tasks.</div>
+    
+    <div class="collaps-container" *ngIf="taskList.data.length > 0">
+        <div *ngFor="
+                let task of taskList.data | filter: searchTxt:'task';
+                let i = index
+            ">
+            <div class="row custom-row"
+                 [ngClass]="{ active: task.isCollapsed }">
+                <div class="col-7">
+                    <span class="add-collaps-button"
+                          (click)="task.isCollapsed = !task.isCollapsed">{{ task.task }}</span>
+                </div>
+                <div class="col-2">
+                    
+                    <span (click)="task.isCollapsed = !task.isCollapsed">{{ task.stage }}</span>
+                </div>
+
+                <div class="col-3">
+                    <span (click)="task.isCollapsed = !task.isCollapsed">{{selectedDealTypeObj[0].dealType}}</span>
+                </div>
+            </div>
+            <div class="row"
+                 [ngClass]="{ 'bottom-border-space': task.isCollapsed }">
+                <div class="col-12 expand-container"
+                     id="collapseBasic"
+                     [collapse]="!task.isCollapsed">
+                    <div class="row">
+                        <div class="col-12">
+                            <label>Task:</label>
+                            <input type="text"
+                                   class="form-control"
+                                   [(ngModel)]="task.task"
+                                   (ngModelChange)="checkDuplicateTask($event, i)"
+                                   readonly />
+                            <span class="err-msg"
+                                  *ngIf="errMsg || task.task == ''">
+                                {{
+                                    task.task == ""
+                                        ? "Task name is required."
+                                        : errMsg
+                                }}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row margin-top15">
+                        <div class="col-4">
+                            <label>Task Owner</label>
+
+                            <select class="form-control custom-field"
+                                    [(ngModel)]="task.taskOwnerCd"
+                                    required
+                                    name="taskowner"
+                                    disabled>
+                                <option value="">Select Owner</option>
+                                <option *ngFor="let owner of taskOwner"
+                                        [ngValue]="owner.code">
+                                    {{ owner.name }}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="col-4">
+                            <label>Category</label>
+                            <select class="form-control custom-field"
+                                    [(ngModel)]="task.taskCategoryCd"
+                                    required
+                                    disabled
+                                    name="taskcategory">
+                                <option value="">Select Category</option>
+                                <option *ngFor="let cat of taskCategory"
+                                        [ngValue]="cat.code">
+                                    {{ cat.name }}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="col-4">
+                            <label>Action</label>
+                            <select class="form-control custom-field"
+                                    [(ngModel)]="task.taskActionCd"
+                                    disabled
+                                    name="taskaction">
+                                <option value="">Select Action</option>
+                                <option *ngFor="let act of taskAction"
+                                        [ngValue]="act.code">
+                                    {{ act.name }}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <!--<div class="row margin-top15">
+
+                        <div class="col-6">
+                            &nbsp;
+                        </div>
+                    </div>-->
+                    <div class="row margin-top15">
+                        <!--<div class="col-6">
+                            <button
+                                class="btn custom-primary margin-left5 hand-cursor"
+                                (click)="addStep(task)"
+                                [disabled]="task.steps.length >= 3"
+                            >
+                                + Add Step
+                            </button>
+                        </div>-->
+                    </div>
+                    <div class="row margin-top15"
+                         *ngFor="let step of task.steps; let j = index">
+                        <div class="col-11">
+                            <label>Step {{ j + 1 }}</label>
+                            <!-- <input
+                                placeholder="Step {{ i + 1 }}"
+                                type="text"
+                                name="step"
+                                [(ngModel)]="tasks.steps[i].name"
+                                class="form-control custom-field"
+                                maxlength="300"
+                            /> -->
+                            <textarea name="step"
+                                      id="step"
+                                      cols="30"
+                                      rows="2"
+                                      placeholder="Step {{ j + 1 }}"
+                                      [(ngModel)]="task.steps[j].step"
+                                      required
+                                      class="form-control custom-field"
+                                      readonly></textarea>
+                        </div>
+                        <div class="col-1 pt-4 mt-4">
+                            <span class="custom-btn-Edit defaultText step-del"
+                                  (click)="deleteStep(task, j)">
+                                Delete
+                                <i class="fa fa-trash" aria-hidden="true"></i>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row margin-top15">
+                        <div class="col-12 text-right">
+                            <input class="btn cancel-btn"
+                                   name="Cancel"
+                                   type="button"
+                                   value="Cancel"
+                                   (click)="task.isCollapsed = !task.isCollapsed" />
+                            <!--<input
+                                class="btn custom-primary margin-left5"
+                                name="Save"
+                                type="button"
+                                value="Update"
+                                (click)="updateTask(task)"
+                                [disabled]="!task.task || errMsg"
+                            />-->
+                            <input class="btn cancel-btn margin-left5"
+                                   name="Delete"
+                                   type="button"
+                                   value="Delete"
+                                   (click)="deleteTask(task)" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="row custom-row">
+            <div class="col-12">
+                <span (click)="category.isCollapsed = !category.isCollapsed" >ABC123</span>
+            </div>
+
+        </div>
+        <div class="row custom-row">
+            <div class="col-12">
+                <span (click)="category.isCollapsed = !category.isCollapsed" >ABC123</span>
+            </div>
+
+        </div> -->
+    </div>
+
+</div>

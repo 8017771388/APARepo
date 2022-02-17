@@ -1,0 +1,437 @@
+.create-profile-breadcrumb {
+    //padding-left: 40px;
+    margin-bottom: 0;
+}
+.custom-btn-Edit {
+    font-size: 16px;
+    color: #2773d8;
+    border: none;
+    background: transparent;
+    line-height: 10px;
+}
+.advisor-subscription {
+    .form-control::placeholder {        
+        font-style: italic;
+    }   
+    
+    option{
+        font-style: normal;
+    }
+      
+    .blue {
+        color: #007bff;
+    }
+    form {
+        &.ng-touched.ng-invalid {
+            border: none;
+        }
+        .ng-valid[required],
+        .ng-valid.required {
+            border-left: 5px solid #42a948; /* green */
+        }
+
+        .ng-invalid:not(form),
+        .ng-valid.ng-invalid {
+            border-left: 5px solid #a94442; /* red */
+        }
+        .no-border {
+            border: 1px solid #ced4da !important;
+        }
+    }
+
+    .deal-btn-section {
+        margin-left: 3%;
+        margin-right: 3%;
+    }
+    .card {
+        margin-left: 3%;
+        margin-right: 3%;
+    }
+    input {
+        font-size: 14px;
+    }
+    textarea{
+        font-size: 14px;
+    }
+    select {
+        font-size: 14px;
+    }
+    .custom-check {
+        margin-top: 7px;
+    }
+    .pl-16 {
+        padding-left: 16px;
+    }
+    .pl-25 {
+        padding-left: 25px;
+    }
+    .pr-50{
+        padding-right: 50px;
+    }
+    
+    .custom-header-card {
+        border-radius: 5px 5px 0 0;
+        -webkit-border-radius: 5px 5px 0 0;
+        background: #a2a2a2;
+        border: none;
+        .card-header {
+            font-size: 16px;
+            color: #fff;
+            /*font-family: "roboto-condensed";*/
+            border: none;
+            //background-color: #abcde4;
+        }
+    }
+    .card-header {
+        font-size: 16px;
+        /*font-family: "roboto-condensed";*/
+        background-color: #a7d1ef;
+        font-weight: 500;
+    }
+    .card-body {
+        //max-height: 300px;
+        //overflow-y: auto;
+        //overflow-x: hidden;
+        .deal-name-box {
+            input {
+                position: relative;
+            }
+            .deal-name-tooltip {
+                position: absolute;
+                right: 26px;
+                top: 8px;
+                i {
+                    font-size: 14px;
+                }
+            }
+        }
+
+        .active-checkbox {
+            float: right;
+            padding-top: 5px;
+        }
+        .delete-span {
+            /*display:block;*/
+            padding-top: 6px;
+            color: #2773d8;
+            border: none;
+            background: transparent;
+            padding-left: 5%;
+        }
+        // .add-beneficiary{
+        //     float:right;
+        // }
+        .add-beneficiary{
+            margin-left: 0;
+        }
+
+        .percentage-input {
+            display: inline-block;
+            width: 50%;
+        }
+
+        .txt-left {
+            text-align: left;
+        }
+    }
+    .contact-body {
+        min-height: 150px;
+    }
+    .custom-label {
+        padding-top: 5px;
+        font-weight: bold;
+        font-family: "roboto";
+        font-size: 16px;
+        text-align: right;
+    }
+    .span-space {
+        display: inline-block;
+        margin-top: 2px;
+    }
+    .dollar {
+        position: relative;
+        .currency {
+            position: absolute;
+            z-index: 999;
+            padding: 7px;
+            font-size: 14px;
+            left:21px;
+            &.left-32{
+                left: 32px;
+            }
+        }
+    }
+    .delete-btn {
+        font-size: 16px;
+        color: #0076c8;
+        cursor: pointer;
+        border: 0;
+        background: 0 0;
+    }
+}
+.textboxwidth {
+    width: 200px !important;
+}
+
+.ng-touched {
+    &.error-class {
+        border: 1px solid red;
+    }
+    &.ng-invalid {
+        border: 1px solid red;
+    }
+}
+
+.custom-plan-table {
+    background: #fff;
+    padding: 2px 34px;
+    // margin-left: 10px;
+    margin-top: 10px;
+
+    .row-heading {
+        background: #9bd0ea;
+        border-top: 1px solid #dcdcdc;
+        border-bottom: 1px solid #dcdcdc;
+    }
+    .plan-custom-row {
+        padding: 0;
+        // border-bottom: 1px solid #dcdcdc;
+        // margin-bottom: 0;
+        border: 1px solid #dcdcdc;
+        background: #fff;
+    }
+    .custom-col {
+        padding: 8px 15px;
+        border-right: 1px solid #ccc;
+        &:first-child {
+            border-left: 1px solid #ccc;
+        }
+    }
+}
+.note-container {
+    /*background-color: red;*/
+    border-radius: 3px;
+    border-color: lightgrey;
+    border-width: 1px;
+    border-style: solid;
+    //margin-left: 14px;
+    padding: 15px;
+
+    .note-icon {
+        display: inline;
+        vertical-align: top;
+        i {
+            color: #0076c8;
+            font-size: 17px;
+        }
+    }
+    .note-details {
+        display: inline-block;
+        margin-left: 3px;
+        .label-strong {
+            font-size: 14px;
+        }
+        p {
+            margin-left: 5px;
+            margin-bottom: 4px;
+            margin-top: 2px;
+            font-size: 16px;
+            font-weight: 400;
+            color: #000;
+        }
+        .note-del {
+            margin-left: 5px;
+            margin-bottom: 10px;
+            color: #707070;
+            font-size: 13px;
+            cursor: pointer;
+        }
+    }
+}
+.label-strong {
+    padding-left: 5px !important;
+}
+
+.custom-typeahed-container {
+    position: absolute;
+    z-index: 1000;
+    ul {
+        list-style: none;
+        padding: 0;
+        background: #fff;
+        border: 1px solid #ccc;
+        li {
+            padding: 7px 17px;
+            font-size: 16px;
+            cursor: pointer;
+            &:hover {
+                background: #007bff;
+                color: #fff;
+            }
+            &.active {
+                background: #007bff;
+                color: #fff;
+            }
+        }
+    }
+}
+
+.valid {
+    border-left: 5px solid #42a948; /* green */
+}
+
+.invalid {
+    border-left: 5px solid #a94442 !important; /* red */
+}
+
+.hand-cursor {
+    cursor: pointer;
+}
+
+.error-txt {
+    padding-top: 2px;
+    color: red;
+}
+
+.border-red {
+    border: 1px 1px 1px 0px;
+    border-color: red;
+}
+.pd-top5 {
+    padding-top: 5px;
+}
+
+.colaps {
+    color: #106fe4;
+    font-size: 18px;
+    padding-right: 0.5rem;
+}
+.colsp-wrap {
+    cursor: pointer;
+}
+
+.percentage-span {
+    position: absolute;
+    right: 22px;
+    top: 6px;
+}
+
+
+.padding-r-0{
+    padding-right: 0;
+}
+.padding-l-0{
+    padding-left: 0;
+}
+.custom-radio{
+    font-size: 12px;
+    label{
+        padding: 8px 5px;
+    }
+    
+}
+.left-n-184{
+    left: -184px !important;
+}
+.subtext-form{
+    color:#9e9d9d;
+    font-size: 12px;
+}
+.form-group{
+    margin-bottom: 35px;
+}
+.errorMsg {
+    font-size: 14px;
+    position: absolute;
+    width: 357px;
+    color: red;
+    //left:-219px;
+    right: 9px;
+    text-align: left !important;
+    padding-top: 4px;
+}
+.margin-left12{
+    margin-left:12px;
+}
+
+.pl-30{
+    padding-left: 30px;
+}
+.m-b-0{
+    margin-bottom:0
+}
+
+.currency_right{
+    left:unset !important;
+    right:20px;
+}
+
+.dropdownCheckbox{
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    padding:6px 10px;
+    width:100%;
+    height: calc(1.5em + 0.75rem + 2px);
+    font-size: 14px;
+    position: relative;
+    .fa-caret-up{
+        position: absolute;
+        right: 10px;
+        font-size: 12px;
+    }
+    .fa-caret-down{
+        position: absolute;
+        right: 10px;
+        top: 12px;
+        font-size: 12px;
+    }
+}
+
+.dropdownDiv{
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    position:absolute;
+    padding:10px;
+    z-index:9999;
+    width:100%;
+    max-height:300px;
+    overflow: auto;
+}
+
+.dropdownDiv ul{
+    padding-left:20px;
+}
+
+.dropdownDiv ul li{
+    list-style: none;
+}
+
+.checkBoxContainer{
+    padding: 10px 5px 5px 5px;
+    display: inline-block;
+    text-align : center;
+    span{
+        margin-left: 5px;
+    }
+}
+.total-error-margin {
+    margin-top: -11px !important;
+}
+.pd-right72{
+padding-right:4%;
+}
+.button-color{
+    color:white;
+}
+.pd-top15{
+    padding-top:15px;
+}
+.font-italic{
+    font-style: italic;
+}

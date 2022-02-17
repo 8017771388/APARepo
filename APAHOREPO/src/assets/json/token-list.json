@@ -1,0 +1,33 @@
+{
+    "Tokendetail": [
+        {
+            "status": "Token results got Sucessfully",
+            "exceptions": [],
+            "data": [{
+                "tokenID": "a143ab58-6020-45ac-8a89-6c5447317a8f",
+                "value": "AAAA",
+                "type": "REP2",
+                "tenantCD": "LPL",
+                "maskedValue": "**AA"
+            },{
+                "tokenID": "sdfdsfds6020fddfdf9-6c5447317a8f",
+                "value": "BBBB",
+                "type": "REP2",
+                "tenantCD": "AXA",
+                "maskedValue": "**CC"
+            },{
+                "tokenID": "uiuytiuyyi58-6020-45ac-8a89-6c5447317a8f",
+                "value": "CCCC",
+                "type": "REP3",
+                "tenantCD": "LPL",
+                "maskedValue": "**11"
+            },{
+                "tokenID": "a143ab58-6020-45ac-8a89-6c5447317a8f",
+                "value": "DDD",
+                "type": "REP4",
+                "tenantCD": "LPL",
+                "maskedValue": "**44"
+            }]
+        }
+    ]
+}

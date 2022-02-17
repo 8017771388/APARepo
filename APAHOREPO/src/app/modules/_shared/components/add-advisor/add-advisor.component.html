@@ -1,0 +1,33 @@
+<div class="modal-wrapper" >
+    <div class="modal-header goal-header">
+        <h1>{{title}}</h1>
+        <button (click)="bsModalRef.hide()" class="cross-btn">
+            <i class="fa fa-times"></i>
+        </button>
+    </div>
+    <div class="modal-body goal-body add-advisor">
+        <div class="row">
+            <div class="col-12">
+                <div class="col-12">
+                    <label for="advisor" class=" col-form-label advisor-label"><strong>Select Advisor</strong></label>
+                </div>
+                <div class="col-12">
+                   
+                  <input [(ngModel)]="searchAdvisor"
+                        id="advisor"
+                        [typeahead]="dataSource"                        
+                        (typeaheadOnSelect)="typeaheadOnSelect($event)" 
+                        (typeaheadNoResults)="typeaheadNoResults($event)"               
+                        typeaheadOptionField="primaryrepid.name"
+                        class="form-control">    
+                    <div *ngIf="noResult">No Results Found</div>      
+                </div>
+            </div>
+        </div>        
+        
+    </div>
+    <div class="modal-footer custom-footer">
+            <input type="button" class="btn cancel-btn" value="Cancel" name="Cancel" (click)="bsModalRef.hide()">
+            <input type="button" class="btn custom-primary" value="Add" name="Add" (click)="addAdvisor()" [disabled]="noResult === true || searchAdvisor === '' || advisorselected === true">
+    </div>
+</div>

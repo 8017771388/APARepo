@@ -1,0 +1,164 @@
+a[aria-expanded="true"] {
+    background: #d1d2d4;
+}
+
+a[data-toggle="collapse"] {
+    position: relative;
+}
+
+.white {
+    background: #fff;
+}
+
+.sidebar {
+    min-width: 250px;
+    max-width: 250px;
+    -webkit-box-shadow: inset -3px 0 5px 0 rgba(0, 0, 0, 0.1);
+    box-shadow: inset -3px 0 5px 0 rgba(0, 0, 0, 0.1);
+    position: relative;
+    padding-right: 0;
+    background: #f1f1f1;
+    transition: all 0.3s;
+    height: 100%;
+    margin-top: 3rem;
+
+    &.active {
+        margin-left: -248px;
+        .custom-button {
+            &:before {
+                display: block;
+                padding: 2px 10px 2px 5px;
+                border-radius: 0 5px 5px 0;
+            }
+        }
+    }
+    .sidebar-header {
+        color: #242424;
+        font-family: "roboto-condensed";
+        font-size: 20px;
+        padding: 10px 10px 0px 10px;
+        border-bottom: 1px solid #ccc;
+
+        h3 {
+            font-size: 20px;
+        }
+    }
+    .toggle-button {
+        position: relative;
+        width: 100%;
+        border-bottom: 1px solid #ccc;
+        height: 30px;
+    }
+    .custom-button {
+        position: absolute;
+        top: 5px;
+        right: 0;
+        border: none;
+        background: transparent;
+        font-size: 12px;
+        &:after {
+            font-family: "FontAwesome";
+            content: "\f04a";
+            color: #878787;
+        }
+
+        &:before {
+            font-family: "FontAwesome";
+            content: "\f04e";
+            color: #878787;
+            position: absolute;
+            right: -20px;
+            display: none;
+        }
+    }
+    .side-bar-list {
+        list-style: none;
+        font-size: 14px;
+        padding: 0 0 10px 0;
+        li {
+            padding: 10px 0 10px 10px;
+            border-bottom: 1px solid #ccc;
+            &:hover {
+                background-color: #fff;
+                box-shadow: inset -3px 0 5px 0 rgba(0, 0, 0, 0.1);
+                -webkit-box-shadow: inset -3px 0 5px 0 rgba(0, 0, 0, 0.1);
+            }
+        }
+    }
+}
+
+.apa-sidenav {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    color: #242424;
+    font-family: "roboto-condensed";
+    //font-size: 20px;
+    .apa-sidenav-menu {
+        flex-grow: 1;
+        .nav {
+            flex-direction: column;
+            flex-wrap: nowrap;
+            //padding: 0 0 10px 0;
+            .apa-sidenav-menu-heading {
+                padding: 1.75rem 1rem 0.75rem;
+                //font-size: 0.75rem;
+                //font-weight: bold;
+                text-transform: uppercase;
+                color: #242424;
+            }
+            .nav-link {
+                display: flex;
+                align-items: center;
+                // padding-top: 0.75rem;
+                // padding-bottom: 0.75rem;
+                position: relative;
+                color: #242424;
+                padding: 10px 10px 10px 10px;
+                border-bottom: 1px solid #ccc;
+                .apa-nav-link-icon {
+                    //font-size: 0.9rem;
+                    color: #242424;
+                }
+                .apa-sidenav-collapse-arrow {
+                    display: inline-block;
+                    margin-left: auto;
+                    transition: transform 0.15s ease;
+                    color: #242424;
+                }
+            }
+            .apa-sidenav-menu-nested {
+                // margin-left: 1.5rem;
+                flex-direction: column;
+            }
+        }
+    }
+    .apa-sidenav-footer {
+        padding: 0.75rem;
+        flex-shrink: 0;
+    }
+}
+// .apa-sidenav
+//     .apa-sidenav-menu
+//     .nav
+//     .nav-link.collapsed
+//     .apa-sidenav-collapse-arrow {
+//     //transform: rotate(-90deg);
+// }
+.sub-menu {
+    padding-left: 1.5rem !important;
+}
+
+.sub-sub-menu {
+    padding-left: 2.5rem !important;
+}
+
+.apa-sidenav-menu .nav-link:hover {
+    background-color: #fff;
+}
+.apa-sidenav-menu .nav-link.active {
+    background-color: #fff;
+}
+.apa-sidenav-menu .nav-link.active .apa-nav-link-icon {
+    background-color: #fff;
+}

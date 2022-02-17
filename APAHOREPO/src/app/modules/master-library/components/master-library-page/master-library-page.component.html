@@ -1,0 +1,24 @@
+<div class="master-container container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <tabset>
+                 <tab heading="Deal Type">
+                     <div class="tab-container">
+                         <app-dealtype></app-dealtype>
+                     </div>
+                </tab>
+               <tab heading="Stage">
+                   <div class="tab-container">                      
+                       <app-stage></app-stage>
+                   </div>
+                </tab> 
+                <tab heading="Task" [active]="true">
+                    <div class="tab-container">
+                        <app-task></app-task>
+                    </div>
+
+                </tab> 
+            </tabset>
+        </div>
+    </div>
+</div>

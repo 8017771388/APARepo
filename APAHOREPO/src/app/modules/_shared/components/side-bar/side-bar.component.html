@@ -1,0 +1,146 @@
+<!-- Sidebar  -->
+<nav
+    class="sidebar apa-sidenav accordion"
+    [ngClass]="status ? 'active' : ''"
+    id="sidenavAccordion"
+    *ngIf="!isError"
+>
+    <div class="toggle-button">
+        <button
+            type="button"
+            id="sidebarCollapse"
+            class="custom-button"
+            (click)="clickEvent()"
+        >
+            <span>Hide Menu</span>
+        </button>
+    </div>
+    <!--<div class="sidebar-header">
+        <h3>Quick Views</h3>
+    </div>-->
+
+    <div class="apa-sidenav-menu">
+        <div class="nav">
+            <span *ngFor="let menu of navigationArray; let i = index">
+                <a
+                    class="nav-link"
+                    [routerLinkActive]="['active', '']"
+                    [routerLink]="[menu.route]"
+                    *ngIf="menu.subMenu.length <= 0"
+                    >{{ menu.name }}</a
+                >
+                <a
+                    class="nav-link"
+                    [ngClass]="menu.isColapsed ? '' : 'collapsed'"
+                    href="#"
+                    data-toggle="collapse"
+                    data-target="#collapseLayouts{{ i }}"
+                    [attr.aria-expanded]="menu.isColapsed"
+                    aria-controls="collapseLayouts{{ i }}"
+                    *ngIf="menu.subMenu.length > 0"
+                    (click)="menu.isColapsed = !menu.isColapsed"
+                >
+                    {{ menu.name }}
+                    <div
+                        class="apa-sidenav-collapse-arrow"
+                        *ngIf="menu.subMenu.length > 0"
+                    >
+                        <i
+                            class="fa"
+                            [ngClass]="
+                                menu.isColapsed
+                                    ? 'fa-angle-down'
+                                    : 'fa-angle-right'
+                            "
+                        ></i>
+                    </div>
+                </a>
+                <div
+                    class="collapse"
+                    [ngClass]="menu.isColapsed ? 'show' : ''"
+                    id="collapseLayouts{{ i }}"
+                    aria-labelledby="headingOne"
+                    data-parent="#sidenavAccordion{{ i }}"
+                    *ngIf="menu.subMenu.length > 0"
+                >
+                    <nav
+                        class="apa-sidenav-menu-nested nav"
+                        id="sidenavAccordion{{ i }}"
+                    >
+                        <span *ngFor="let sub of menu.subMenu; let j = index">
+                            <a
+                                class="nav-link sub-menu"
+                                [ngClass]="isHome ? '' : 'collapsed'"
+                                href="#"
+                                data-toggle="collapse"
+                                data-target="#collapseLayouts{{ j }}"
+                                aria-expanded="false"
+                                [attr.aria-expanded]="isHome"
+                                aria-controls="collapseLayouts{{ j }}"
+                                *ngIf="sub.subMenu.length > 0"
+                                (click)="isHome = !isHome"
+                                >{{ sub.name }}
+                                <div class="apa-sidenav-collapse-arrow">
+                                    <i
+                                        class="fa"
+                                        [ngClass]="
+                                            isHome
+                                                ? 'fa-angle-down'
+                                                : 'fa-angle-right'
+                                        "
+                                    ></i>
+                                </div>
+                            </a>
+                            <div
+                                class="collapse"
+                                [ngClass]="isHome ? 'show' : ''"
+                                id="collapseLayouts{{ j }}"
+                                aria-labelledby="headingOne"
+                                data-parent="#sidenavAccordion3"
+                                *ngIf="sub.subMenu.length > 0"
+                            >
+                                <nav
+                                    class="apa-sidenav-menu-nested nav"
+                                    id="sidenavAccordion3"
+                                >
+                                    <span
+                                        *ngFor="
+                                            let subSub of sub.subMenu;
+                                            let k = index
+                                        "
+                                    >
+                                        <a
+                                            class="nav-link sub-sub-menu"
+                                            [routerLinkActive]="['active', '']"
+                                            [routerLink]="[subSub.route]"
+                                            >{{ subSub.name }}</a
+                                        >
+                                    </span>
+                                </nav>
+                            </div>
+
+                            <a
+                                class="nav-link sub-menu"
+                                [routerLinkActive]="['active', '']"
+                                [routerLink]="[sub.route]"
+                                *ngIf="sub.subMenu.length <= 0"
+                                >{{ sub.name }}</a
+                            >
+                            <!-- <a
+                            class="nav-link sub-menu"
+                            [routerLinkActive]="['active', '']"
+                            [routerLink]="[
+                                'master-library/master-library-page'
+                            ]"
+                            >Master Library</a
+                        > -->
+                        </span>
+                    </nav>
+                </div>
+            </span>
+        </div>
+    </div>
+</nav>
+<!-- <nav class="apa-sidenav accordion apa-sidenav-dark" id="sidenavAccordion">
+    
+</nav> -->

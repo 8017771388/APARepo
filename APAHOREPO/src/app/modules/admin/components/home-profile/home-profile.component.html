@@ -1,0 +1,57 @@
+<div class="row mt-1"> 
+    <div class="col-12">
+        <div class="dx-button dx-button-mode-contained  dx-button-has-text" role="button">
+            <div class="dx-button-content" (click)="addCFO()"><i class="dx-icon dx-icon-add"></i><span class="dx-button-text">Add New</span></div>
+        </div>
+        <!-- <div>
+            <h4>{{totalCount}} CFO's</h4>
+    
+        </div> -->
+        <div class="total-records margin-bottom10">
+            <strong>{{totalCount}}</strong>
+            CFO<span *ngIf="totalCount > 1">'s</span>
+        </div>
+    </div>
+</div> 
+    <div class="row mt-3"> 
+            <div class="col-12">
+                    <dx-data-grid 
+                            id="gridContainer"
+                            [dataSource]="housers"
+                            [showColumnLines]="true"
+                            [showRowLines]="true"
+                            [showBorders]="true"
+                            [rowAlternationEnabled]="true"
+                            [columnAutoWidth]="true" 
+                            (onContentReady)="contentReady($event)">
+                            <dxo-paging [pageSize]="15"></dxo-paging>
+                            <dxo-pager 
+                                [showPageSizeSelector]="false"
+                                [allowedPageSizes]="[5, 10, 20]"
+                                [showInfo]="true">
+                            </dxo-pager>
+                            <dxo-header-filter 
+                                [visible]="showHeaderFilter">
+                            </dxo-header-filter>
+                            <dxo-search-panel 
+                                [visible]="true" 
+                                [width]="300" 
+                                placeholder="Search...">
+                            </dxo-search-panel>
+                            <dxi-column dataField="username" caption="CFO"></dxi-column>
+                            <dxi-column dataField="fullname" caption="Full Name"></dxi-column>
+                            <dxi-column dataField="isActive" caption="Is active?"></dxi-column>
+                            <dxi-column dataField="role" caption="Role"></dxi-column>
+                            <dxi-column  [allowFiltering]="false" [allowSorting]="false" cellTemplate="Action">  
+                                <div *dxTemplate="let a of 'Action'">
+                                    <button mdbBtn type="button" color="blue-grey" (click)="updateVcfo(a)" mdbWavesEffect class="custom-edit">
+                                        <i class="fa fa-edit"></i>
+                                        Edit
+                                    </button>         
+                                </div>
+                             </dxi-column>
+                        </dx-data-grid>
+            </div>
+    </div>
+    
+

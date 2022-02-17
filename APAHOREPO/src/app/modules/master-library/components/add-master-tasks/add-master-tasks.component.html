@@ -1,0 +1,255 @@
+<div class="modal-wrapper">
+    <div class="modal-header goal-header">
+        <h1>{{ title }}</h1>
+        <button (click)="bsModalRef.hide()" class="cross-btn">
+            <i class="fa fa-times"></i>
+        </button>
+    </div>
+    <form #taskForm="ngForm">
+        <div class="modal-body goal-body">
+            <div class="row margin-top5">
+                <div class="col-12">
+                    <label>Task Name</label>
+                    <input
+                        placeholder="Task Name"
+                        type="text"
+                        required
+                        [(ngModel)]="tasks.taskJson.taskInfo.task"
+                        class="form-control custom-field"
+                        maxlength="300"
+                        name="taskName"
+                        (keyup)="checkDuplicateTask()"
+                        [ngClass]="[invalidTask ? 'ng-invalid' : '']"
+                    />
+                    <span *ngIf="invalidTask" class="error"
+                        >This task is already exists</span
+                    >
+                </div>
+            </div>
+            <div class="row margin-top5">
+                <div class="col-6">
+                    <label>Task Owner</label>
+                    <select
+                        class="form-control custom-field"
+                        [(ngModel)]="tasks.taskJson.taskInfo.taskOwnerCd"
+                        required
+                        name="taskOwner"
+                    >
+                        <option value="">Select Owner</option>
+                        <option
+                            *ngFor="let owner of taskowner"
+                            [ngValue]="owner.code"
+                            >{{ owner.name }}</option
+                        >
+                    </select>
+                </div>
+                <div class="col-6">
+                    <label>Category</label>
+                    <select
+                        class="form-control custom-field"
+                        [(ngModel)]="tasks.taskJson.taskInfo.taskCategoryCd"
+                        required
+                        name="category"
+                        [disabled]="disableOnEdit"
+                    >
+                        <option value="">Select Category</option>
+                        <option
+                            *ngFor="let cat of category"
+                            [ngValue]="cat.code"
+                            >{{ cat.name }}</option
+                        >
+                    </select>
+                </div>
+                <!-- <div class="col-6" *ngIf="showDateCal">
+                    <label>Category</label>
+                    <select
+                        class="form-control custom-field"
+                        [(ngModel)]="tasks.taskJson.taskInfo.taskCategoryCd"
+                        name="category"
+                        [disabled]="disableOnEdit"
+                    >
+                        <option value="">Select Category</option>
+                        <option
+                            *ngFor="let cat of category"
+                            [ngValue]="cat.code"
+                            >{{ cat.name }}</option
+                        >
+                    </select>
+                </div> -->
+            </div>
+            <div class="row margin-top5">
+                <div class="col-6">
+                    <label>Action</label>
+                    <select
+                        class="form-control custom-field"
+                        [(ngModel)]="tasks.taskJson.taskInfo.taskActionCd"
+                        name="action"
+                        [disabled]="disableOnEdit"
+                        required
+                    >
+                        <option value="">Select Action</option>
+                        <option
+                            *ngFor="let act of action"
+                            [ngValue]="act.code"
+                            >{{ act.name }}</option
+                        >
+                    </select>
+                </div>
+                <div class="col-6" *ngIf="!showDateCal"></div>
+                <div class="col-6" *ngIf="showDateCal">
+                    <label>Due Date</label>
+                    <div class="input-group custom-input-group">
+                        <input
+                            type="text"
+                            class="form-control custom-field"
+                            [(ngModel)]="tasks.taskJson.taskInfo.taskDueDate"
+                            #dueDate="bsDatepicker"
+                            bsDatepicker
+                            [bsConfig]="{
+                                dateInputFormat: 'MMM D, YYYY'
+                            }"
+                            (bsValueChange)="
+                                onValueChange($event, tasks.taskJson.taskInfo)
+                            "
+                            name="taskDueDate"
+                            autocomplete="off"
+                        />
+                        <span class="input-group-btn">
+                            <button
+                                type="button"
+                                class="btn btn-default calender-custom"
+                                (click)="dueDate.toggle()"
+                            >
+                                <i class="fa fa-calendar"></i>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="row margin-top5" *ngIf="showStatus">
+                <div class="col-6">
+                    <label>Status</label>
+                    <select
+                        class="form-control custom-field"
+                        [(ngModel)]="tasks.taskJson.taskInfo.taskStatusCd"
+                        name="status"
+                        required
+                    >
+                        <option value="">Select Status</option>
+                        <option
+                            *ngFor="let stat of status"
+                            [ngValue]="stat.code"
+                            >{{ stat.name }}</option
+                        >
+                    </select>
+                </div>
+                <div class="col-6">
+                    &nbsp;
+                </div>
+            </div>
+            <div class="row margin-top5" *ngIf="showNote">
+                <div class="col-12">
+                    <label>Note</label>
+                    <textarea
+                        name="note"
+                        id="note"
+                        cols="30"
+                        rows="3"
+                        placeholder="Enter your note"
+                        [(ngModel)]="tasks.taskJson.taskInfo.noteInfo.note"
+                        class="form-control custom-field"
+                        maxlength="500"
+                    ></textarea>
+                </div>
+            </div>
+            <div class="row margin-top5 mt-3" *ngIf="!disableOnEdit">
+                <div class="col-6">
+                    <button
+                        class="btn custom-primary margin-left5 hand-cursor"
+                        (click)="addStep()"
+                        [disabled]="tasks.taskJson.taskInfo.steps.length >= 3"
+                    >
+                        + Add Step
+                    </button>
+                </div>
+            </div>
+            <div
+                class="row margin-top5 mt-3"
+                *ngFor="
+                    let step of tasks.taskJson.taskInfo.steps;
+                    let i = index
+                "
+            >
+                <div class="" [ngClass]="[disableOnEdit ? 'col-12' : 'col-11']">
+                    <label>Step {{ i + 1 }}</label>
+                    <!-- <input
+                        placeholder="Step {{ i + 1 }}"
+                        type="text"
+                        name="step"
+                        [(ngModel)]="tasks.taskJson.taskInfo.steps[i].name"
+                        class="form-control custom-field"
+                        maxlength="300"
+                    /> -->
+                    <textarea
+                        name="step{{ i + 1 }}"
+                        id="step{{ i + 1 }}"
+                        cols="30"
+                        rows="1"
+                        placeholder="Step {{ i + 1 }}"
+                        [(ngModel)]="tasks.taskJson.taskInfo.steps[i].step"
+                        required
+                        class="form-control custom-field"
+                        maxlength="500"
+                        [disabled]="disableOnEdit"
+                    ></textarea>
+                </div>
+                <div class="col-1 pl-0 pt-3 mt-4" *ngIf="!disableOnEdit">
+                    <!-- <span
+                        class="custom-btn-Edit defaultText hand-cursor"
+                        (click)="deleteStep(i)"
+                        [disabled]="disableOnEdit"
+                    >
+                        Delete
+                    </span> -->
+                    <button
+                        class="custom-btn-Edit defaultText"
+                        (click)="deleteStep(i)"
+                    >
+                        Delete
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer custom-footer">
+            <input
+                type="button"
+                class="btn cancel-btn"
+                value="Cancel"
+                name="Cancel"
+                (click)="bsModalRef.hide()"
+            />
+            <input
+                type="button"
+                class="btn custom-primary"
+                value="Save"
+                name="Save"
+                [disabled]="!taskForm.form.valid || invalidTask"
+                *ngIf="!isReOpen"
+                (click)="saveTask()"
+            />
+            <input
+                type="button"
+                class="btn custom-primary"
+                value="Reopen"
+                name="Reopen"
+                [disabled]="
+                    !taskForm.form.valid ||
+                    invalidTask ||
+                    tasks.taskJson.taskInfo.taskStatusCd == 'CM'
+                "
+                *ngIf="isReOpen"
+                (click)="saveTask()"
+            />
+        </div>
+    </form>
+</div>

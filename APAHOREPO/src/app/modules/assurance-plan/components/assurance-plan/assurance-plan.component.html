@@ -1,0 +1,21 @@
+<div class="admin-container container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div (click)="adminRoute($event)">
+               <!-- <tab heading="Manage Assurance Plan">-->
+                    <div
+                        class="tab-container"
+                        *ngIf="currentTab == 'AssurancePlan'"
+                    >
+                        <app-assurance-plan-list></app-assurance-plan-list>
+                    </div>
+                <!--</tab>-->
+                <!--<tab heading="Manage CFO Home Profile">
+                    <div class="tab-container" *ngIf="currentTab=='HomeProfile'">
+                             <app-home-profile></app-home-profile>
+                    </div>
+                </tab>-->
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,41 @@
+<div class="modal-wrapper" >
+    <div class="modal-header goal-header">
+        <h1>{{title}}</h1>
+        <button (click)="bsModalRef.hide()" class="cross-btn">
+            <i class="fa fa-times"></i>
+        </button>
+    </div>
+    <div class="modal-body goal-body">
+       
+        <div class="row  margin-top5">
+            <div class="col-6">
+                <label>Department Name</label>
+                <input placeholder="Department Name" type="text" [(ngModel)]="department.department" class="form-control custom-field" maxlength="300"/>                
+                
+            </div>
+            <div class="col-6">
+                <label>AD Group</label>
+                <input placeholder="AD Group Name" type="text" [(ngModel)]="department.adGroup" class="form-control custom-field" maxlength="300"/>                
+                
+            </div>
+        </div>
+        <div class="row margin-top5">
+            <div class="col-6">
+                <label>DL Name</label>                
+                <input placeholder="DL Name" type="text" [(ngModel)]="department.dlName" class="form-control custom-field" maxlength="300"/> 
+            </div>
+            <div class="col-6">
+                <label>Owner</label>                
+                <input placeholder="" type="text" [(ngModel)]="department.owner" class="form-control custom-field" maxlength="300"/>
+            </div>         
+            
+        </div>
+               
+       
+    </div>
+    <div class="modal-footer custom-footer">
+            <input type="button" class="btn cancel-btn" value="Cancel" name="Cancel" (click)="bsModalRef.hide()">
+            <input type="button" class="btn custom-primary" value="Save" name="Save">
+            
+    </div>
+</div>

@@ -1,0 +1,129 @@
+<div class="master-container">
+    <div class="row">
+        <div class="col-4 offset-8">
+            <div class="search-container">
+                <button class="search-btn-submit">
+                    <i class="fa fa-search"></i>
+                </button>
+                <input
+                    class="form-control"
+                    id="myInput"
+                    type="text"
+                    placeholder="Search.."
+                    [(ngModel)]="searchTxt"
+                />
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 sub-heading">
+            <h2>Deal Type</h2>
+        </div>
+    </div>
+    <div class="collaps-container" *ngIf="dealTypeList.data.length > 0">
+        <div
+            *ngFor="
+                let dealType of dealTypeList.data
+                    | filter: searchTxt:'dealType';
+                let i = index
+            "
+        >
+            <div
+                class="row custom-row"
+                [ngClass]="{ active: dealType.isCollapsed }"
+            >
+                <div class="col-12">
+                    <span
+                        class="add-collaps-button"
+                        (click)="dealType.isCollapsed = !dealType.isCollapsed"
+                        >{{ dealType.dealType }}</span
+                    >
+                </div>
+            </div>
+            <div
+                class="row"
+                [ngClass]="{ 'bottom-border-space': dealType.isCollapsed }"
+            >
+                <div
+                    class="col-12 expand-container"
+                    id="collapseBasic"
+                    [collapse]="!dealType.isCollapsed"
+                >
+                    <div class="row">
+                        <div class="col-12">
+                            <label>Deal Type:</label>
+                            <input
+                                type="text"
+                                class="form-control"
+                                [(ngModel)]="coppiedDealType[i].dealType"
+                                (ngModelChange)="checkDuplicateDT($event, i)"
+                                  readonly
+                            />
+                            <span
+                                class="err-msg"
+                                *ngIf="
+                                    errMsg || coppiedDealType[i].dealType == ''
+                                "
+                                >{{
+                                    coppiedDept[i].dlName == ""
+                                        ? "Please enter deal type."
+                                        : errMsg
+                                }}</span
+                            >
+                        </div>
+                    </div>
+
+                    <div class="row margin-top15">
+                        <div class="col-12 text-right">
+                            <input
+                                class="btn cancel-btn"
+                                name="Cancel"
+                                type="button"
+                                value="Cancel"
+                                (click)="
+                                    dealType.isCollapsed = !dealType.isCollapsed
+                                "
+                            />
+                            <!--<input
+                                class="btn custom-primary margin-left5"
+                                name="Save"
+                                type="button"
+                                value="Update"
+                                (click)="updateDealType(coppiedDealType[i])"
+                                [disabled]="
+                                    !coppiedDealType[i].dealType || errMsg
+                                "
+                            />
+                            <input
+                                class="btn cancel-btn margin-left5"
+                                name="Delete"
+                                type="button"
+                                value="Delete"
+                            />-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="row custom-row">
+            <div class="col-12">
+                <span (click)="category.isCollapsed = !category.isCollapsed" >ABC123</span>
+            </div>
+
+        </div>
+        <div class="row custom-row">
+            <div class="col-12">
+                <span (click)="category.isCollapsed = !category.isCollapsed" >ABC123</span>
+            </div>
+
+        </div> -->
+    </div>
+    <div class="row container-footer">
+        <div class="col-12">
+            <!--<button (click)="addDepartment()">
+                <i class="fa fa-plus-circle"></i>
+                <span>Add New Department</span>
+            </button>-->
+        </div>
+    </div>
+</div>

@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>APAHO.Web</id>
+    <version>1.0.0.0</version>
+    <title>APAHO</title>
+    <authors>Sumija</authors>
+    <owners>Sumija, Hiranmoy, Marissa</owners>
+    <description>APAHO  Web Application</description>
+    <releaseNotes></releaseNotes>
+    <copyright>Copyright 2018</copyright>
+  </metadata>
+  <files>
+    <file src="dist\APAHOWeb\**\*.*" target="\" exclude="dist\APAHOWeb\assets\configEnvironment.js;dist\APAHOWeb\assets\token.configEnvironment.js;" />
+    <file src="dist\APAHOWeb\assets\token.configEnvironment.js" target="\assets\configEnvironment.js" />
+    <file src="original_code\**\*.*" target="original_code" />
+    <file src="buildSessionId" />
+    <!--<file src="web.config" target="\" />-->
+  </files>
+</package>

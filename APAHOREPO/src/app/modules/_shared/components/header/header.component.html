@@ -1,0 +1,95 @@
+<header>
+    <nav class="navbar fixed-top navbar-dark bg-dark">
+        <span class="navbar-brand mb-0 h1" [innerHtml]="appTitle"></span>
+        <div class="ml-auto mr-0 order-0" *ngIf="userData">
+            <div class="user-info">
+                <span
+                    ><img
+                        class="avatar"
+                        (error)="placeholderUrl()"
+                        [src]="userImageUrl"
+                    />&nbsp;</span
+                >
+                <span
+                    class="hdr-userinfo text-right"
+                    [innerHtml]="userData.firstName + ' ' + userData.lastName"
+                ></span>
+                <span class="sign-out-span">
+                    |
+                    <a href="javascript:void(0)" (click)="signout()"
+                        ><strong>Sign Out</strong></a
+                    >
+                </span>
+            </div>
+        </div>
+    </nav>
+    <nav class="navbar navbar-expand-sm bg-light custom-navbar fontweight700" *ngIf="userData">
+        <ul class="navbar-nav header-navbar">
+            <li class="nav-item" [routerLinkActive]="['active', '']">
+                <a class="nav-link" [routerLink]="['/assurance-plan']" (click)="showAPASubmenu=false">Assurance Plan</a>
+            </li>
+            <li class="nav-item" [ngClass]="[showAPASubmenu ? 'active' : '']">
+                <a class="nav-link" [routerLink]="['/home']" (click)="showAPASubmenu=true">Deal Execution</a>
+                
+            </li>
+            <li class="nav-item" [routerLinkActive]="['active', '']" *ngIf="userType == 'DealSpecialist'">
+                <a class="nav-link" [routerLink]="['/premium-buyer']" (click)="showAPASubmenu=false">Premium Buyer </a>
+            </li>
+            
+        </ul>
+            <!--<ul class="navbar-nav header-navbar">
+                <li class="nav-item" [routerLinkActive]="['active', '']">
+                    <a class="nav-link" [routerLink]="['home']">Home</a>
+                </li>
+                <li class="nav-item" [routerLinkActive]="['active', '']">
+                    <a class="nav-link" [routerLink]="['/admin']">Admin</a>
+                </li>
+                <li class="nav-item" [routerLinkActive]="['active', '']">
+                    <a class="nav-link" [routerLink]="['master-library/master-library-page']">Master Library</a>
+                </li>
+            </ul>-->
+    </nav>
+    <nav class="navbar navbar-expand-sm bg-light custom-navbar sub-menu margintop0" style="margin-top:0px!important;" *ngIf="showAPASubmenu">
+        <ul class="navbar-nav header-navbar">
+            <li class="nav-item" [routerLinkActive]="['active', '']">
+                <a class="nav-link" [routerLink]="['/home']" (click)="showAPASubmenu=true">Home</a>
+            </li>
+            <li class="nav-item" [routerLinkActive]="['active', '']">
+                <a class="nav-link" [routerLink]="['/admin']" (click)="showAPASubmenu=true">Admin</a>
+            </li>
+            <li class="nav-item" [routerLinkActive]="['active', '']">
+                <a class="nav-link" [routerLink]="['master-library/master-library-page']" (click)="showAPASubmenu=true">Deal Library</a>
+            </li>
+        </ul>
+        <div                  
+            class="notification"
+            
+            (click)="openNotification()"
+        >
+            <i
+                class="fa fa-bell"
+                aria-hidden="true"
+                
+            ></i>
+            <span *ngIf="notificationCount > 0 && showNotification">{{
+                notificationCount > 0 ? notificationCount : ""
+            }}</span>
+        </div>
+    </nav>
+
+    <nav class="navbar navbar-expand-sm bg-light custom-navbar sub-menu margintop0" style="margin-top:0px!important;" *ngIf="showBSubmenu">
+        <ul class="navbar-nav header-navbar">
+            <li class="nav-item" [routerLinkActive]="['active', '']">
+                <a class="nav-link" [routerLink]="['/premium-buyer/premium-buyer-page']" (click)="showBSubmenu=true">Buyers</a>
+            </li>
+            <!-- <li class="nav-item" [routerLinkActive]="['active', '']">
+                <a class="nav-link" [routerLink]="['/premium-buyer/']" (click)="showBSubmenu=true">Content</a>
+            </li>-->
+            <li class="nav-item" [routerLinkActive]="['active', '']">
+                <a class="nav-link" [routerLink]="['premium-buyer/seller']" (click)="showBSubmenu=true">Sellers</a>
+            </li> 
+        </ul>
+        
+    </nav>
+    
+</header>

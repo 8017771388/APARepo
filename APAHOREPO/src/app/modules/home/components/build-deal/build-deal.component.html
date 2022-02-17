@@ -1,0 +1,520 @@
+<div class="build-core-plan container-fluid">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a [routerLink]="[
+                '/home/']">Home</a>
+            </li>
+            <li aria-current="page" class="breadcrumb-item active">
+                Create Plan
+            </li>
+        </ol>
+    </nav>
+    <div class="build-core-plan-container">
+        <!--<h1>
+            Build Deal Plan for <b> {{ advisorName }} </b>
+        </h1>-->
+        <div class="row pb-4 deal-container-box">
+            <div class="col-6 deal-container-deals">
+                <div class="deal-details-card deal-details">
+                    <div class="blue-bg">
+                        <span class="deal-type-heading">Deal Information</span>
+                    </div>
+                    <div class="deal-details-subpart">
+                        <div class="cards-body deals-card">
+                            <div class="row">
+                                <div class="col-sm-5 col-md-5 pr-0 text-right d-xl-none">
+                                    <span class="">Deal Name : </span>
+                                </div>
+                                <div class="col-sm-7 col-md-7 text-ellipsis text-left d-xl-none">
+                                    <strong title="{{ dealInfo.dealName }}">{{ dealInfo.dealName }}</strong>
+                                </div>
+                                <div class="col-xl-4 pl-0 text-right d-xs-none d-sm-none d-md-none d-lg-none d-xl-block">
+                                    <span class="">Deal Name : </span>
+                                </div>
+                                <div class="col-xl-8 text-ellipsis p-0 text-left d-xs-none d-sm-none d-md-none d-lg-none d-xl-block">
+                                    <strong title="{{ dealInfo.dealName }}">{{ dealInfo.dealName }}</strong>
+                                </div>
+                            </div> 
+
+                            <div class="row margin-top5">
+                                <div class="col-sm-5 pr-0 text-right d-xl-none">
+                                    <span class=""
+                                        >Target Close Date :
+                                    </span>
+                                </div>
+                                <div class="col-sm-7 text-left d-xl-none">
+                                    <strong>
+                                        {{
+                                            dealInfo.dealTargetEndDate
+                                                ? (dealInfo.dealTargetEndDate | date)
+                                                : "Not Assigned"
+                                        }}</strong
+                                    >
+                                </div>
+                                <div class="col-xl-4 pl-0 text-right d-xs-none d-sm-none d-md-none d-lg-none d-xl-block">
+                                    <span class=""
+                                        >Target Close Date :
+                                    </span>
+                                </div>
+                                <div class="col-xl-2 p-0 text-left d-xs-none d-sm-none d-md-none d-lg-none d-xl-block border-right">
+                                    <strong>
+                                        {{
+                                            dealInfo.dealTargetEndDate
+                                                ? (dealInfo.dealTargetEndDate
+                                                  | date)
+                                                : "Not Assigned"
+                                        }}</strong
+                                    >
+                                </div>
+                                <div class="col-xl-2 p-0 text-right d-xs-none d-sm-none d-md-none d-lg-none d-xl-block">
+                                    <span class="">Deal Type : </span>
+                                </div>
+                                <div class="col-xl-4 pr-0 text-ellipsis text-left d-xs-none d-sm-none d-md-none d-lg-none d-xl-block">
+                                    <strong title="{{ dealInfo.dealType }}">{{ dealInfo.dealType }}</strong>
+                                </div>
+                            </div>  
+                            <div class="row margin-top5 d-xl-none">
+                                <div class="col-sm-5 pr-0 text-right">
+                                    <span class="">Deal Type : </span>
+                                </div>
+                                <div class="col-sm-7 text-ellipsis text-left ">
+                                    <strong title="{{ dealInfo.dealType }}">{{ dealInfo.dealType }}</strong>
+                                </div>
+                            </div>
+ 
+                            <div class="row margin-top5 ">
+                                <div class="col-sm-5 pr-0 text-right d-xl-none">
+                                    <span class="">Active Stage : </span>
+                                </div>
+                                <div class="col-sm-7 text-left d-xl-none">
+                                    <strong> {{ dealInfo.dealStage }}</strong>
+                                </div>
+ 
+                                <div class="col-xl-4 pl-0 text-right d-xs-none d-sm-none d-md-none d-lg-none d-xl-block">
+                                    <span class="">Active Stage : </span>
+                                </div>
+                                <div class="col-xl-2 p-0 text-left d-xs-none d-sm-none d-md-none d-lg-none d-xl-block border-right">
+                                    <strong> {{ dealInfo.dealStage }}</strong>
+                                </div>
+                                
+                                <!-- <div class="col-xl-2 p-0 text-right d-xs-none d-sm-none d-md-none d-lg-none d-xl-block">
+                                    <span class="">
+                                        Documents :
+                                    </span>
+                                </div>
+                                <div class="col-xl-4 pr-0 text-left d-xs-none d-sm-none d-md-none d-lg-none d-xl-block">
+                                    <span
+                                        ><a
+                                            class="blue"
+                                            href="https://lplfinancial.app.box.com/folder/113433091125"
+                                            target="_blank"
+                                            ><u>Link</u></a
+                                        ></span
+                                    >
+                                </div> -->
+                                
+                            </div>
+                            <!-- <div class="row margin-top5 d-xl-none">
+                                <div class="col-sm-5 pr-0 text-right">
+                                    <span class="">
+                                        Documents :
+                                    </span>
+                                </div>
+                                <div class="col-sm-7 text-left">
+                                    <span
+                                        ><a
+                                            class="blue"
+                                            href="https://lplfinancial.app.box.com/folder/113433091125"
+                                            target="_blank"
+                                            ><u>Link</u></a
+                                        ></span
+                                    >
+                                </div>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 deal-container-actors">
+                <div class="deal-details-card deal-details">
+                    <div class="blue-bg">
+                        <span class="deal-type-heading"
+                            >Actors on the Deal</span
+                        >
+                    </div>
+                    <div class="deal-details-subpart">
+                        <div class="cards-body deals-card">
+                            <div class="row">
+                                <div class="col-sm-5 pr-0 text-right d-xl-none">
+                                    <span class="">Deal Specialist : </span>
+                                </div>
+                                <div class="col-sm-7 text-ellipsis text-left d-xl-none">
+                                    <strong title="{{dealInfo.dealSpecialist}}">
+                                        {{dealInfo.dealSpecialist? dealInfo.dealSpecialist: "Not Assigned"}}
+                                    </strong>
+                                </div>
+                                <div class="col-xl-3 pl-0 text-right d-xs-none d-sm-none d-md-none d-lg-none d-xl-block">
+                                    <span class="">Deal Specialist : </span>
+                                </div>
+                                <div class="col-xl-9 pl-0 text-ellipsis text-left d-xs-none d-sm-none d-md-none d-lg-none d-xl-block text-left">
+                                    <strong title="{{dealInfo.dealSpecialist}}">
+                                        {{dealInfo.dealSpecialist? dealInfo.dealSpecialist: "Not Assigned"}}
+                                    </strong>
+                                </div>
+                            </div>
+
+                            <div class="row margin-top5">
+                                <div class="col-sm-5 pr-0 text-right d-xl-none">
+                                    <span class="">
+                                        Seller{{dealInfo.sellers?.length > 1 ? 's' : ""}} :
+                                    </span>
+                                </div>
+                                <div class="col-sm-7 text-left d-xl-none">
+                                    <span *ngIf="dealInfo.sellers?.length <= 0 "><strong>Not Assigned</strong></span>
+                                    <ul class="seller-buyer-list" *ngIf="dealInfo.sellers?.length > 0 ">
+                                        <li *ngFor="let seller of dealInfo.sellers" class="text-ellipsis" >
+                                            <strong title='{{seller.name +" " +"(" + seller.repID + ")"}}'>
+                                                {{seller.name +" " +"(" + seller.repID + ")"}}
+                                            </strong>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-xl-3 pl-0 text-right d-xs-none d-sm-none d-md-none d-lg-none d-xl-block">
+                                    <span class="">
+                                        Seller{{dealInfo.sellers?.length > 1 ? 's' : ""}} :
+                                    </span>
+                                </div>
+                                <div class="col-xl-3 p-0 text-left d-xs-none d-sm-none d-md-none d-lg-none d-xl-block border-right">
+                                    <span *ngIf="dealInfo.sellers?.length <= 0 "><strong>Not Assigned</strong></span>
+                                    <ul class="seller-buyer-list" *ngIf="dealInfo.sellers?.length > 0 ">
+                                        <li *ngFor="let seller of dealInfo.sellers" class="text-ellipsis" >
+                                            <strong title='{{seller.name +" " +"(" + seller.repID + ")"}}'>
+                                                {{seller.name +" " +"(" + seller.repID + ")"}}
+                                            </strong>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-xl-2 pl-0 text-right d-xs-none d-sm-none d-md-none d-lg-none d-xl-block">
+                                    <span class="">Buyer{{dealInfo.buyers?.length > 1 ? 's' : ""}} : </span>
+                                </div>
+                                <div class="col-xl-4 pl-0 text-left d-xs-none d-sm-none d-md-none d-lg-none d-xl-block">
+                                    <span *ngIf="dealInfo.buyers?.length <= 0 "><strong>Not Assigned</strong></span>
+                                    <ul class="seller-buyer-list" *ngIf="dealInfo.buyers?.length > 0 ">
+                                        <li class="text-ellipsis" *ngFor="let buyer of dealInfo.buyers">
+                                            <strong title='{{buyer.name + " " + "(" + buyer.repID + ")"}}'>
+                                                {{buyer.name + " " + "(" + buyer.repID + ")"}}
+                                            </strong>
+                                        </li>
+                                    </ul>
+                                </div>
+                                
+                            </div>
+                            <div class="row margin-top5 d-xl-none">
+                                <div class="col-sm-5 pr-0 text-right">
+                                    <span class="">Buyer{{dealInfo.buyers?.length > 1 ? 's' : ""}} : </span>
+                                </div>
+                                <div class="col-sm-7 text-left">
+                                    <span *ngIf="dealInfo.buyers?.length <= 0 "><strong>Not Assigned</strong></span>
+                                    <ul class="seller-buyer-list" *ngIf="dealInfo.buyers?.length > 0 ">
+                                        <li class="text-ellipsis" *ngFor="let buyer of dealInfo.buyers">
+                                            <strong title='{{buyer.name + " " + "(" + buyer.repID + ")"}}'>
+                                                {{buyer.name + " " + "(" + buyer.repID + ")"}}
+                                            </strong>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--<div class="deal-details-subpart">
+        <div class="cards-body deals-card">
+            <div class="row">
+                <div class="col-2"></div>
+                <div class="col-4 text-right">
+                    <span class="">Deal Specialist : </span>
+                </div>
+
+                <div class="col-6 pl-0 text-left">
+                    <strong>
+                        {{
+                            dealInfo.dealSpecialist
+                                ? dealInfo.dealSpecialist
+                                : "Not Assigned"
+                        }}
+                    </strong>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-2 p-0 text-right">
+                    <span class="">Seller : </span>
+                </div>
+                <div class="col-4 text-left boder-right">
+                    <ul class="seller-buyer-list">
+                        <li
+                            *ngFor="
+                                let seller of dealInfo.sellers
+                            "
+                        >
+                            <strong>
+                                {{
+                                    seller.name +
+                                        " " +
+                                        "(" +
+                                        seller.repID +
+                                        ")"
+                                }}
+                            </strong>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-2 p-0 text-right">
+                    <span class="">Buyers : </span>
+                </div>
+                <div class="col-4 text-left">
+                    <ul class="seller-buyer-list">
+                        <li
+                            class=""
+                            *ngFor="
+                                let buyer of dealInfo.buyers
+                            "
+                        >
+                            <strong>
+                                {{
+                                    buyer.name +
+                                        " " +
+                                        "(" +
+                                        buyer.repID +
+                                        ")"
+                                }}
+                            </strong>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>-->
+                </div>
+            </div>
+        </div>
+
+        <div class="row custom-row header-bg-color">
+            <div class="col-8">
+                <h2>Deal Stages</h2>
+            </div>
+            <div class="col-4">
+                <div class="search-container">
+                    <button class="search-btn-submit">
+                        <i class="fa fa-search"></i>
+                    </button>
+                    <input
+                        class="form-control"
+                        id="myInput"
+                        type="text"
+                        placeholder="Search Stages/Tasks"
+                        [(ngModel)]="searchTxt"
+                        (keyup)="searchStagesAndTasks($event)"
+                    />
+                </div>
+            </div>
+        </div>
+        <div class="category-grid" *ngIf="stagesList">
+            <div
+                *ngFor="
+                    let stage of stagesList.data.masterlibrary;
+                    let i = index
+                "
+            >
+                <div
+                    class="row custom-row custom-switches"
+                    [attr.aria-expanded]="!stage.isCollapsed"
+                    aria-controls="collapseBasic"
+                >
+                    <div class="col-12">
+                        <button
+                            class="transparent-button margin-left5"
+                            (click)="stage.isCollapsed = !stage.isCollapsed"
+                        >
+                            <i
+                                class="fa fa-caret-right"
+                                *ngIf="!stage.isCollapsed"
+                            ></i>
+                            <i
+                                class="fa fa-caret-down"
+                                *ngIf="stage.isCollapsed"
+                            ></i>
+                        </button>
+                        <span title="ABC123" class="goal">{{
+                            stage.stage
+                        }}</span>
+                    </div>
+                </div>
+                <div
+                    class="expand-plan-details"
+                    id="collapseBasic"
+                    [collapse]="!stage.isCollapsed"
+                >
+                    <div class="row">
+                        <div class="col-11 ml-5">
+                            <!-- *ngIf="dealInfo.dealStage == stage.stage" -->
+                            <div class="link-text" (click)="addTask(stage)">
+                                <i class="fa fa-plus-circle"></i>
+                                <span>Add Task +</span>
+                            </div>
+                            <div class="custom-plan-table">
+                                <div class="row row-heading">
+                                    <div class="col-1 custom-col">
+                                        Add
+                                    </div>
+                                    <div class="col-8 custom-col">
+                                        Task Name
+                                    </div>
+                                    <div class="col-2 custom-col">
+                                        Due Date
+                                    </div>
+                                    <!-- <div class="col-2 custom-col">
+                                        Owner
+                                    </div> -->
+                                    <div class="col-1 custom-col">
+                                        Action
+                                    </div>
+                                </div>
+                                <div
+                                    *ngFor="
+                                        let task of stage.tasks;
+                                        let j = index
+                                    "
+                                >
+                                    <div class="row plan-custom-row">
+                                        <div class="col-1 custom-col pt-3">
+                                            <input
+                                                type="checkbox"
+                                                (change)="
+                                                    addGoaltoTemp(
+                                                        $event,
+                                                        stage,
+                                                        task
+                                                    )
+                                                "
+                                                [checked]="task.checked"
+                                                (ngModelChange)="onModelChange($event)"
+                                            />
+                                        </div>
+                                        <div class="col-8 custom-col pt-3">
+                                            <span> {{ task.task }}</span>
+                                        </div>
+                                        <div class="col-2 custom-col">
+                                            <div
+                                                class="input-group custom-input-group"
+                                            >
+                                                <input
+                                                    type="text"
+                                                    class="form-control custom-field"
+                                                    [(ngModel)]="
+                                                        stage.tasks[j]
+                                                            .taskDueDate
+                                                    "
+                                                    #dueDate="bsDatepicker"
+                                                    bsDatepicker
+                                                    [bsConfig]="{
+                                                        dateInputFormat:
+                                                            'MMM D, YYYY'
+                                                    }"
+                                                    (bsValueChange)="
+                                                        onValueChange(
+                                                            $event,
+                                                            task
+                                                        )
+                                                    "
+                                                    name="datePicker"
+                                                    (ngModelChange)="onModelChange($event)"
+                                                />
+                                                <span class="input-group-btn">
+                                                    <button
+                                                        type="button"
+                                                        class="btn btn-default calender-custom"
+                                                        (click)="
+                                                            dueDate.toggle()
+                                                        "
+                                                        ng-click="isDatepickerOpen = !isDatepickerOpen"
+                                                    >
+                                                        <i
+                                                            class="fa fa-calendar"
+                                                        ></i>
+                                                    </button>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <!-- <div class="col-2 custom-col">
+                                            <select
+                                                class="form-control custom-field"
+                                                [(ngModel)]="task.taskOwnerCd"
+                                            >
+                                                <option value="" selected
+                                                    >Select Owner</option
+                                                >
+                                                <option
+                                                    *ngFor="
+                                                        let owner of taskOwner
+                                                    "
+                                                    [ngValue]="owner.code"
+                                                    >{{ owner.name }}</option
+                                                >
+                                            </select>
+                                        </div> -->
+                                        <div class="col-1 custom-col pt-3">
+                                            <button
+                                                class="btn btn-sm action-button "
+                                                (click)="
+                                                    editTask(stage, task, j)
+                                                "
+                                            >
+                                                <!-- <i
+                                                    class="fa fa-pencil"
+                                                    aria-hidden="true"
+                                                ></i> -->
+                                                Edit
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div *ngIf="stage.tasks.length <= 0">
+                                    <div class="row plan-custom-row">
+                                        <div
+                                            class="col-sm-12 custom-col text-center"
+                                        >
+                                            No Tasks Available
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div
+                class="text-center m-3 p-2"
+                *ngIf="stagesList.data.masterlibrary.length <= 0"
+            >
+                Stage/Task not found
+            </div>
+        </div>
+        <div class="category-footer text-right">
+            <input
+                class="btn cancel-btn btn-font-size16"
+                name="Cancel"
+                type="button"
+                value="Cancel"
+                (click)="cancel()"
+            />
+            <input
+                class="btn custom-primary margin-left5 btn-font-size16"
+                name="Save"
+                type="button"
+                value="Save"
+                [disabled]="this.tempArrayToStoreTask.length <= 0 || searchOn || dealInfo.isDealPlanExists"
+                (click)="savePlan()"
+            />
+        </div>
+    </div>
+</div>

@@ -1,0 +1,222 @@
+<div class="row admin-serach-container ">
+    <div class="col-4 input-group input-group-search">
+        <label for="grid-search" class="sr-only"></label>
+        <div class="reset-field">
+            <input
+                class="form-control grid-search"
+                [(ngModel)]="searchText"
+                (keydown)="searchOnEnter($event)"
+                placeholder="Search Seller Name"
+                type="text"
+            />
+            <i
+                class="clear-search fa fa-remove"
+                (click)="searchText = ''; searchSeller()"
+                *ngIf="searchText != ''"
+            ></i>
+        </div>
+        <span class="input-group-btn advisor-panel-search">
+            <button class="btn text-search-button" (click)="searchSeller()">
+                <i class="fa fa-search"></i>
+            </button>
+        </span>
+    </div>
+</div>
+
+<div class="row margin-top5">
+    <div class="col-12">
+        <div
+        class="dx-button dx-button-mode-contained dx-button-has-text"
+        role="button"
+        [routerLink]="['/premium-buyer/seller/create-opportunity/']"
+    >
+        <div class="dx-button-content">
+            <i class="dx-icon dx-icon-add"></i
+            ><span class="dx-button-text">Add Opportunity</span>
+        </div>
+    </div>
+        <div class="total-records mt-1">
+            <strong>{{ totalActiveCount }}</strong> {{totalActiveCount>1?'Active Sellers':'Active Seller'}}
+            
+        </div>
+    </div>
+</div>
+
+<div class="row margin-top5">
+    <div class="col-12">
+        <dx-data-grid
+            #gridContainer
+            id="gridContainerAdmin"
+            [dataSource]="dataSource"
+            [showColumnLines]="true"
+            [showRowLines]="true"
+            [showBorders]="true"
+            [rowAlternationEnabled]="false"
+            [cacheEnabled]="false"
+        >
+            <dxo-remote-operations
+                [sorting]="true"
+                [filtering]="true"
+                [paging]="true"
+            >
+            </dxo-remote-operations>
+            <dxo-paging [pageSize]="25"></dxo-paging>
+            <dxo-pager
+                [showPageSizeSelector]="false"
+                [allowedPageSizes]="[5, 10, 20]"
+                [showInfo]="true"
+                infoText="Page {0} of {1}({{ pagingInfo }} of {2} items)"
+            >
+                >
+            </dxo-pager>
+            <dxo-header-filter [visible]="showHeaderFilter">
+            </dxo-header-filter>
+            <dxi-column
+                dataField="sellerName"
+                caption="Seller Name"
+                [allowSorting]="true"
+                [allowFiltering]="false"
+                headerCellTemplate="titleHeaderTemplate"
+                
+            >
+                <!-- <div *dxTemplate="let dataAction of 'sellerName'">
+                    <strong>
+                        {{dataAction.data.sellerName}}
+                    </strong>
+                </div> -->
+            </dxi-column>
+
+            <dxi-column
+                dataField="state"
+                caption="Location"
+                [allowSorting]="true"
+                alignment="center"
+                [allowFiltering]="false"
+                headerCellTemplate="titleHeaderTemplate"
+                [width]="200"
+            >
+                <!-- <dxo-header-filter
+                    [dataSource]="filterData.repid"
+                ></dxo-header-filter> -->
+                <!-- <div *dxTemplate="let detail of 'DS'">
+                    {{ detail.data.dealSpecialistInfo.dsFullName }}
+                </div> -->
+            </dxi-column>
+            <dxi-column
+                dataField="source"
+                caption="Source"
+                [allowFiltering]="true"
+                [allowSorting]="false"
+                alignment="center"                
+                headerCellTemplate="titleHeaderTemplate"                
+                [width]="200"
+                [filterValues]="filterValueSource"
+            >
+                <dxo-header-filter
+                    [dataSource]="filterValueArray"
+                ></dxo-header-filter>
+            </dxi-column>
+            <dxi-column
+                dataField="postDate"
+                caption="Posted Date"
+                [allowFiltering]="false"
+                [allowSorting]="true"
+                alignment="center"
+                dataType="date"
+                format="MMM d, yyyy"
+                headerCellTemplate="titleHeaderTemplate"
+                [width]="200"
+            >
+                
+            </dxi-column>
+            <dxi-column
+                dataField="applicationDeadline"
+                caption="Application Deadline"
+                [allowFiltering]="false"
+                [allowSorting]="true"
+                alignment="center"
+                dataType="date"
+                format="MMM d, yyyy"
+                headerCellTemplate="titleHeaderTemplate"
+                cellTemplate="ad"
+                [width]="150">
+                <div *dxTemplate="let dataAction of 'ad'">
+                <div class="dx-fieldset date-box">
+                    <div class="dx-field">
+                        <div class="dx-field-value">
+                            <dx-date-box
+                                [showClearButton]="false"
+                                [useMaskBehavior]="true"
+                                pickerType="calendar"
+                                displayFormat="MMM d, yyyy"
+                                format="MMM d, yyyy"
+                                type="date"
+                               
+                                [(value)]="dataAction.data.applicationDeadline"
+                                (onValueChanged)="changedDeadline($event, dataAction.data)"
+                                >
+                            </dx-date-box>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </dxi-column>
+            
+            <dxi-column
+                dataField="sellerprofilestage"
+                caption="Stage"
+                [allowFiltering]="true"
+                [allowSorting]="false"
+                alignment="center"
+                [width]="180"
+                headerCellTemplate="titleHeaderTemplate"                
+                [calculateFilterExpression]="calculateFilterExpressionStage"
+                [filterValues]="filterValue"
+                cellTemplate="sps"
+            >
+               
+                <dxo-header-filter
+                    [dataSource]="filterData.sellerprofilestage"
+                ></dxo-header-filter>
+
+                <div *dxTemplate="let stage of 'sps'">
+                    <div class="dx-fieldset">
+                        <div class="dx-field">
+                            <div class="dx-field-value">
+                                <dx-select-box [items]="sellerStageObj" [value]="stage.data.sellerprofilestage" (onValueChanged)="changedStage($event, stage.data)">
+                                   
+                                </dx-select-box>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </dxi-column>
+            <dxi-column
+                caption="Action"
+                alignment="center"
+                [allowFiltering]="false"
+                [allowSorting]="false"
+                [width]="110"
+                cellTemplate="Action"
+                headerCellTemplate="titleHeaderTemplate"
+            >
+                <div *dxTemplate="let dataAction of 'Action'">
+                    <button
+                        type="button"
+                        class="btn btn-sm action-button width-90"
+                        (click)="goToEditProfile(dataAction.data.sellerProfileID)"
+                    >
+                        Edit
+                    </button>
+                </div>
+            </dxi-column>
+            <div *dxTemplate="let info of 'titleHeaderTemplate'">
+                <span title="{{ info.column.caption }}"
+                    ><strong>{{ info.column.caption }}</strong></span
+                >
+            </div>
+            
+        </dx-data-grid>
+    </div>
+</div>

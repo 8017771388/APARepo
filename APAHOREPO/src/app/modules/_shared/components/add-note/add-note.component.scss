@@ -1,0 +1,54 @@
+.modal-wrapper{
+    .notes-body{
+        max-height: 500px;
+        overflow-y: auto;
+        .bullet {
+            position:relative;
+            &:after {
+                content: " ";
+                width: 10px;
+                height: 10px;
+                border-radius: 10px;
+                -webkit-border-radius: 10px;
+                -moz-border-radius: 10px;
+                position: absolute;
+                right: -15px;
+                top: 4px;
+                z-index: 100;
+                background: red;
+            }
+            &.red-text {
+                color: red;
+                //font-size: 12px;
+            }
+        }
+    
+    }
+}
+.modal-footer{
+    padding: 15px 15px 22px 15px;
+    background: #eaf1f7;
+    // text-align: right;
+    position: relative;
+}
+.error-textBox{
+    border : 1px solid #FF0000;
+    
+}
+.error-text{
+    position: absolute;
+    left: 6px;
+    bottom: 2px;
+    width: 200px;
+}
+
+.font-style-italic
+{
+    padding-left:5px !important;
+}
+ .label-strong{
+    padding-left:5px !important;
+}
+.task-status{
+    font-size: 15px;
+}

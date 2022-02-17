@@ -1,0 +1,252 @@
+<div class="container-fluid">
+    <div class="row pt-4 valuation-detail-wrapper">        
+        <div class="col-md-4">            
+            <div class="valuation-detail-cards member-details">
+               <div class="grey-bg">
+                   <span class="member-type-heading">Platinum Member</span>
+               </div>
+               <div class="member-details-subpart">
+                <div class="profile-image">
+                    <img class="mx-auto d-block rounded-circle" src="./assets/img/img_avatar.png" alt="Avatar">
+                </div>
+                <div class="member-name">
+                    <p class="card-heading">Clay Mathews</p>
+                </div>
+                <div class="profile-completion">
+                    <div class="progress-bar-contatainer" >
+                        <div class="progress-bar" [ngStyle]="{'width' : '80%'}" ></div>
+                    </div> 
+                    <p class="text-center"><strong>Your profile is 80% complete</strong></p>
+                </div>
+                <div class="profile-details">
+                    <div class="profiles">
+                        <span>PROFILE VIEWS</span>
+                        <span><strong>91</strong></span>
+                    </div>
+                    <div class="profiles">
+                        <span>PROFILE SCORE</span>
+                        <span><strong>8.7</strong></span>
+                    </div>
+                </div>
+               </div>
+            </div>
+
+        </div>
+        <div class="col-md-5 ">
+            <div class="valuation-detail-cards">
+                <p class="card-heading">Potential Matches</p>
+                <div class="cards-body">
+                    <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">SCORE</th>
+                        <th scope="col">NAME</th>
+                        <th scope="col">DATE</th>
+                        <th scope="col">MESSAGES</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row">8.7</th>
+                        <td>DON HUTSON</td>
+                        <td>3/22</td>
+                        <td>2 MESSAGES</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">8.7</th>
+                        <td>DON HUTSON</td>
+                        <td>3/22</td>
+                        <td>2 MESSAGES</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">8.7</th>
+                        <td>DON HUTSON</td>
+                        <td>3/22</td>
+                        <td></td>
+                      </tr>
+                      <!-- <tr>
+                        <th scope="row">8.7</th>
+                        <td>DON HUTSON</td>
+                        <td>3/22</td>
+                        <td>3 MESSAGES</td>
+                      </tr> -->
+                    </tbody>
+                  </table>
+                </div>
+                <div class="cards-footer">
+                    <div class="btn-section">
+                        <button type="button" class="btn btn-light view-all-btn">VIEW ALL</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 ">
+            <div class="valuation-detail-cards">
+                <p class="card-heading">Active Deals</p>
+                <div class="cards-body deals-card">
+                    <div class="deals-wrapper">
+                        <label>Name: </label>
+                        <span><strong> Andre the Giant</strong></span>
+                    </div>
+                    <div class="deals-wrapper">
+                        <label>Status: </label>
+                        <span><strong> Reviewing Valuation</strong></span>
+                    </div>
+                    <div class="deals-wrapper">
+                        <label>Next Activity: </label>
+                        <span><strong> Agreee on Terms</strong></span>
+                    </div>
+                    <div class="deals-wrapper">
+                        <label>Completion:</label>
+                        <span><strong> 15%</strong></span>
+                    </div>
+
+                </div>
+            </div>
+        </div>        
+    </div>
+    <div class="row pt-4 valuation-detail-wrapper">
+        <div class="col-md-12 pb-4 mb-5">
+            <div class="valuation-detail-cards">
+                <div><p class="card-heading text-left pl-3">Questionnaire</p>
+                <div class="row pl-5 pr-5">
+                    <div class="col-sm-4">
+                        <div><button class="btn btn-light custom-btn" [ngClass]="{'active':activeBtn=='buy'}" (click)="activeBtn = 'buy'">Buy a practice</button></div>
+                        <div><button class="btn btn-light custom-btn" [ngClass]="{'active':activeBtn=='sell'}" (click)="activeBtn = 'sell'">Selling all or part of practice</button></div>
+                    </div>
+                    <div class="col-sm-8 pl-5 mb-4 bdr-left">
+                        <div class="questionnaire-template">
+                            <div class="row"><h4 class="col-md-12">{{activeBtn=='buy' ? 'Buy a practice' : 'Selling all or part of practice'}}</h4></div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <label for="reqLoanAmt"><b>Where are you interested in buying ?</b></label>
+                                    
+                                    <select [(ngModel)]="states" class="select-control form-control">
+                                        <option value="AL">Alabama</option>
+                                        <option value="AK">Alaska</option>
+                                        <option value="AZ">Arizona</option>
+                                        <option value="AR">Arkansas</option>
+                                        <option value="CA">California</option>
+                                        <option value="CO">Colorado</option>
+                                        <option value="CT">Connecticut</option>
+                                        <option value="DE">Delaware</option>
+                                        <option value="DC">District Of Columbia</option>
+                                        <option value="FL">Florida</option>
+                                        <option value="GA">Georgia</option>
+                                        <option value="HI">Hawaii</option>
+                                        <option value="ID">Idaho</option>
+                                        <option value="IL">Illinois</option>
+                                        <option value="IN">Indiana</option>
+                                        <option value="IA">Iowa</option>
+                                        <option value="KS">Kansas</option>
+                                        <option value="KY">Kentucky</option>
+                                        <option value="LA">Louisiana</option>
+                                        <option value="ME">Maine</option>
+                                        <option value="MD">Maryland</option>
+                                        <option value="MA">Massachusetts</option>
+                                        <option value="MI">Michigan</option>
+                                        <option value="MN">Minnesota</option>
+                                        <option value="MS">Mississippi</option>
+                                        <option value="MO">Missouri</option>
+                                        <option value="MT">Montana</option>
+                                        <option value="NE">Nebraska</option>
+                                        <option value="NV">Nevada</option>
+                                        <option value="NH">New Hampshire</option>
+                                        <option value="NJ">New Jersey</option>
+                                        <option value="NM">New Mexico</option>
+                                        <option value="NY">New York</option>
+                                        <option value="NC">North Carolina</option>
+                                        <option value="ND">North Dakota</option>
+                                        <option value="OH">Ohio</option>
+                                        <option value="OK">Oklahoma</option>
+                                        <option value="OR">Oregon</option>
+                                        <option value="PA">Pennsylvania</option>
+                                        <option value="RI">Rhode Island</option>
+                                        <option value="SC">South Carolina</option>
+                                        <option value="SD">South Dakota</option>
+                                        <option value="TN">Tennessee</option>
+                                        <option value="TX">Texas</option>
+                                        <option value="UT">Utah</option>
+                                        <option value="VT">Vermont</option>
+                                        <option value="VA">Virginia</option>
+                                        <option value="WA">Washington</option>
+                                        <option value="WV">West Virginia</option>
+                                        <option value="WI">Wisconsin</option>
+                                        <option value="WY">Wyoming</option>
+                                    </select>
+                                </div>                    
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12"><label for="financeLbl"><b>When you will be ready to make purchase?</b></label></div>
+                                <div class="col-md-12 radio">
+                                    <label class="chk-padding">
+                                        <input type="radio" name="readyToPurchase" value="I am ready now" ><span class="cr"><i class="cr-icon fa fa-circle"></i></span>
+                                        <span >I am ready now</span>
+                                    </label>
+                                    <label class="chk-padding">
+                                        <input type="radio" name="readyToPurchase" value="Less than a year" ><span class="cr"><i class="cr-icon fa fa-circle"></i></span>
+                                        <span >Less than a year</span>
+                                    </label>
+                                    <label class="chk-padding">
+                                        <input type="radio" name="readyToPurchase" value="Less than three year" ><span class="cr"><i class="cr-icon fa fa-circle"></i></span>
+                                        <span >Less than three year</span>
+                                    </label>
+                                    <label class="chk-padding">
+                                        <input type="radio" name="readyToPurchase" value="Unsure" ><span class="cr"><i class="cr-icon fa fa-circle"></i></span>
+                                        <span >Unsure</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12"><label for="financeLbl"><b>What is most important to you in a potential seller?</b></label></div>
+                                <div class="col-md-12 radio">
+                                    <label class="chk-padding">
+                                        <input type="radio" name="potentialSeller" value="Location of business" ><span class="cr"><i class="cr-icon fa fa-circle"></i></span>
+                                        <span >Location of business</span>
+                                    </label>
+                                    <label class="chk-padding">
+                                        <input type="radio" name="potentialSeller" value="Size of business" ><span class="cr"><i class="cr-icon fa fa-circle"></i></span>
+                                        <span >Size of business</span>
+                                    </label>
+                                    <label class="chk-padding">
+                                        <input type="radio" name="potentialSeller" value="Similar investment strategy" ><span class="cr"><i class="cr-icon fa fa-circle"></i></span>
+                                        <span >Similar investment strategy</span>
+                                    </label>
+                                    <label class="chk-padding">
+                                        <input type="radio" name="potentialSeller" value="Size and type of Organization" ><span class="cr"><i class="cr-icon fa fa-circle"></i></span>
+                                        <span >Size and type of Organization</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12"><label for="financeLbl"><b>How many new household you can take on today?</b></label></div>
+                                <div class="col-md-12 radio">
+                                    <label class="chk-padding">
+                                        <input type="radio" name="householdTakeOn" value="Some, but hiring to expand capacity" ><span class="cr"><i class="cr-icon fa fa-circle"></i></span>
+                                        <span >Some, but hiring to expand capacity</span>
+                                    </label>
+                                    <label class="chk-padding">
+                                        <input type="radio" name="householdTakeOn" value="Less than 30" ><span class="cr"><i class="cr-icon fa fa-circle"></i></span>
+                                        <span >Less than 30</span>
+                                    </label>
+                                    <label class="chk-padding">
+                                        <input type="radio" name="householdTakeOn" value="Less than 100" ><span class="cr"><i class="cr-icon fa fa-circle"></i></span>
+                                        <span >Less than 100</span>
+                                    </label>
+                                    <label class="chk-padding">
+                                        <input type="radio" name="householdTakeOn" value="Over 100" ><span class="cr"><i class="cr-icon fa fa-circle"></i></span>
+                                        <span >Over 100</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <button class="btn btn-light mr-3" >Cancel</button>
+                                <button class="btn btn-primary" (click)="openConfirmation()">Save</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
